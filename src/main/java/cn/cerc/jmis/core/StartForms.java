@@ -314,12 +314,6 @@ public class StartForms implements Filter {
         }
     }
 
-    protected boolean isExperienceAccount(IForm form) {
-        return getIphoneAppstoreAccount().equals(form.getHandle().getUserCode())
-                || "16307405".equals(form.getHandle().getUserCode())
-                || "15531101".equals(form.getHandle().getUserCode());
-    }
-
     protected void checkTimeout(IForm form, String funcCode, long startTime, long timeout) {
         long totalTime = System.currentTimeMillis() - startTime;
         if (totalTime > timeout) {
@@ -359,9 +353,31 @@ public class StartForms implements Filter {
         return url;
     }
 
-    // iphone 上架时专用测试帐号以及专业版体验账号
+    protected boolean isExperienceAccount(IForm form) {
+        return getIphoneAppstoreAccount().equals(form.getHandle().getUserCode())
+                || getBaseVerAccount().equals(form.getHandle().getUserCode())
+                || getSimagoAccount().equals(form.getHandle().getUserCode())
+                || getLineWinderAccount().equals(form.getHandle().getUserCode());
+    }
+
+    // iPhone 上架时专用测试帐号以及专业版体验账号
     protected String getIphoneAppstoreAccount() {
         return "15202406";
+    }
+
+    // 基础版体验账号
+    protected String getBaseVerAccount() {
+        return "16307405";
+    }
+
+    // 喜曼多专用APP测试账号与iPhone上架测试账号
+    protected String getSimagoAccount() {
+        return "47583201";
+    }
+
+    // 狼王专用APP测试账号与iPhone上架测试账号
+    protected String getLineWinderAccount() {
+        return "15531101";
     }
 
     @Override
