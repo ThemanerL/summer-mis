@@ -23,7 +23,13 @@ public class UrlRecord {
         this.name = name;
     }
 
+    /** 此函数将在下个版本作废，请勿使用 **/
+    @Deprecated
     public UrlRecord addParam(String key, String value) {
+        return putParam(key, value);
+    }
+
+    public UrlRecord putParam(String key, String value) {
         params.put(key, value);
         return this;
     }
