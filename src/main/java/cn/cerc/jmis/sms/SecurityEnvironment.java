@@ -14,6 +14,7 @@ import cn.cerc.jmis.language.R;
 import cn.cerc.jmis.page.AbstractJspPage;
 
 public class SecurityEnvironment {
+
     private static final Logger log = LoggerFactory.getLogger(SecurityEnvironment.class);
 
     // 用于Form中，向UI(jsp)传递当前是否安全，若不安全则显示输入验证码画面
@@ -71,7 +72,7 @@ public class SecurityEnvironment {
         }
 
         SqlQuery ds2 = new SqlQuery(form.getHandle());
-        ds2.add("select * from %s", SystemTable.getSecurityMobile);
+        ds2.add("select * from %s", SystemTable.get(SystemTable.getSecurityMobile));
         ds2.add("where mobile_='%s'", mobile);
         ds2.open();
         if (ds2.eof()) {
@@ -135,7 +136,7 @@ public class SecurityEnvironment {
         }
         if (!mobile.startsWith("+")) {
             SqlQuery ds = new SqlQuery(form.getHandle());
-            ds.add("select countryCode_ from %s", SystemTable.getUserInfo);
+            ds.add("select countryCode_ from %s", SystemTable.get(SystemTable.getUserInfo));
             ds.add("where mobile_='%s'", mobile);
             ds.open();
             if (ds.eof()) {
@@ -145,7 +146,7 @@ public class SecurityEnvironment {
         }
 
         SqlQuery ds = new SqlQuery(form.getHandle());
-        ds.add("select * from %s", SystemTable.getSecurityMobile);
+        ds.add("select * from %s", SystemTable.get(SystemTable.getSecurityMobile));
         ds.add("where mobile_='%s'", mobile);
         ds.open();
         if (ds.eof()) {
@@ -180,7 +181,7 @@ public class SecurityEnvironment {
 
     public static String getUserSecuirtyMobile(IForm form) {
         SqlQuery ds1 = new SqlQuery(form.getHandle());
-        ds1.add("SELECT mobile_,securityMobile_,countryCode_ FROM %s", SystemTable.getUserInfo);
+        ds1.add("SELECT mobile_,securityMobile_,countryCode_ FROM %s", SystemTable.get(SystemTable.getUserInfo));
         ds1.add("WHERE id_='%s'", form.getHandle().getUserCode());
         ds1.open();
         if (ds1.eof()) {
