@@ -110,6 +110,17 @@ public class SvrUserLogin extends CustomService {
             throw new SecurityCheckException(String.format("没有找到注册的帐套  %s ", corpNo));
         }
 
+        // 取得认证密码，若是微信入口进入，则免密码录入
+        String password = headIn.getString("Password_");
+        if (password == null || "".equals(password)) {
+            if ("".equals(dsUser.getString("Mobile_"))) {
+                throw new RuntimeException("您没有登记手机号，请您输入密码进行登录！");
+            } else {
+                getDataOut().getHead().setField("Mobile_", dsUser.getString("Mobile_"));
+                throw new RuntimeException("用户密码不允许为空！");
+            }
+        }
+
         boolean YGLogin = buff.getCorpType() == BookVersion.ctFree.ordinal();
         if (buff.getStatus() == 3) {
             throw new SecurityCheckException("对不起，您的账套处于暂停录入状态，禁止登录！若需启用，请您联系客服处理！");
@@ -128,17 +139,6 @@ public class SvrUserLogin extends CustomService {
         if (dsUser.getString("BelongAccount_") != null && !"".equals(dsUser.getString("BelongAccount_"))) {
             throw new SecurityCheckException(
                     String.format("该帐号已被设置为附属帐号，不允许登录，请使用主帐号 %s 登录系统！", dsUser.getString("BelongAccount_")));
-        }
-
-        // 取得认证密码，若是微信入口进入，则免密码录入
-        String password = headIn.getString("Password_");
-        if (password == null || "".equals(password)) {
-            if ("".equals(dsUser.getString("Mobile_"))) {
-                throw new RuntimeException("您没有登记手机号，请您输入密码进行登录！");
-            } else {
-                getDataOut().getHead().setField("Mobile_", dsUser.getString("Mobile_"));
-                throw new RuntimeException("用户密码不允许为空！");
-            }
         }
 
         // 检查设备码
@@ -163,7 +163,8 @@ public class SvrUserLogin extends CustomService {
                     dsUser.post();
                     if (dsUser.getInt("VerifyTimes_") > 3) {
                         throw new SecurityCheckException(
-                                String.format("您输入密码的错误次数已达 %d 次，输错超过6次时，您的账号将被自动停用！", dsUser.getInt("VerifyTimes_")));
+                                String.format("您输入密码的错误次数已达 %d 次，若您不记得密码，可以不输入密码，通过验证码的方式登录并重置密码，并且输错超过6次时，您的账号将被自动停用！",
+                                        dsUser.getInt("VerifyTimes_")));
                     } else {
                         throw new SecurityCheckException("您的登录密码错误，禁止登录！");
                     }
