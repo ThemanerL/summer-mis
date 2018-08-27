@@ -163,7 +163,7 @@ public class SvrUserLogin extends CustomService {
                     dsUser.post();
                     if (dsUser.getInt("VerifyTimes_") > 3) {
                         throw new SecurityCheckException(
-                                String.format("您输入密码的错误次数已达 %d 次，若您不记得密码，可以不输入密码，通过验证码的方式登录并重置密码，并且输错超过6次时，您的账号将被自动停用！",
+                                String.format("您输入密码的错误次数已达 %d 次，若忘记密码，可不输入，直接通过验证码的方式进入系统，输错超过6次时，您的账号将被自动停用！",
                                         dsUser.getInt("VerifyTimes_")));
                     } else {
                         throw new SecurityCheckException("您的登录密码错误，禁止登录！");
