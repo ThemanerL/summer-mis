@@ -111,12 +111,14 @@ public class SvrUserLogin extends CustomService {
         }
 
         // 取得认证密码，若是微信入口进入，则免密码录入
+        String mobile = dsUser.getString("Mobile_");
+        getDataOut().getHead().setField("Mobile_", mobile);
+
         String password = headIn.getString("Password_");
         if (password == null || "".equals(password)) {
             if ("".equals(dsUser.getString("Mobile_"))) {
                 throw new RuntimeException("您没有登记手机号，请您输入密码进行登录！");
             } else {
-                getDataOut().getHead().setField("Mobile_", dsUser.getString("Mobile_"));
                 throw new RuntimeException("用户密码不允许为空！");
             }
         }

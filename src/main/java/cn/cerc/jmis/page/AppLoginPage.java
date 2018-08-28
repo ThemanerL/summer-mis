@@ -19,6 +19,7 @@ import cn.cerc.jdb.core.ServerConfig;
 import cn.cerc.jdb.core.Utils;
 import cn.cerc.jmis.core.ClientDevice;
 import cn.cerc.jmis.form.AbstractForm;
+import cn.cerc.security.sapi.JayunSecurity;
 
 public class AppLoginPage extends AbstractJspPage implements IAppLogin {
 
@@ -114,6 +115,15 @@ public class AppLoginPage extends AbstractJspPage implements IAppLogin {
                 ((ClientDevice) this.getForm().getClient()).setSid(sid);
                 result = true;
             }
+
+            // 登记聚安应用帐号
+            String mobile = Utils.safeString(app.getDataOut().getHead().getString("Mobile_"));
+            if (mobile != null && !"".equals(mobile)) {
+                JayunSecurity api = new JayunSecurity(req);
+                if (!api.register(userCode, mobile)) {
+                    log.error(api.getMessage());
+                }
+            }
         } else {
             // 登录验证失败，进行判断，手机号为空，则回到登录页，手机不为空，密码为空，则跳到发送验证码页面
             String mobile = Utils.safeString(app.getDataOut().getHead().getString("Mobile_"));
@@ -135,14 +145,11 @@ public class AppLoginPage extends AbstractJspPage implements IAppLogin {
 
     /**
      * 
-     * @param handle
-     *            环境变量
+     * @param handle 环境变量
      * @param 电话号码
      * @return 根据电话号码返回用户帐号，用于普及版登入
-     * @throws ServletException
-     *             异常
-     * @throws IOException
-     *             异常
+     * @throws ServletException 异常
+     * @throws IOException      异常
      */
     private String getAccountFromTel(IHandle handle, String tel) throws ServletException, IOException {
         LocalService svr = new LocalService(handle);
