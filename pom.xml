@@ -305,10 +305,10 @@
             <version>1.1</version>
         </dependency>
     </dependencies>
-    <repositories>
+      <repositories>
         <repository>
-            <id>thirdparty</id>
-            <url>http://121.40.194.178:8081/nexus/content/repositories/thirdparty</url>
+            <id>vine</id>
+            <url>http://121.40.194.178:8081/nexus/content/groups/public</url>
         </repository>
     </repositories>
     <distributionManagement>
