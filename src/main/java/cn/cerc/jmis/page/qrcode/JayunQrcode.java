@@ -93,9 +93,6 @@ public class JayunQrcode {
         }
     }
 
-    /**
-     * 参数签名
-     */
     public static String getSign(String appKey, String appSecret, String action, long timestamp) {
         Map<String, Object> tmp = new TreeMap<>();
         tmp.put("action", action);
@@ -115,26 +112,6 @@ public class JayunQrcode {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * 参数签名
-     */
-    public static String getJson(Map<String, Object> items) {
-        // 拼接参数字符串
-        StringBuilder build = new StringBuilder();
-        int i = 0;
-        for (String key : items.keySet()) {
-            i++;
-            build.append(i == 1 ? "?" : "&");
-            build.append(key);
-            build.append("=");
-            Object value = items.get(key);
-            if (value != null) {
-                build.append(value);
-            }
-        }
-        return build.toString();
     }
 
 }

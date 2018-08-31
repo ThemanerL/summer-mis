@@ -29,7 +29,6 @@ public class SocketTool {
      * 根据域名生成 socketUrl
      * 
      * @param request HttpServletRequest
-     * @param items   域名关键字
      */
     public String getSocketUrl(HttpServletRequest request) {
         StringBuffer url = request.getRequestURL();
