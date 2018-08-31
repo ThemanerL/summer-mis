@@ -13,7 +13,7 @@ import javax.servlet.ServletException;
 import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.form.IForm;
 import cn.cerc.jbean.form.IPage;
-import cn.cerc.jbean.other.MemoryBuffer;
+import cn.cerc.jdb.cache.Buffer;
 import cn.cerc.jdb.core.DataSet;
 import cn.cerc.jdb.core.Record;
 import cn.cerc.jdb.core.ServerConfig;
@@ -153,7 +153,7 @@ public abstract class AbstractJspPage extends UIComponent implements IPage {
     }
 
     // 从请求或缓存读取数据
-    public final String getValue(MemoryBuffer buff, String reqKey) {
+    public final String getValue(Buffer buff, String reqKey) {
         String result = getRequest().getParameter(reqKey);
         if (result == null) {
             String val = buff.getString(reqKey).replace("{}", "");

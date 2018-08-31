@@ -1,12 +1,16 @@
 package cn.cerc.jmis.page;
 
 import java.io.IOException;
+import java.util.Map;
+import java.util.TreeMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.gson.Gson;
 
 import cn.cerc.jbean.client.LocalService;
 import cn.cerc.jbean.core.AppConfig;
@@ -18,7 +22,11 @@ import cn.cerc.jdb.core.Record;
 import cn.cerc.jdb.core.ServerConfig;
 import cn.cerc.jdb.core.Utils;
 import cn.cerc.jmis.core.ClientDevice;
+import cn.cerc.jmis.core.RequestData;
 import cn.cerc.jmis.form.AbstractForm;
+import cn.cerc.jmis.page.qrcode.SocketTool;
+import cn.cerc.security.sapi.JayunAPI;
+import cn.cerc.security.sapi.JayunSecurity;
 
 public class AppLoginPage extends AbstractJspPage implements IAppLogin {
 
@@ -44,6 +52,38 @@ public class AppLoginPage extends AbstractJspPage implements IAppLogin {
         if (!"".equals(logoUrl)) {
             this.add("logoUrl", logoUrl);
         }
+
+        if (form.getClient().isPhone()) {
+            return;
+        }
+
+        // 获取域名
+        SocketTool tool = new SocketTool();
+        String domain = tool.getDomain(getRequest());
+        this.add("socketUrl", tool.getSocketUrl(getRequest()));
+
+        // 判断当前客户端类型
+        log.info("deviceType {}", form.getClient().getDevice());
+        boolean isWeb = RequestData.webclient.equals(form.getClient().getId());
+        this.add("isWeb", isWeb);
+        if (!isWeb) {
+            return;
+        }
+
+        String appKey = ServerConfig.getInstance().getProperty(JayunAPI.JAYUN_APP_KEY);
+        Map<String, Object> items = new TreeMap<>();
+        items.put("appKey", appKey);
+        items.put("action", "login");
+        items.put("sessionId", getRequest().getSession().getId());
+        items.put("domain", domain);
+
+        JayunSecurity api = new JayunSecurity(form.getRequest());
+        boolean result = api.encodeQrcode(new Gson().toJson(items));
+        if (!result) {
+            log.error(api.getMessage());
+            this.add("msg", api.getMessage());
+        }
+        this.add("qrcode", (String) api.getData());
     }
 
     @Override
@@ -114,6 +154,15 @@ public class AppLoginPage extends AbstractJspPage implements IAppLogin {
                 ((ClientDevice) this.getForm().getClient()).setSid(sid);
                 result = true;
             }
+
+            // 登记聚安应用帐号
+            String mobile = Utils.safeString(app.getDataOut().getHead().getString("Mobile_"));
+            if (mobile != null && !"".equals(mobile)) {
+                JayunSecurity api = new JayunSecurity(req);
+                if (!api.register(userCode, mobile)) {
+                    log.error(api.getMessage());
+                }
+            }
         } else {
             // 登录验证失败，进行判断，手机号为空，则回到登录页，手机不为空，密码为空，则跳到发送验证码页面
             String mobile = Utils.safeString(app.getDataOut().getHead().getString("Mobile_"));
@@ -135,14 +184,11 @@ public class AppLoginPage extends AbstractJspPage implements IAppLogin {
 
     /**
      * 
-     * @param handle
-     *            环境变量
+     * @param handle 环境变量
      * @param 电话号码
      * @return 根据电话号码返回用户帐号，用于普及版登入
-     * @throws ServletException
-     *             异常
-     * @throws IOException
-     *             异常
+     * @throws ServletException 异常
+     * @throws IOException      异常
      */
     private String getAccountFromTel(IHandle handle, String tel) throws ServletException, IOException {
         LocalService svr = new LocalService(handle);

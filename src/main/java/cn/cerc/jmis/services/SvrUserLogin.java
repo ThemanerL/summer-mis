@@ -48,12 +48,6 @@ public class SvrUserLogin extends CustomService {
         Record headIn = getDataIn().getHead();
         getDataOut().getHead().setField("errorNo", 0);
 
-        String deviceId = headIn.getString("MachineID_");
-        // 判断是否为浏览器登录
-        if (Application.webclient.equals(deviceId)) {
-            throw new SecurityCheckException("系统不支持使用web浏览器登录，请使用客户端登录系统！");
-        }
-
         String device_name = "";
         if (headIn.hasValue("ClientName_")) {
             device_name = headIn.getString("ClientName_");
@@ -111,12 +105,14 @@ public class SvrUserLogin extends CustomService {
         }
 
         // 取得认证密码，若是微信入口进入，则免密码录入
+        String mobile = dsUser.getString("Mobile_");
+        getDataOut().getHead().setField("Mobile_", mobile);
+
         String password = headIn.getString("Password_");
         if (password == null || "".equals(password)) {
             if ("".equals(dsUser.getString("Mobile_"))) {
                 throw new RuntimeException("您没有登记手机号，请您输入密码进行登录！");
             } else {
-                getDataOut().getHead().setField("Mobile_", dsUser.getString("Mobile_"));
                 throw new RuntimeException("用户密码不允许为空！");
             }
         }
@@ -142,6 +138,7 @@ public class SvrUserLogin extends CustomService {
         }
 
         // 检查设备码
+        String deviceId = headIn.getString("MachineID_");
         enrollMachineInfo(dsUser.getString("CorpNo_"), userCode, deviceId, device_name);
 
         if (dsUser.getBoolean("Encrypt_")) {
@@ -566,7 +563,7 @@ public class SvrUserLogin extends CustomService {
         }
     }
 
-    private void updateCurrentUser(String computer, String screen, String language) {
+    public void updateCurrentUser(String computer, String screen, String language) {
         getConnection().execute(String.format("Update %s Set Viability_=0 Where Viability_>0 and LogoutTime_<'%s'",
                 SystemTable.get(SystemTable.getCurrentUser), TDateTime.Now().incHour(-1)));
         String SQLCmd = String.format(

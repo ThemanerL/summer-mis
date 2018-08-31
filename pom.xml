@@ -4,6 +4,8 @@
     <groupId>cn.cerc</groupId>
     <artifactId>summer-mis</artifactId>
     <version>1.5.0</version>
+    <description>用于快速开发资讯管理系统（MIS），如进销存系统、财务系统、人力资源系统等</description>
+    <url>https://github.com/cn-cerc/summer-mis</url>
     <properties>
         <mysql-connector-java.version>5.1.38</mysql-connector-java.version>
         <org.hibernate.version>4.3.5.Final</org.hibernate.version>
@@ -127,6 +129,12 @@
             <groupId>cn.cerc</groupId>
             <artifactId>summer-db</artifactId>
             <version>${cn.cerc.summer.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>cn.cerc</groupId>
+            <artifactId>summer-security</artifactId>
+            <version>1.4.3</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -291,6 +299,11 @@
             <version>2.3.1</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>javax.websocket</groupId>
+            <artifactId>javax.websocket-api</artifactId>
+            <version>1.1</version>
+        </dependency>
     </dependencies>
     <repositories>
         <repository>
@@ -325,6 +338,4 @@
             </plugin>
         </plugins>
     </reporting>
-    <description>用于快速开发资讯管理系统（MIS），如进销存系统、财务系统、人力资源系统等</description>
-    <url>https://github.com/cn-cerc/summer-mis</url>
 </project>
