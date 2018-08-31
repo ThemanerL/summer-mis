@@ -25,11 +25,6 @@ public class SocketTool {
         return domain;
     }
 
-    /**
-     * 根据域名生成 socketUrl
-     * 
-     * @param request HttpServletRequest
-     */
     public String getSocketUrl(HttpServletRequest request) {
         StringBuffer url = request.getRequestURL();
         String domain = url.delete(url.length() - request.getRequestURI().length(), url.length()).toString();
