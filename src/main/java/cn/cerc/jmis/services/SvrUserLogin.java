@@ -457,7 +457,7 @@ public class SvrUserLogin extends CustomService {
         return true;
     }
 
-    private void enrollMachineInfo(String corpNo, String userCode, String deviceId, String deviceName) {
+    public void enrollMachineInfo(String corpNo, String userCode, String deviceId, String deviceName) {
         SqlQuery ds = new SqlQuery(this);
         ds.add("select * from %s", SystemTable.get(SystemTable.getDeviceVerify));
         ds.add("where UserCode_='%s' and MachineCode_='%s'", userCode, deviceId);

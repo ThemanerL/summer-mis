@@ -84,6 +84,11 @@ public class SvrAutoLogin {
                 buff.setField("VerifyMachine", true);
             }
 
+            // 检查设备码
+            SvrUserLogin svrLogin = new SvrUserLogin();
+            svrLogin.init(handle);
+            svrLogin.enrollMachineInfo(dsUser.getString("CorpNo_"), userCode, deviceId, "浏览器");
+
             // 设置登录信息
             ClientDevice info = new ClientDevice(form);
             info.setRequest(form.getRequest());
