@@ -81,7 +81,7 @@ public class AppLoginPage extends AbstractJspPage implements IAppLogin {
         items.put("domain", domain);
 
         String ip = config.getProperty(notify_ip);
-        if (ip != null || !"".equals(ip)) {
+        if (ip != null && !"".equals(ip)) {
             int localPort = form.getRequest().getServerPort();
             String notify_url = "http://";
             if (localPort != 80) {
