@@ -91,6 +91,7 @@ public class AppLoginPage extends AbstractJspPage implements IAppLogin {
             }
             notify_url += "/forms/FrmQRCode";
             items.put("notify_url", notify_url);
+            log.warn("notify_url {}", notify_url);
         }
 
         JayunSecurity api = new JayunSecurity(form.getRequest());
