@@ -8,7 +8,7 @@ import cn.cerc.jdb.mysql.SqlQuery;
 
 public class BookQuery extends SqlQuery implements IDataOperator {
     private static final long serialVersionUID = 7447239243975915295L;
-    private IDataOperator operator;
+    private SqlOperator operator;
     private IHandle handle;
 
     public BookQuery(IHandle handle) {
@@ -17,15 +17,15 @@ public class BookQuery extends SqlQuery implements IDataOperator {
     }
 
     @Override
-    public IDataOperator getDefaultOperator() {
+    public SqlOperator getDefaultOperator() {
         if (operator == null) {
             SqlOperator def = new SqlOperator(handle);
             String tableName = SqlOperator.findTableName(this.getCommandText());
             def.setTableName(tableName);
             operator = def;
         }
-        this.setOperator(this);
-        return this;
+        this.setOperator(operator);
+        return operator;
     }
 
     @Override
