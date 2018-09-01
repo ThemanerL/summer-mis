@@ -63,7 +63,7 @@ public class AppLoginPage extends AbstractJspPage implements IAppLogin {
         // 获取域名
         SocketTool tool = new SocketTool();
         String domain = tool.getDomain(getRequest());
-        this.add("socketUrl", tool.getSocketUrl(getRequest()));
+        String socket_url = tool.getSocketUrl(getRequest());
 
         // 判断当前客户端类型
         log.info("deviceType {}", form.getClient().getDevice());
@@ -82,17 +82,23 @@ public class AppLoginPage extends AbstractJspPage implements IAppLogin {
 
         String ip = config.getProperty(notify_ip);
         if (ip != null && !"".equals(ip)) {
-            int localPort = form.getRequest().getServerPort();
+            int server_port = form.getRequest().getServerPort();
             String notify_url = "http://";
-            if (localPort != 80) {
-                notify_url += (ip + ":" + localPort);
+            socket_url = "ws://";
+            if (server_port != 80) {
+                notify_url += (ip + ":" + server_port);
+                socket_url += (ip + ":" + server_port);
             } else {
                 notify_url += ip;
+                socket_url += ip;
             }
             notify_url += "/forms/FrmQRCode";
+            socket_url += "/forms/websocket";
+
             items.put("notify_url", notify_url);
             log.warn("notify_url {}", notify_url);
         }
+        this.add("socketUrl", socket_url);
 
         JayunSecurity api = new JayunSecurity(form.getRequest());
         boolean result = api.encodeQrcode(new Gson().toJson(items));
