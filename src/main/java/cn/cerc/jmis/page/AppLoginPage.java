@@ -30,6 +30,9 @@ import cn.cerc.security.sapi.JayunSecurity;
 
 public class AppLoginPage extends AbstractJspPage implements IAppLogin {
 
+    // 配置在服务器的用户名下面 summer-application.properties
+    public static final String notify_ip = "jayun.notify_ip";
+
     public AppLoginPage() {
         super(null);
     }
@@ -70,12 +73,25 @@ public class AppLoginPage extends AbstractJspPage implements IAppLogin {
             return;
         }
 
-        String appKey = ServerConfig.getInstance().getProperty(JayunAPI.JAYUN_APP_KEY);
+        String appKey = config.getProperty(JayunAPI.JAYUN_APP_KEY);
         Map<String, Object> items = new TreeMap<>();
         items.put("appKey", appKey);
         items.put("action", "login");
         items.put("sessionId", getRequest().getSession().getId());
         items.put("domain", domain);
+
+        String ip = config.getProperty(notify_ip);
+        if (ip == null || "".equals(ip)) {
+            int localPort = form.getRequest().getLocalPort();
+            String notify_url = "http://";
+            if (localPort != 80) {
+                notify_url += (ip + ":" + localPort);
+            } else {
+                notify_url += ip;
+            }
+            notify_url += "/forms/FrmQRCode";
+            items.put("notify_url", notify_url);
+        }
 
         JayunSecurity api = new JayunSecurity(form.getRequest());
         boolean result = api.encodeQrcode(new Gson().toJson(items));
