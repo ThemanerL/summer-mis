@@ -85,13 +85,8 @@ public class AppLoginPage extends AbstractJspPage implements IAppLogin {
             int server_port = form.getRequest().getServerPort();
             String notify_url = "http://";
             socket_url = "ws://";
-            if (server_port != 80) {
-                notify_url += (ip + ":" + server_port);
-                socket_url += (ip + ":" + server_port);
-            } else {
-                notify_url += ip;
-                socket_url += ip;
-            }
+            notify_url += (ip + ":" + server_port);
+            socket_url += (ip + ":" + server_port);
             notify_url += "/forms/FrmQRCode";
             socket_url += "/forms/websocket";
 
