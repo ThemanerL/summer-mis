@@ -5,7 +5,12 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class SocketTool {
+
+    private static final Logger log = LoggerFactory.getLogger(SocketTool.class);
 
     // FIXME 改为参数传入
     private static List<String> items = new ArrayList<>();
@@ -28,6 +33,9 @@ public class SocketTool {
     public String getSocketUrl(HttpServletRequest request) {
         StringBuffer url = request.getRequestURL();
         String domain = url.delete(url.length() - request.getRequestURI().length(), url.length()).toString();
+
+        log.warn("domail {}", domain);
+
         String socketUrl = domain;
         if (domain.indexOf("http://") != -1) {
             socketUrl = domain.replace("http", "ws");

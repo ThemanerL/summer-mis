@@ -30,6 +30,8 @@ import cn.cerc.security.sapi.JayunSecurity;
 
 public class AppLoginPage extends AbstractJspPage implements IAppLogin {
 
+    private static final Logger log = LoggerFactory.getLogger(AppLoginPage.class);
+
     // 配置在服务器的用户名下面 summer-application.properties
     public static final String Notify_Url = "app.notify_url";
 
@@ -40,8 +42,6 @@ public class AppLoginPage extends AbstractJspPage implements IAppLogin {
     public AppLoginPage(IForm form) {
         super(form);
     }
-
-    private static final Logger log = LoggerFactory.getLogger(AppLoginPage.class);
 
     @Override
     public void init(IForm form) {
