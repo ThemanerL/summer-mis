@@ -22,7 +22,6 @@ import cn.cerc.jdb.core.Record;
 import cn.cerc.jdb.core.ServerConfig;
 import cn.cerc.jdb.core.Utils;
 import cn.cerc.jmis.core.ClientDevice;
-import cn.cerc.jmis.core.RequestData;
 import cn.cerc.jmis.form.AbstractForm;
 import cn.cerc.jmis.page.qrcode.SocketTool;
 import cn.cerc.security.sapi.JayunAPI;
@@ -57,14 +56,6 @@ public class AppLoginPage extends AbstractJspPage implements IAppLogin {
         }
 
         if (form.getClient().isPhone()) {
-            return;
-        }
-
-        // 判断当前客户端类型
-        log.info("deviceType {}", form.getClient().getDevice());
-        boolean isWeb = RequestData.webclient.equals(form.getClient().getId());
-        this.add("isWeb", isWeb);
-        if (!isWeb) {
             return;
         }
 
