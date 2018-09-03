@@ -31,7 +31,7 @@ import cn.cerc.security.sapi.JayunSecurity;
 public class AppLoginPage extends AbstractJspPage implements IAppLogin {
 
     // 配置在服务器的用户名下面 summer-application.properties
-    public static final String notify_ip = "jayun.notify_ip";
+    public static final String Notify_Url = "app.notify_url";
 
     public AppLoginPage() {
         super(null);
@@ -60,11 +60,6 @@ public class AppLoginPage extends AbstractJspPage implements IAppLogin {
             return;
         }
 
-        // 获取域名
-        SocketTool tool = new SocketTool();
-        String domain = tool.getDomain(getRequest());
-        String socket_url = tool.getSocketUrl(getRequest());
-
         // 判断当前客户端类型
         log.info("deviceType {}", form.getClient().getDevice());
         boolean isWeb = RequestData.webclient.equals(form.getClient().getId());
@@ -73,6 +68,13 @@ public class AppLoginPage extends AbstractJspPage implements IAppLogin {
             return;
         }
 
+        // 获取域名
+        SocketTool tool = new SocketTool();
+        String domain = tool.getDomain(getRequest());
+
+        String socket_url = tool.getSocketUrl(getRequest());
+        this.add("socketUrl", socket_url);
+
         String appKey = config.getProperty(JayunAPI.JAYUN_APP_KEY);
         Map<String, Object> items = new TreeMap<>();
         items.put("appKey", appKey);
@@ -80,20 +82,11 @@ public class AppLoginPage extends AbstractJspPage implements IAppLogin {
         items.put("sessionId", getRequest().getSession().getId());
         items.put("domain", domain);
 
-        String ip = config.getProperty(notify_ip);
-        if (ip != null && !"".equals(ip)) {
-            int server_port = form.getRequest().getServerPort();
-            String notify_url = "http://";
-            socket_url = "ws://";
-            notify_url += (ip + ":" + server_port);
-            socket_url += (ip + ":" + server_port);
-            notify_url += "/forms/FrmQRCode";
-            socket_url += "/forms/websocket";
-
+        String notify_url = config.getProperty(Notify_Url);
+        if (notify_url != null && !"".equals(notify_url)) {
             items.put("notify_url", notify_url);
             log.warn("notify_url {}", notify_url);
         }
-        this.add("socketUrl", socket_url);
 
         JayunSecurity api = new JayunSecurity(form.getRequest());
         boolean result = api.encodeQrcode(new Gson().toJson(items));

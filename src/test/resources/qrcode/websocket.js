@@ -6,8 +6,6 @@ $(function() {
     if ('WebSocket' in window) {
         // app服务器地址
         websocket = new WebSocket(socketUrl);
-    } else {
-        alert('当前浏览器 Not support websocket')
     }
 
     // 连接发生错误的回调方法
