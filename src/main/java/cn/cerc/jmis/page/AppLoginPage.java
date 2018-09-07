@@ -19,7 +19,6 @@ import cn.cerc.jdb.core.ServerConfig;
 import cn.cerc.jdb.core.Utils;
 import cn.cerc.jmis.core.ClientDevice;
 import cn.cerc.jmis.form.AbstractForm;
-import cn.cerc.security.sapi.JayunSecurity;
 
 public class AppLoginPage extends AbstractJspPage implements IAppLogin {
 
@@ -119,14 +118,15 @@ public class AppLoginPage extends AbstractJspPage implements IAppLogin {
                 result = true;
             }
 
-            // 登记聚安应用帐号
-            String mobile = Utils.safeString(app.getDataOut().getHead().getString("Mobile_"));
-            if (mobile != null && !"".equals(mobile)) {
-                JayunSecurity api = new JayunSecurity(req);
-                if (!api.register(userCode, mobile)) {
-                    log.error(api.getMessage());
-                }
-            }
+            // // 登记聚安应用帐号
+            // String mobile =
+            // Utils.safeString(app.getDataOut().getHead().getString("Mobile_"));
+            // if (mobile != null && !"".equals(mobile)) {
+            // JayunSecurity api = new JayunSecurity(req);
+            // if (!api.register(userCode, mobile)) {
+            // log.error(api.getMessage());
+            // }
+            // }
         } else {
             // 登录验证失败，进行判断，手机号为空，则回到登录页，手机不为空，密码为空，则跳到发送验证码页面
             String mobile = Utils.safeString(app.getDataOut().getHead().getString("Mobile_"));
