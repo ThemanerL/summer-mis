@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import cn.cerc.jbean.tools.MD5;
+import cn.cerc.jdb.core.MD5;
 import cn.cerc.jdb.core.ServerConfig;
 import cn.cerc.security.sapi.JayunAPI;
 
