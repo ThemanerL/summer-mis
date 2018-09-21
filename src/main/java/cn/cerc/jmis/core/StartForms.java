@@ -357,7 +357,8 @@ public class StartForms implements Filter {
         return getIphoneAppstoreAccount().equals(form.getHandle().getUserCode())
                 || getBaseVerAccount().equals(form.getHandle().getUserCode())
                 || getSimagoAccount().equals(form.getHandle().getUserCode())
-                || getLineWinderAccount().equals(form.getHandle().getUserCode());
+                || getLineWinderAccount().equals(form.getHandle().getUserCode())
+                || getTaiWanAccount().equals(form.getHandle().getUserCode());
     }
 
     // iPhone 上架时专用测试帐号以及专业版体验账号
@@ -378,6 +379,11 @@ public class StartForms implements Filter {
     // 狼王专用APP测试账号与iPhone上架测试账号
     protected String getLineWinderAccount() {
         return "15531101";
+    }
+
+    // 台湾地区地藤普及版测试账号
+    protected String getTaiWanAccount() {
+        return "47598601";
     }
 
     @Override
