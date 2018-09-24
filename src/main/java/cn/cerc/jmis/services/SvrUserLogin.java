@@ -79,7 +79,7 @@ public class SvrUserLogin extends CustomService {
         }
 
         String corpNo = dsUser.getString("CorpNo_");
-        ServerConfig config = ServerConfig.getInstance();
+        ServerConfig config = new ServerConfig();
         String supCorpNo = config.getProperty("vine.mall.supCorpNo", "");
         // 判断该手机号绑定的账号，是否有supCorpNo的下游，专用App登录
         if (!"".equals(supCorpNo)) {

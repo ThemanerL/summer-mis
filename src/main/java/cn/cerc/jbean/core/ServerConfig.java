@@ -14,20 +14,14 @@ import cn.cerc.jdb.core.IConfig;
 import cn.cerc.jdb.core.LocalConfig;
 
 @Deprecated /** 请改使用cn.cerc.jdb.core.ServerConfig */
-public enum ServerConfig implements IConfig {
-
-    INSTANCE;
-
-    public static ServerConfig getInstance() {
-        return ServerConfig.INSTANCE;
-    }
-
+public class ServerConfig implements IConfig {
     private static final Logger log = LoggerFactory.getLogger(ServerConfig.class);
     public static final String TaskServiceEnabled = "task.service";
     public static final String TaskServiceToken = "task.token";
     public static final String AdminMobile = "admin.mobile";
     public static final String AdminEmail = "admin.email";
 
+    private static ServerConfig instance;
     private static Properties properties = new Properties();
     private Map<String, String> defaultParams = new HashMap<>();
 
@@ -53,6 +47,20 @@ public enum ServerConfig implements IConfig {
         } catch (IOException e) {
             log.error("Failed to load the settings from the file: " + confFile);
         }
+    }
+
+    public ServerConfig() {
+        if (instance != null) {
+            log.error("ServerConfig instance is not null");
+        }
+        instance = this;
+    }
+
+    public static ServerConfig getInstance() {
+        if (instance == null) {
+            new ServerConfig();
+        }
+        return instance;
     }
 
     public static String getAppName() {

@@ -50,7 +50,7 @@ public class AppLoginPage extends AbstractJspPage implements IAppLogin {
         this.setJspFile(conf.getJspLoginFile());
         this.add("homePage", conf.getFormWelcome());
         this.add("needVerify", "false");
-        ServerConfig config = ServerConfig.getInstance();
+        ServerConfig config = new ServerConfig();
         String logoUrl = config.getProperty("vine.mall.logoUrl", "");
         if (!"".equals(logoUrl)) {
             this.add("logoUrl", logoUrl);
