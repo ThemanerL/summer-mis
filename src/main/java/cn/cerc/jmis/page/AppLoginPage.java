@@ -55,6 +55,10 @@ public class AppLoginPage extends AbstractJspPage implements IAppLogin {
         if (!"".equals(logoUrl)) {
             this.add("logoUrl", logoUrl);
         }
+        String supCorpNo = config.getProperty("vine.mall.supCorpNo", "");
+        if (!"".equals(supCorpNo)) {
+            this.add("supCorpNo", supCorpNo);
+        }
 
         if (form.getClient().isPhone()) {
             return;
