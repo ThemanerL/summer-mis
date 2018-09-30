@@ -34,7 +34,6 @@ import cn.cerc.jmis.page.JspPage;
 import cn.cerc.jmis.page.RedirectPage;
 
 public class StartForms implements Filter {
-
     private static final Logger log = LoggerFactory.getLogger(StartForms.class);
 
     @Override
@@ -322,14 +321,15 @@ public class StartForms implements Filter {
             String pageCode = tmp[tmp.length - 1] + "." + funcCode;
 
             String dataIn = new Gson().toJson(form.getRequest().getParameterMap());
-            if (dataIn.length() > 60000)
-                dataIn = dataIn.substring(0, 60000);
-            LocalService ser = new LocalService(form.getHandle(), "SvrFormTimeout.save");
-            Record head = ser.getDataIn().getHead();
-            head.setField("pageCode", pageCode);
-            head.setField("dataIn", dataIn);
-            head.setField("tickCount", totalTime);
-            ser.exec();
+            if (dataIn.length() > 200)
+                dataIn = dataIn.substring(0, 200);
+            log.warn(String.format("pageCode:{}, tickCount:{}, dataIn: {}", pageCode, dataIn, totalTime));
+//            LocalService ser = new LocalService(form.getHandle(), "SvrFormTimeout.save");
+//            Record head = ser.getDataIn().getHead();
+//            head.setField("pageCode", pageCode);
+//            head.setField("dataIn", dataIn);
+//            head.setField("tickCount", totalTime);
+//            ser.exec();
         }
     }
 
