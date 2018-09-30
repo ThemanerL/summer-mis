@@ -178,33 +178,44 @@ public class AppLoginPage extends AbstractJspPage implements IAppLogin {
                     log.error(api.getMessage());
                 }
             }
+            req.getSession().setAttribute("loginMsg", "");
+            req.getSession().setAttribute("mobile", "");
         } else {
             // 登录验证失败，进行判断，手机号为空，则回到登录页，手机不为空，密码为空，则跳到发送验证码页面
             String mobile = Utils.safeString(app.getDataOut().getHead().getString("Mobile_"));
+            ServerConfig config = new ServerConfig();
+            String supCorpNo = config.getProperty("vine.mall.supCorpNo", "");
             if (mobile == null || "".equals(mobile)) {
                 log.debug(String.format("用户帐号(%s)与密码认证失败", userCode));
-                req.setAttribute("loginMsg", app.getMessage());
-                this.execute();
+                req.getSession().setAttribute("loginMsg", app.getMessage());
+                if (!"".equals(supCorpNo) && form.getClient().getDevice().equals(ClientDevice.device_iphone)) {
+                    getResponse().sendRedirect("TFrmWelcome.check");
+                    return false;
+                } else {
+                    this.execute();
+                }
             } else if (password == null || "".equals(password)) {
-                getResponse().sendRedirect("TFrmEasyReg?phone=" + mobile);
+                if (!"".equals(supCorpNo) && form.getClient().getDevice().equals(ClientDevice.device_iphone)) {
+                    req.getSession().setAttribute("mobile", mobile);
+                    getResponse().sendRedirect("TFrmWelcome.check");
+                } else {
+                    getResponse().sendRedirect("TFrmEasyReg?phone=" + mobile);
+                }
                 return false;
             } else {
                 log.debug(String.format("用户帐号(%s)与密码认证失败", userCode));
-                req.setAttribute("loginMsg", app.getMessage());
-                this.execute();
+                req.getSession().setAttribute("loginMsg", app.getMessage());
+                if (!"".equals(supCorpNo) && form.getClient().getDevice().equals(ClientDevice.device_iphone)) {
+                    getResponse().sendRedirect("TFrmWelcome.check");
+                    return false;
+                } else {
+                    this.execute();
+                }
             }
         }
         return result;
     }
 
-    /**
-     * 
-     * @param handle 环境变量
-     * @param 电话号码
-     * @return 根据电话号码返回用户帐号，用于普及版登入
-     * @throws ServletException 异常
-     * @throws IOException      异常
-     */
     private String getAccountFromTel(IHandle handle, String tel) throws ServletException, IOException {
         LocalService svr = new LocalService(handle);
         svr.setService("SvrUserLogin.getUserCodeByMobile");

@@ -27,7 +27,7 @@ import cn.cerc.jbean.form.IPage;
 import cn.cerc.jbean.other.BufferType;
 import cn.cerc.jbean.other.MemoryBuffer;
 import cn.cerc.jbean.tools.IAppLogin;
-import cn.cerc.jdb.core.Record;
+import cn.cerc.jdb.core.ServerConfig;
 import cn.cerc.jmis.form.Webpage;
 import cn.cerc.jmis.page.ErrorPage;
 import cn.cerc.jmis.page.JspPage;
@@ -280,7 +280,20 @@ public class StartForms implements Filter {
                     }
                 } else {
                     log.debug("没有进行认证过，跳转到设备认证页面");
-                    pageOutput = new RedirectPage(form, Application.getAppConfig().getFormVerifyDevice());
+                    ServerConfig config = new ServerConfig();
+                    String supCorpNo = config.getProperty("vine.mall.supCorpNo", "");
+                    // 若是专用APP登陆并且是iPhone，则不跳转设备登陆页，由iPhone原生客户端处理
+                    if (!"".equals(supCorpNo) && form.getClient().getDevice().equals(ClientDevice.device_iphone)) {
+                        try {
+                            method = form.getClass().getMethod(funcCode + "_phone");
+                        } catch (NoSuchMethodException e) {
+                            method = form.getClass().getMethod(funcCode);
+                        }
+                        form.getRequest().setAttribute("needVerify", "true");
+                        pageOutput = method.invoke(form);
+                    } else {
+                        pageOutput = new RedirectPage(form, Application.getAppConfig().getFormVerifyDevice());
+                    }
                 }
             }
 
@@ -348,7 +361,6 @@ public class StartForms implements Filter {
     protected boolean isExperienceAccount(IForm form) {
         return getIphoneAppstoreAccount().equals(form.getHandle().getUserCode())
                 || getBaseVerAccount().equals(form.getHandle().getUserCode())
-                || getSimagoAccount().equals(form.getHandle().getUserCode())
                 || getLineWinderAccount().equals(form.getHandle().getUserCode())
                 || getTaiWanAccount().equals(form.getHandle().getUserCode());
     }
