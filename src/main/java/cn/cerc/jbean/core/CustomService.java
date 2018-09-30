@@ -6,10 +6,8 @@ import java.lang.reflect.Method;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cn.cerc.jbean.other.SystemTable;
 import cn.cerc.jdb.core.DataSet;
 import cn.cerc.jdb.core.IHandle;
-import cn.cerc.jdb.core.TDateTime;
 
 public class CustomService extends AbstractHandle implements IService, IRestful {
     private static final Logger log = LoggerFactory.getLogger(CustomService.class);
@@ -100,7 +98,8 @@ public class CustomService extends AbstractHandle implements IService, IRestful 
                 if (totalTime > timeout) {
                     String tmp[] = this.getClass().getName().split("\\.");
                     String service = tmp[tmp.length - 1] + "." + this.funcCode;
-                    saveServiceTimeout(service, totalTime, false, false);
+                    log.warn(String.format("corpNo:%s, userCode:%s, service:%s, tickCount:%s", getCorpNo(),
+                            getUserCode(), service, totalTime));
                 }
             }
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
@@ -118,17 +117,6 @@ public class CustomService extends AbstractHandle implements IService, IRestful 
                 return ss;
             }
         }
-    }
-
-    private void saveServiceTimeout(String service, long totalTime, boolean trans, boolean client) {
-        StringBuffer sql = new StringBuffer();
-        sql.append(
-                String.format("insert into %s (CorpNo_,Service_,Trans_,TickCount_,AppUser_,AppDate_,Client_,DataIn_) ",
-                        SystemTable.get(SystemTable.getAppLogs)));
-        sql.append(String.format("values ('%s','%s',%d,%s,'%s','%s',%d,'%s')", this.getCorpNo(), service, trans ? 1 : 0,
-                "" + totalTime, this.getUserCode(), TDateTime.Now(), client ? 1 : 0,
-                this.getDataIn().getJSON().replace("'", "`")));
-        this.getConnection().execute(sql.toString());
     }
 
     public DataSet getDataIn() {
