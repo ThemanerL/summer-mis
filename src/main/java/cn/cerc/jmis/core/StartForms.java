@@ -316,20 +316,12 @@ public class StartForms implements Filter {
     protected void checkTimeout(IForm form, String funcCode, long startTime, long timeout) {
         long totalTime = System.currentTimeMillis() - startTime;
         if (totalTime > timeout) {
-
             String tmp[] = form.getClass().getName().split("\\.");
             String pageCode = tmp[tmp.length - 1] + "." + funcCode;
-
             String dataIn = new Gson().toJson(form.getRequest().getParameterMap());
             if (dataIn.length() > 200)
                 dataIn = dataIn.substring(0, 200);
-            log.warn(String.format("pageCode:{}, tickCount:{}, dataIn: {}", pageCode, dataIn, totalTime));
-//            LocalService ser = new LocalService(form.getHandle(), "SvrFormTimeout.save");
-//            Record head = ser.getDataIn().getHead();
-//            head.setField("pageCode", pageCode);
-//            head.setField("dataIn", dataIn);
-//            head.setField("tickCount", totalTime);
-//            ser.exec();
+            log.warn(String.format("pageCode:%s, tickCount:%s, dataIn: %s", pageCode, totalTime, dataIn));
         }
     }
 
