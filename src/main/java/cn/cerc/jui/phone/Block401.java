@@ -16,6 +16,8 @@ public class Block401 extends UIComponent {
     private UISpan remark = new UISpan();
     private UISpan describe = new UISpan();
     private UIButton button = new UIButton();
+    private String url;
+    private String style;
 
     /**
      * 显示商品摘要，方便加入购物车
@@ -41,9 +43,20 @@ public class Block401 extends UIComponent {
         html.println("<!-- %s -->", this.getClass().getName());
         html.print("<section class='block401'>");
         html.print("<div class='up_con'>");
+        if (this.url != null && !"".equals(this.url)) {
+            html.print("<a href=\"%s\" target=\"_blank\">", this.url);
+        }
         product.output(html);
+        if (this.url != null && !"".equals(this.url)) {
+            html.print("</a>");
+        }
         html.print("<div role='title'>%s</div>", this.title);
-        html.print("<div role='operation'>");
+        html.print("<div role='operation' ");
+        if (this.style != null && !"".equals(this.style)) {
+            html.print("style='%s'>", this.style);
+        } else {
+            html.print(">");
+        }
 
         for (UIImage image : images) {
             html.print("<span role='image'>");
@@ -97,5 +110,21 @@ public class Block401 extends UIComponent {
 
     public UISpan getDescribe() {
         return describe;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getStyle() {
+        return style;
+    }
+
+    public void setStyle(String style) {
+        this.style = style;
     }
 }

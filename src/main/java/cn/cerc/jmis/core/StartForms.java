@@ -27,14 +27,13 @@ import cn.cerc.jbean.form.IPage;
 import cn.cerc.jbean.other.BufferType;
 import cn.cerc.jbean.other.MemoryBuffer;
 import cn.cerc.jbean.tools.IAppLogin;
-import cn.cerc.jdb.core.Record;
+import cn.cerc.jdb.core.ServerConfig;
 import cn.cerc.jmis.form.Webpage;
 import cn.cerc.jmis.page.ErrorPage;
 import cn.cerc.jmis.page.JspPage;
 import cn.cerc.jmis.page.RedirectPage;
 
 public class StartForms implements Filter {
-
     private static final Logger log = LoggerFactory.getLogger(StartForms.class);
 
     @Override
@@ -177,8 +176,8 @@ public class StartForms implements Filter {
 
     // 是否在当前设备使用此菜单，如：检验此设备是否需要设备验证码
     protected boolean passDevice(IForm form) {
-        // 若是iphone应用商店测试，则跳过验证
-        if (getIphoneAppstoreAccount().equals(form.getHandle().getUserCode())) {
+        // 若是iPhone应用商店测试或地藤体验账号则跳过验证
+        if (isExperienceAccount(form)) {
             return true;
         }
 
@@ -245,8 +244,8 @@ public class StartForms implements Filter {
                 throw new RuntimeException("对不起，您没有权限执行此功能！");
             }
 
-            // 若是iphone应用商店测试，则跳过设备认证的判断，用于专用测试账号
-            if (getIphoneAppstoreAccount().equals(request.getParameter("login_usr"))) {
+            // 专用测试账号则跳过设备认证的判断
+            if (isExperienceAccount(form)) {
                 try {
                     if (form.getClient().isPhone()) {
                         try {
@@ -281,7 +280,20 @@ public class StartForms implements Filter {
                     }
                 } else {
                     log.debug("没有进行认证过，跳转到设备认证页面");
-                    pageOutput = new RedirectPage(form, Application.getAppConfig().getFormVerifyDevice());
+                    ServerConfig config = new ServerConfig();
+                    String supCorpNo = config.getProperty("vine.mall.supCorpNo", "");
+                    // 若是专用APP登陆并且是iPhone，则不跳转设备登陆页，由iPhone原生客户端处理
+                    if (!"".equals(supCorpNo) && form.getClient().getDevice().equals(ClientDevice.device_iphone)) {
+                        try {
+                            method = form.getClass().getMethod(funcCode + "_phone");
+                        } catch (NoSuchMethodException e) {
+                            method = form.getClass().getMethod(funcCode);
+                        }
+                        form.getRequest().setAttribute("needVerify", "true");
+                        pageOutput = method.invoke(form);
+                    } else {
+                        pageOutput = new RedirectPage(form, Application.getAppConfig().getFormVerifyDevice());
+                    }
                 }
             }
 
@@ -317,19 +329,12 @@ public class StartForms implements Filter {
     protected void checkTimeout(IForm form, String funcCode, long startTime, long timeout) {
         long totalTime = System.currentTimeMillis() - startTime;
         if (totalTime > timeout) {
-
             String tmp[] = form.getClass().getName().split("\\.");
             String pageCode = tmp[tmp.length - 1] + "." + funcCode;
-
             String dataIn = new Gson().toJson(form.getRequest().getParameterMap());
-            if (dataIn.length() > 60000)
-                dataIn = dataIn.substring(0, 60000);
-            LocalService ser = new LocalService(form.getHandle(), "SvrFormTimeout.save");
-            Record head = ser.getDataIn().getHead();
-            head.setField("pageCode", pageCode);
-            head.setField("dataIn", dataIn);
-            head.setField("tickCount", totalTime);
-            ser.exec();
+            if (dataIn.length() > 200)
+                dataIn = dataIn.substring(0, 200);
+            log.warn(String.format("pageCode:%s, tickCount:%s, dataIn: %s", pageCode, totalTime, dataIn));
         }
     }
 
@@ -353,9 +358,36 @@ public class StartForms implements Filter {
         return url;
     }
 
-    // iphone 上架时专用测试帐号
+    protected boolean isExperienceAccount(IForm form) {
+        return getIphoneAppstoreAccount().equals(form.getHandle().getUserCode())
+                || getBaseVerAccount().equals(form.getHandle().getUserCode())
+                || getLineWinderAccount().equals(form.getHandle().getUserCode())
+                || getTaiWanAccount().equals(form.getHandle().getUserCode());
+    }
+
+    // iPhone 上架时专用测试帐号以及专业版体验账号
     protected String getIphoneAppstoreAccount() {
         return "15202406";
+    }
+
+    // 基础版体验账号
+    protected String getBaseVerAccount() {
+        return "16307405";
+    }
+
+    // 喜曼多专用APP测试账号与iPhone上架测试账号
+    protected String getSimagoAccount() {
+        return "47583201";
+    }
+
+    // 狼王专用APP测试账号与iPhone上架测试账号
+    protected String getLineWinderAccount() {
+        return "15531101";
+    }
+
+    // 台湾地区地藤普及版测试账号
+    protected String getTaiWanAccount() {
+        return "47598601";
     }
 
     @Override

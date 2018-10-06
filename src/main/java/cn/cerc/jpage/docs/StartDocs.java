@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import cn.cerc.jbean.core.ServerConfig;
+import cn.cerc.jdb.core.ServerConfig;
 
 public class StartDocs extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -21,7 +21,7 @@ public class StartDocs extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (!ServerConfig.enableDocService()) {
+        if (!"1".equals(ServerConfig.getInstance().getProperty("docs.service", "0"))) {
             throw new RuntimeException("该功能暂不开放");
         }
         String uri = req.getRequestURI();

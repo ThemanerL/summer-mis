@@ -3,13 +3,15 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>cn.cerc</groupId>
     <artifactId>summer-mis</artifactId>
-    <version>1.4.1</version>
+    <version>1.5.1</version>
+    <description>用于快速开发资讯管理系统（MIS），如进销存系统、财务系统、人力资源系统等</description>
+    <url>https://github.com/cn-cerc/summer-mis</url>
     <properties>
         <mysql-connector-java.version>5.1.38</mysql-connector-java.version>
         <org.hibernate.version>4.3.5.Final</org.hibernate.version>
         <org.springframework.version>4.2.6.RELEASE</org.springframework.version>
         <quartz.version>2.2.1</quartz.version>
-        <cn.cerc.summer.version>1.4.1</cn.cerc.summer.version>
+        <cn.cerc.summer.version>1.5.1</cn.cerc.summer.version>
     </properties>
     <build>
         <plugins>
@@ -112,6 +114,12 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>com.aliyun.openservices</groupId>
+            <artifactId>ots-public</artifactId>
+            <version>2.1.2</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
@@ -125,20 +133,14 @@
         </dependency>
         <dependency>
             <groupId>cn.cerc</groupId>
-            <artifactId>summer-bean</artifactId>
-            <version>${cn.cerc.summer.version}</version>
+            <artifactId>summer-security</artifactId>
+            <version>1.4.3</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>net.sourceforge.jexcelapi</groupId>
             <artifactId>jxl</artifactId>
             <version>2.6.12</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>log4j</groupId>
-                    <artifactId>log4j</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.itextpdf</groupId>
@@ -175,11 +177,6 @@
             <artifactId>commons-pool</artifactId>
             <version>1.5.6</version>
         </dependency>
-<!--         <dependency> -->
-<!--             <groupId>log4j</groupId> -->
-<!--             <artifactId>log4j</artifactId> -->
-<!--             <version>1.2.17</version> -->
-<!--         </dependency> -->
         <dependency>
             <groupId>com.belerweb</groupId>
             <artifactId>pinyin4j</artifactId>
@@ -223,6 +220,11 @@
         <!-- spring 线程池 -->
         <dependency>
             <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
             <version>${org.springframework.version}</version>
         </dependency>
@@ -256,12 +258,6 @@
             <groupId>com.aliyun.mns</groupId>
             <artifactId>aliyun-sdk-mns</artifactId>
             <version>1.1.8</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>log4j</groupId>
-                    <artifactId>log4j</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>commons-logging</groupId>
@@ -290,11 +286,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- <dependency> -->
-        <!-- <groupId>org.codehaus.plexus</groupId> -->
-        <!-- <artifactId>plexus-interpolation</artifactId> -->
-        <!-- <version>1.14</version> -->
-        <!-- </dependency> -->
         <!-- 支持docs,使用markdown技术 -->
         <dependency>
             <groupId>com.vladsch.flexmark</groupId>
@@ -308,11 +299,16 @@
             <version>2.3.1</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>javax.websocket</groupId>
+            <artifactId>javax.websocket-api</artifactId>
+            <version>1.1</version>
+        </dependency>
     </dependencies>
-    <repositories>
+      <repositories>
         <repository>
-            <id>thirdparty</id>
-            <url>http://121.40.194.178:8081/nexus/content/repositories/thirdparty</url>
+            <id>vine</id>
+            <url>http://121.40.194.178:8081/nexus/content/groups/public</url>
         </repository>
     </repositories>
     <distributionManagement>
@@ -342,6 +338,4 @@
             </plugin>
         </plugins>
     </reporting>
-    <description>用于快速开发资讯管理系统（MIS），如进销存系统、财务系统、人力资源系统等</description>
-    <url>https://github.com/cn-cerc/summer-mis</url>
 </project>

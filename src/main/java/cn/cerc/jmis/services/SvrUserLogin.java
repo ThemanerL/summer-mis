@@ -1,5 +1,8 @@
 package cn.cerc.jmis.services;
 
+import static cn.cerc.jbean.other.SystemTable.getBookInfo;
+import static cn.cerc.jbean.other.SystemTable.getUserInfo;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -8,16 +11,16 @@ import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.core.CustomHandle;
 import cn.cerc.jbean.core.CustomService;
 import cn.cerc.jbean.core.DataValidateException;
-import cn.cerc.jbean.core.ServerConfig;
 import cn.cerc.jbean.core.Webfunc;
 import cn.cerc.jbean.other.BookVersion;
 import cn.cerc.jbean.other.BufferType;
 import cn.cerc.jbean.other.MemoryBuffer;
 import cn.cerc.jbean.other.SystemTable;
-import cn.cerc.jbean.tools.MD5;
 import cn.cerc.jdb.core.DataSet;
 import cn.cerc.jdb.core.IHandle;
+import cn.cerc.jdb.core.MD5;
 import cn.cerc.jdb.core.Record;
+import cn.cerc.jdb.core.ServerConfig;
 import cn.cerc.jdb.core.TDateTime;
 import cn.cerc.jdb.jiguang.ClientType;
 import cn.cerc.jdb.mysql.BuildQuery;
@@ -44,12 +47,6 @@ public class SvrUserLogin extends CustomService {
     public boolean Check() throws SecurityCheckException {
         Record headIn = getDataIn().getHead();
         getDataOut().getHead().setField("errorNo", 0);
-
-        String deviceId = headIn.getString("MachineID_");
-        // 判断是否为浏览器登录
-        if (Application.webclient.equals(deviceId)) {
-            throw new SecurityCheckException("系统不支持使用web浏览器登录，请使用客户端登录系统！");
-        }
 
         String device_name = "";
         if (headIn.hasValue("ClientName_")) {
@@ -82,9 +79,42 @@ public class SvrUserLogin extends CustomService {
         }
 
         String corpNo = dsUser.getString("CorpNo_");
+        ServerConfig config = new ServerConfig();
+        String supCorpNo = config.getProperty("vine.mall.supCorpNo", "");
+        // 判断该手机号绑定的账号，是否有supCorpNo的下游，专用App登录
+        if (!"".equals(supCorpNo)) {
+            SqlQuery ds = new SqlQuery(this);
+            ds.add("select oi.CorpNo_,oi.ShortName_,a.Code_,a.Name_ from %s a ", getUserInfo);
+            ds.add("inner join %s oi on a.CorpNo_=oi.CorpNo_", getBookInfo);
+            ds.add("inner join scmnetaccredit na on na.SupCode_='%s' and na.CusCode_=oi.CorpNo_", supCorpNo);
+            ds.add("where a.Enabled_=1 and oi.Status_<3 ");
+            if (!"".equals(dsUser.getString("Mobile_"))) {
+                ds.add("and a.Mobile_='%s'", dsUser.getString("Mobile_"));
+            } else {
+                ds.add("and a.Code_='%s'", userCode);
+            }
+            ds.open();
+            if (ds.eof()) {
+                throw new SecurityCheckException(String.format("您不是该上游%s的下游客户，不允许登录！", supCorpNo));
+            }
+        }
+
         BookInfoRecord buff = MemoryBookInfo.get(this, corpNo);
         if (buff == null) {
             throw new SecurityCheckException(String.format("没有找到注册的帐套  %s ", corpNo));
+        }
+
+        // 取得认证密码，若是微信入口进入，则免密码录入
+        String mobile = dsUser.getString("Mobile_");
+        getDataOut().getHead().setField("Mobile_", mobile);
+
+        String password = headIn.getString("Password_");
+        if (password == null || "".equals(password)) {
+            if ("".equals(dsUser.getString("Mobile_"))) {
+                throw new RuntimeException("您没有登记手机号，请您输入密码进行登录！");
+            } else {
+                throw new RuntimeException("用户密码不允许为空！");
+            }
         }
 
         boolean YGLogin = buff.getCorpType() == BookVersion.ctFree.ordinal();
@@ -107,18 +137,8 @@ public class SvrUserLogin extends CustomService {
                     String.format("该帐号已被设置为附属帐号，不允许登录，请使用主帐号 %s 登录系统！", dsUser.getString("BelongAccount_")));
         }
 
-        // 取得认证密码，若是微信入口进入，则免密码录入
-        String password = headIn.getString("Password_");
-        if (password == null || "".equals(password)) {
-            if ("".equals(dsUser.getString("Mobile_"))) {
-                throw new RuntimeException("您没有登记手机号，请您输入密码进行登录！");
-            } else {
-                getDataOut().getHead().setField("Mobile_", dsUser.getString("Mobile_"));
-                throw new RuntimeException("用户密码不允许为空！");
-            }
-        }
-
         // 检查设备码
+        String deviceId = headIn.getString("MachineID_");
         enrollMachineInfo(dsUser.getString("CorpNo_"), userCode, deviceId, device_name);
 
         if (dsUser.getBoolean("Encrypt_")) {
@@ -140,7 +160,8 @@ public class SvrUserLogin extends CustomService {
                     dsUser.post();
                     if (dsUser.getInt("VerifyTimes_") > 3) {
                         throw new SecurityCheckException(
-                                String.format("您输入密码的错误次数已达 %d 次，输错超过6次时，您的账号将被自动停用！", dsUser.getInt("VerifyTimes_")));
+                                String.format("您输入密码的错误次数已达 %d 次，若忘记密码，可不输入，直接通过验证码的方式进入系统，输错超过6次时，您的账号将被自动停用！",
+                                        dsUser.getInt("VerifyTimes_")));
                     } else {
                         throw new SecurityCheckException("您的登录密码错误，禁止登录！");
                     }
@@ -387,10 +408,8 @@ public class SvrUserLogin extends CustomService {
             cdsVer.open();
             DataValidateException.stopRun("系统出错，请您重新进入系统！", cdsVer.size() != 1);
 
-            String verifyCode = "888888";
-            if (ServerConfig.getAppLevel() != ServerConfig.appTest) {
-                verifyCode = utils.intToStr(utils.random(900000) + 100000);
-            }
+            String verifyCode = utils.intToStr(utils.random(900000) + 100000);
+            log.info("{} verifyCode is {}", mobile, verifyCode);
 
             cdsVer.edit();
             cdsVer.setField("VerifyCode_", verifyCode);
@@ -438,7 +457,7 @@ public class SvrUserLogin extends CustomService {
         return true;
     }
 
-    private void enrollMachineInfo(String corpNo, String userCode, String deviceId, String deviceName) {
+    public void enrollMachineInfo(String corpNo, String userCode, String deviceId, String deviceName) {
         SqlQuery ds = new SqlQuery(this);
         ds.add("select * from %s", SystemTable.get(SystemTable.getDeviceVerify));
         ds.add("where UserCode_='%s' and MachineCode_='%s'", userCode, deviceId);
@@ -544,11 +563,12 @@ public class SvrUserLogin extends CustomService {
         }
     }
 
-    private void updateCurrentUser(String computer, String screen, String language) {
+    public void updateCurrentUser(String computer, String screen, String language) {
         getConnection().execute(String.format("Update %s Set Viability_=0 Where Viability_>0 and LogoutTime_<'%s'",
                 SystemTable.get(SystemTable.getCurrentUser), TDateTime.Now().incHour(-1)));
-        String SQLCmd = String.format("update %s set Viability_=-1 where Account_='%s' and Viability_>-1",
-                SystemTable.get(SystemTable.getCurrentUser), getUserCode());
+        String SQLCmd = String.format(
+                "update %s set Viability_=-1,LogoutTime_='%s' where Account_='%s' and Viability_>-1",
+                SystemTable.get(SystemTable.getCurrentUser), TDateTime.Now(), getUserCode());
         getConnection().execute(SQLCmd);
 
         // 增加新的记录

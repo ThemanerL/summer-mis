@@ -23,7 +23,12 @@ public class UrlRecord {
         this.name = name;
     }
 
+    @Deprecated
     public UrlRecord addParam(String key, String value) {
+        return putParam(key, value);
+    }
+
+    public UrlRecord putParam(String key, String value) {
         params.put(key, value);
         return this;
     }
@@ -61,7 +66,7 @@ public class UrlRecord {
     }
 
     public String getUrl() {
-        StringBuffer sl = new StringBuffer();
+        StringBuilder sl = new StringBuilder();
         if (site != null)
             sl.append(site);
 
