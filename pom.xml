@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>cn.cerc</groupId>
     <artifactId>summer-mis</artifactId>
-    <version>1.5.1</version>
+    <version>1.6.0</version>
     <description>用于快速开发资讯管理系统（MIS），如进销存系统、财务系统、人力资源系统等</description>
     <url>https://github.com/cn-cerc/summer-mis</url>
     <properties>
@@ -11,7 +11,7 @@
         <org.hibernate.version>4.3.5.Final</org.hibernate.version>
         <org.springframework.version>4.2.6.RELEASE</org.springframework.version>
         <quartz.version>2.2.1</quartz.version>
-        <cn.cerc.summer.version>1.5.1</cn.cerc.summer.version>
+        <cn.cerc.summer.version>1.6.0</cn.cerc.summer.version>
     </properties>
     <build>
         <plugins>
