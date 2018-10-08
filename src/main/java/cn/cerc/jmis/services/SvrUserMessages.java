@@ -7,8 +7,7 @@ import java.math.BigInteger;
 import cn.cerc.jbean.core.CustomService;
 import cn.cerc.jbean.other.BufferType;
 import cn.cerc.jbean.other.SystemTable;
-import cn.cerc.jdb.cache.Buffer;
-import cn.cerc.jdb.cache.IMemcache;
+import cn.cerc.jdb.cache.Redis;
 import cn.cerc.jdb.core.Record;
 import cn.cerc.jdb.core.TDateTime;
 import cn.cerc.jdb.mysql.SqlQuery;
@@ -86,10 +85,9 @@ public class SvrUserMessages extends CustomService {
         cdsMsg.post();
 
         // 清除缓存
-        IMemcache buff = Buffer.getMemcache();
         String buffKey = String.format("%d.%s.%s.%s", BufferType.getObject.ordinal(), MessageRecord.class, corpNo,
                 userCode);
-        buff.delete(buffKey);
+        Redis.delete(buffKey);
 
         // 返回消息的编号
         getDataOut().getHead().setField("msgId", cdsMsg.getBigInteger("UID_"));

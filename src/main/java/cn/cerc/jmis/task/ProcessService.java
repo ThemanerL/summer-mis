@@ -12,8 +12,7 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import cn.cerc.jbean.other.BufferType;
 import cn.cerc.jbean.rds.StubHandle;
-import cn.cerc.jdb.cache.Buffer;
-import cn.cerc.jdb.cache.IMemcache;
+import cn.cerc.jdb.cache.Redis;
 import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.core.ServerConfig;
 import cn.cerc.jdb.core.TDateTime;
@@ -85,12 +84,11 @@ public class ProcessService extends TimerTask {
                 int timeOut = task.getInterval();
                 String buffKey = String.format("%d.%s.%s", BufferType.getObject.ordinal(), this.getClass().getName(),
                         task.getClass().getName());
-                IMemcache buff = Buffer.getMemcache();
-                if (buff.get(buffKey) != null)
+                if (Redis.get(buffKey) != null)
                     continue;
 
                 // 标识为已执行
-                buff.set(buffKey, "ok", timeOut);
+                Redis.set(buffKey, "ok", timeOut);
 
                 if (task.getInterval() > 1)
                     log.info("execute " + task.getClass().getName());

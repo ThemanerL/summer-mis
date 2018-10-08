@@ -2,8 +2,6 @@ package cn.cerc.jbean.rds;
 
 import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.other.SystemTable;
-import cn.cerc.jdb.cache.CacheConnection;
-import cn.cerc.jdb.cache.CacheSession;
 import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.core.ServerConfig;
 import cn.cerc.jdb.jiguang.JiguangConnection;
@@ -75,12 +73,6 @@ public class StubHandle implements IHandle, AutoCloseable {
         Object obj = handle.getProperty(key);
         if (obj == null && SqlSession.sessionId.equals(key)) {
             SqlConnection conn = new SqlConnection();
-            conn.setConfig(ServerConfig.getInstance());
-            obj = conn.getSession();
-            handle.setProperty(key, obj);
-        }
-        if (obj == null && CacheSession.sessionId.equals(key)) {
-            CacheConnection conn = new CacheConnection();
             conn.setConfig(ServerConfig.getInstance());
             obj = conn.getSession();
             handle.setProperty(key, obj);

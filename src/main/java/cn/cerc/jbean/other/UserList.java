@@ -11,8 +11,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import cn.cerc.jdb.cache.Buffer;
-import cn.cerc.jdb.cache.IMemcache;
+import cn.cerc.jdb.cache.Redis;
 import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.mysql.SqlQuery;
 import cn.cerc.jdb.mysql.SqlSession;
@@ -62,8 +61,7 @@ public class UserList implements IDataList {
 
         // 从缓存中读取
         Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
-        IMemcache cache = Buffer.getMemcache();
-        String data = (String) cache.get(buffKey);
+        String data = Redis.get(buffKey);
         if (data != null && !"".equals(data)) {
             Type type = new TypeToken<Map<String, UserRecord>>() {
             }.getType();
@@ -111,7 +109,7 @@ public class UserList implements IDataList {
         }
 
         // 存入到缓存中
-        cache.set(buffKey, gson.toJson(buff));
+        Redis.set(buffKey, gson.toJson(buff));
         log.debug(this.getClass().getName() + " 缓存初始化！");
     }
 
@@ -141,8 +139,7 @@ public class UserList implements IDataList {
 
     @Override
     public void clear() {
-        IMemcache cache = Buffer.getMemcache();
-        cache.delete(buffKey);
+        Redis.delete(buffKey);
     }
 
     /*
@@ -152,7 +149,7 @@ public class UserList implements IDataList {
             throws UserNotFindException {
         String buffKey = String.format("%d.%s.%s.%d", BufferType.getObject.ordinal(), corpNo, this.getClass().getName(),
                 Version);
-        Buffer.getMemcache().delete(buffKey);
+        Redis.delete(buffKey);
         SqlQuery ds = new SqlQuery(handle);
 
         ds.add("select ID_ from %s where Code_='%s'", SystemTable.get(SystemTable.getUserInfo), userCode);

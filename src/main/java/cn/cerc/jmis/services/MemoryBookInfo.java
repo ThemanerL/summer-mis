@@ -5,8 +5,7 @@ import com.google.gson.Gson;
 import cn.cerc.jbean.client.LocalService;
 import cn.cerc.jbean.other.BookVersion;
 import cn.cerc.jbean.other.BufferType;
-import cn.cerc.jdb.cache.Buffer;
-import cn.cerc.jdb.cache.IMemcache;
+import cn.cerc.jdb.cache.Redis;
 import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.core.Record;
 
@@ -14,9 +13,7 @@ public class MemoryBookInfo {
     private static final String buffVersion = "4";
 
     public static BookInfoRecord get(IHandle handle, String corpNo) {
-        IMemcache buff = Buffer.getMemcache();
-
-        String tmp = (String) buff.get(getBuffKey(corpNo));
+        String tmp = Redis.get(getBuffKey(corpNo));
         if (tmp == null || "".equals(tmp)) {
             LocalService svr = new LocalService(handle, "SvrBookInfo.getRecord");
             if (!svr.exec("corpNo", corpNo))
@@ -38,7 +35,7 @@ public class MemoryBookInfo {
             result.setIndustry(ds.getString("Industry_"));
 
             Gson gson = new Gson();
-            buff.set(getBuffKey(corpNo), gson.toJson(result));
+            Redis.set(getBuffKey(corpNo), gson.toJson(result));
 
             return result;
         } else {
@@ -112,8 +109,7 @@ public class MemoryBookInfo {
     }
 
     public static void clear(String corpNo) {
-        IMemcache buff = Buffer.getMemcache();
-        buff.delete(getBuffKey(corpNo));
+        Redis.delete(getBuffKey(corpNo));
     }
 
     private static String getBuffKey(String corpNo) {
