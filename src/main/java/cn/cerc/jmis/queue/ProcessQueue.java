@@ -64,7 +64,7 @@ public class ProcessQueue extends AbstractTask {
                     MessageProcess.ok.ordinal(), content.toString(), msgId);
         } else {
             bs.add("update %s set Process_=%s,Content_='%s' where UID_=%s", SystemTable.getUserMessages,
-                    MessageProcess.error.ordinal(), content.toString(), msgId);
+                    MessageProcess.wait.ordinal(), content.toString(), msgId);
         }
         bs.exec();
 
