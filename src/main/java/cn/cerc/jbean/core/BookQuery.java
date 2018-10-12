@@ -20,7 +20,7 @@ public class BookQuery extends SqlQuery implements IDataOperator {
     public SqlOperator getDefaultOperator() {
         if (operator == null) {
             SqlOperator def = new SqlOperator(handle);
-            String tableName = SqlOperator.findTableName(this.getCommandText());
+            String tableName = SqlOperator.findTableName(this.getSqlText().getText());
             def.setTableName(tableName);
             operator = def;
         }
