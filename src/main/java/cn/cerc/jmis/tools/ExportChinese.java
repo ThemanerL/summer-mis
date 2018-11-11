@@ -99,9 +99,9 @@ public class ExportChinese {
     }
 
     private static String getChinese(String temp) {
-        int ix = temp.indexOf("R.asString");
-        if (ix > -1) {
-            String s1 = temp.substring(ix, temp.length());
+        int index = temp.indexOf("R.asString");
+        if (index > -1) {
+            String s1 = temp.substring(index, temp.length());
             if (s1.indexOf("\"") > -1) {
                 String s2 = s1.substring(s1.indexOf("\"") + 1, s1.length());
                 if (s2.indexOf("\")") > -1) {
