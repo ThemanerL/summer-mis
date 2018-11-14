@@ -27,6 +27,9 @@ public class ExportChinese {
 
     /**
      * 扫描指定路径的java文件
+     * 
+     * @param srcPath
+     *            路径
      */
     public void scanFile(String srcPath) {
 
@@ -64,6 +67,9 @@ public class ExportChinese {
 
     /**
      * 写入字典
+     * 
+     * @param handle
+     *            上下文环境
      */
     public void writeDict(IHandle handle) {
         SqlQuery ds = new SqlQuery(handle);

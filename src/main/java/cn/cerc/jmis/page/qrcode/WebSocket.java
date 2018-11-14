@@ -17,8 +17,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @ServerEndpoint 注解是一个类层次的注解，它的功能主要是将目前的类定义成一个websocket服务器端,
- *                 注解的值将被用于监听用户连接的终端访问URL地址,客户端可以通过这个URL来连接到WebSocket服务器端
+ * 将目前的类定义成一个websocket服务器端,
+ * 注解的值将被用于监听用户连接的终端访问URL地址,客户端可以通过这个URL来连接到WebSocket服务器端
+ * 
+ * @author root
+ *
  */
 @ServerEndpoint(value = "/websocket", configurator = GetHttpSessionConfigurator.class)
 public class WebSocket {
@@ -36,9 +39,13 @@ public class WebSocket {
     private HttpSession httpSession;
 
     /**
+     * 
      * 连接建立成功调用的方法
      * 
-     * @param session 可选的参数。session为与某个客户端的连接会话，需要通过它来给客户端发送数据
+     * @param session
+     *            可选的参数。session为与某个客户端的连接会话，需要通过它来给客户端发送数据
+     * @param config
+     *            端点配置
      */
     @OnOpen
     public void onOpen(Session session, EndpointConfig config) {
@@ -61,8 +68,10 @@ public class WebSocket {
     /**
      * 收到客户端消息后调用的方法
      * 
-     * @param message 客户端发送过来的消息
-     * @param session 可选的参数
+     * @param message
+     *            客户端发送过来的消息
+     * @param session
+     *            可选的参数
      */
     @OnMessage
     public void onMessage(String message, Session session) {
@@ -77,6 +86,11 @@ public class WebSocket {
 
     /**
      * 发生错误时调用
+     * 
+     * @param session
+     *            当前连接
+     * @param error
+     *            错误
      */
     @OnError
     public void onError(Session session, Throwable error) {
@@ -84,9 +98,6 @@ public class WebSocket {
         log.error(error.getMessage());
     }
 
-    /**
-     * 这个方法与上面几个方法不一样。没有用注解，是根据自己需要添加的方法。
-     */
     public boolean sendMessage(String json) {
         boolean result = true;
         try {
