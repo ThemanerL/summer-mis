@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.WebApplicationContext;
 
+import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.core.CustomHandle;
 import cn.cerc.jbean.form.IForm;
 import cn.cerc.jbean.form.IPage;
@@ -37,6 +38,9 @@ public class StartForm implements ApplicationContextAware {
     @Autowired
     @Qualifier("customHandle")
     private CustomHandle handle;
+    @Autowired
+    @Qualifier("clientDevice")
+    private ClientDevice clientDevice;
 
     @RequestMapping("/{formId}.{funcId}")
     public String execute(@PathVariable String formId, @PathVariable String funcId) {
@@ -48,6 +52,16 @@ public class StartForm implements ApplicationContextAware {
             form.setHandle(handle);
             form.setRequest(request);
             form.setResponse(response);
+
+            clientDevice.setRequest(request);
+            
+            handle.setProperty(Application.sessionId, request.getSession().getId());
+            handle.setProperty(Application.deviceLanguage, clientDevice.getLanguage());
+            
+            request.setAttribute("myappHandle", handle);
+            request.setAttribute("_showMenu_", !ClientDevice.device_ee.equals(clientDevice.getDevice()));
+            
+            form.setClient(clientDevice);
             IPage page = form.execute();
             if (page instanceof JspPage) {
                 JspPage jspPage = (JspPage) page;
