@@ -18,6 +18,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.core.CustomHandle;
+import cn.cerc.jbean.core.IPassport;
 import cn.cerc.jbean.form.IForm;
 import cn.cerc.jbean.form.IPage;
 import cn.cerc.jmis.page.HtmlPage;
@@ -41,6 +42,11 @@ public class StartForm implements ApplicationContextAware {
     @Autowired
     @Qualifier("clientDevice")
     private ClientDevice clientDevice;
+    @Autowired
+    @Qualifier("appLogin")
+    private AppLogin appLogin;
+    @Autowired
+    private IPassport passport;
 
     @RequestMapping("/{formId}.{funcId}")
     public String execute(@PathVariable String formId, @PathVariable String funcId) {
@@ -54,14 +60,36 @@ public class StartForm implements ApplicationContextAware {
             form.setResponse(response);
 
             clientDevice.setRequest(request);
-            
+
             handle.setProperty(Application.sessionId, request.getSession().getId());
             handle.setProperty(Application.deviceLanguage, clientDevice.getLanguage());
-            
+
             request.setAttribute("myappHandle", handle);
             request.setAttribute("_showMenu_", !ClientDevice.device_ee.equals(clientDevice.getDevice()));
-            
+
             form.setClient(clientDevice);
+
+            if ("excel".equals(funcId)) {
+                response.setContentType("application/vnd.ms-excel; charset=UTF-8");
+                response.addHeader("Content-Disposition", "attachment; filename=excel.csv");
+            } else
+                response.setContentType("text/html;charset=UTF-8");
+
+            // 执行自动登录
+            appLogin.init(form);
+            if (!appLogin.checkSecurity(clientDevice.getSid())) {
+                log.warn(String.format("登录执行错误 %s", request.getRequestURL()));
+                return null;
+            }
+
+            // 执行权限检查
+            passport.setHandle(handle);
+            // 是否拥有此菜单调用权限
+            if (!passport.passForm(form)) {
+                log.warn(String.format("无权限执行 %s", request.getRequestURL()));
+                throw new RuntimeException("对不起，您没有权限执行此功能！");
+            }
+
             IPage page = form.execute();
             if (page instanceof JspPage) {
                 JspPage jspPage = (JspPage) page;
