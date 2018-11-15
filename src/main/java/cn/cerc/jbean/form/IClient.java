@@ -1,10 +1,8 @@
 package cn.cerc.jbean.form;
 
+import javax.servlet.http.HttpServletRequest;
+
 public interface IClient {
-
-    public void setForm(IForm form);
-
-    public IForm getForm();
 
     public boolean isPhone();
 
@@ -19,4 +17,6 @@ public interface IClient {
 
     // 设置设备型号
     public void setDevice(String device);
+
+    void setRequest(HttpServletRequest request);
 }

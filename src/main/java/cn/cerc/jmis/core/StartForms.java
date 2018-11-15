@@ -86,7 +86,7 @@ public class StartForms implements Filter {
             }
 
             // 设备讯息
-            ClientDevice info = new ClientDevice(form);
+            ClientDevice info = new ClientDevice();
             info.setRequest(req);
             req.setAttribute("_showMenu_", !ClientDevice.device_ee.equals(info.getDevice()));
             form.setClient(info);

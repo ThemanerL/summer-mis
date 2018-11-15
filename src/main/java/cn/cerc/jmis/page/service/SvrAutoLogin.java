@@ -90,8 +90,8 @@ public class SvrAutoLogin {
             svrLogin.enrollMachineInfo(dsUser.getString("CorpNo_"), userCode, deviceId, "浏览器");
 
             // 设置登录信息
-            ClientDevice info = new ClientDevice(form);
-            info.setRequest(form.getRequest());
+            ClientDevice info = new ClientDevice();
+            info.setRequest(request);
             info.setSid(token);
             sess.init(token);
 
