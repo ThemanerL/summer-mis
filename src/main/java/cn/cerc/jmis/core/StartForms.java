@@ -45,7 +45,7 @@ public class StartForms implements Filter {
 
         String uri = req.getRequestURI();
 
-        // 遇到静太文件直接输出
+        // 遇到静态文件直接输出
         if (isStatic(uri)) {
             chain.doFilter(req, resp);
             return;
