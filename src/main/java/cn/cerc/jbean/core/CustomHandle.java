@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import cn.cerc.jbean.client.LocalService;
 import cn.cerc.jbean.other.BufferType;
@@ -15,6 +16,7 @@ import cn.cerc.jdb.core.ISession;
 import cn.cerc.jdb.core.Record;
 import cn.cerc.jdb.mysql.SqlSession;
 
+@Component
 public class CustomHandle implements IHandle, AutoCloseable {
     private static final Logger log = LoggerFactory.getLogger(CustomHandle.class);
     private Map<String, IConnection> connections = new HashMap<>();
