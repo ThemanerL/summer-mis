@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>cn.cerc</groupId>
     <artifactId>summer-mis</artifactId>
-    <version>1.6.1</version>
+    <version>1.6.2</version>
     <description>用于快速开发资讯管理系统（MIS），如进销存系统、财务系统、人力资源系统等</description>
     <url>https://github.com/cn-cerc/summer-mis</url>
     <properties>
@@ -127,7 +127,7 @@
         <dependency>
             <groupId>cn.cerc</groupId>
             <artifactId>summer-db</artifactId>
-            <version>1.6.1</version>
+            <version>1.6.2</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
