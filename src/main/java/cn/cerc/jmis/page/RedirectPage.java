@@ -42,9 +42,9 @@ public class RedirectPage implements IPage {
     }
 
     @Override
-    public void execute() throws ServletException, IOException {
+    public String execute() throws ServletException, IOException {
         String location = buildUrl();
-        getResponse().sendRedirect(location);
+        return "redirect:" + location;
     }
 
     public String buildUrl() {

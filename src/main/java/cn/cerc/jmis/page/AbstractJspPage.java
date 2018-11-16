@@ -80,9 +80,8 @@ public abstract class AbstractJspPage extends UIComponent implements IPage {
     }
 
     @Override
-    public void execute() throws ServletException, IOException {
-        String url = String.format("/WEB-INF/%s/%s", Application.getAppConfig().getPathForms(), this.getViewFile());
-        getRequest().getServletContext().getRequestDispatcher(url).forward(getRequest(), getResponse());
+    public String execute() throws ServletException, IOException {
+        return this.getViewFile();
     }
 
     public final String getJspFile() {

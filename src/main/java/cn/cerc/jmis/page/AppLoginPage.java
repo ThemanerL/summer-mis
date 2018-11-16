@@ -72,7 +72,7 @@ public class AppLoginPage extends AbstractJspPage implements IAppLogin {
         this.add("socketUrl", socket_url);
 
         // 判断当前客户端类型
-        log.info("deviceType {}", form.getClient().getDevice());
+        log.info("current client device type: {}", form.getClient().getDevice());
         boolean isWeb = RequestData.webclient.equals(form.getClient().getId());
         this.add("isWeb", isWeb);
         if (!isWeb) {

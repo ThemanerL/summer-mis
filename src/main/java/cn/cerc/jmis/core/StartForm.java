@@ -20,11 +20,6 @@ import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.core.CustomHandle;
 import cn.cerc.jbean.core.IPassport;
 import cn.cerc.jbean.form.IForm;
-import cn.cerc.jbean.form.IPage;
-import cn.cerc.jmis.page.HtmlPage;
-import cn.cerc.jmis.page.JsonPage;
-import cn.cerc.jmis.page.JspPage;
-import cn.cerc.jmis.page.RedirectPage;
 
 @Controller
 @Scope(WebApplicationContext.SCOPE_REQUEST)
@@ -90,25 +85,7 @@ public class StartForm implements ApplicationContextAware {
                 throw new RuntimeException("对不起，您没有权限执行此功能！");
             }
 
-            IPage page = form.execute();
-            if (page instanceof JspPage) {
-                JspPage jspPage = (JspPage) page;
-                return jspPage.getViewFile();
-            } else if (page instanceof JsonPage) {
-                JsonPage jsonPage = (JsonPage) page;
-                response.getWriter().println(jsonPage.toString());
-                return null;
-            } else if (page instanceof HtmlPage) {
-                page.execute();
-                return null;
-            } else if (page instanceof RedirectPage) {
-                RedirectPage redirectPage = (RedirectPage) page;
-                return "redirect:" + redirectPage.buildUrl();
-            } else {
-                log.error("not support: " + page.getClass().getName());
-                response.getWriter().println(form.execute().toString());
-                return null;
-            }
+            return form.execute().execute();
         } catch (Exception e) {
             e.printStackTrace();
             return e.getMessage();

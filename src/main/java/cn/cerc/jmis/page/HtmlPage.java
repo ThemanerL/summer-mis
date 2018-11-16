@@ -29,9 +29,10 @@ public class HtmlPage implements IPage {
     }
 
     @Override
-    public void execute() throws ServletException, IOException {
+    public String execute() throws ServletException, IOException {
         PrintWriter out = form.getResponse().getWriter();
         out.print(content.toString());
+        return null;
     }
 
     public HtmlWriter getContent() {

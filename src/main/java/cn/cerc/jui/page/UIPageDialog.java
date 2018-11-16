@@ -39,8 +39,7 @@ public class UIPageDialog extends AbstractJspPage {
     }
 
     @Override
-    public void execute() throws ServletException, IOException {
-
+    public String execute() throws ServletException, IOException {
         IForm form = this.getForm();
         HttpServletRequest request = form.getRequest();
         CustomHandle sess = (CustomHandle) form.getHandle().getProperty(null);
@@ -79,8 +78,7 @@ public class UIPageDialog extends AbstractJspPage {
         }
 
         // 输出jsp模版
-        String url = String.format("/WEB-INF/%s/%s", Application.getAppConfig().getPathForms(), this.getViewFile());
-        getRequest().getServletContext().getRequestDispatcher(url).forward(getRequest(), getResponse());
+        return this.getViewFile();
     }
 
     public void installAdvertisement() {
