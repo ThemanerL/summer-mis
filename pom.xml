@@ -239,33 +239,38 @@
             <version>${org.springframework.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.quartz-scheduler</groupId>
             <artifactId>quartz</artifactId>
             <version>${quartz.version}</version>
         </dependency>
         <!-- end -->
-<!--         <dependency> -->
-<!--             <groupId>org.hibernate</groupId> -->
-<!--             <artifactId>hibernate-core</artifactId> -->
-<!--             <version>${org.hibernate.version}</version> -->
-<!--             <exclusions> -->
-<!--                 <exclusion> -->
-<!--                     <groupId>org.jboss.logging</groupId> -->
-<!--                     <artifactId>jboss-logging</artifactId> -->
-<!--                 </exclusion> -->
-<!--             </exclusions> -->
-<!--         </dependency> -->
-<!--         <dependency> -->
-<!--             <groupId>org.hibernate</groupId> -->
-<!--             <artifactId>hibernate-c3p0</artifactId> -->
-<!--             <version>${org.hibernate.version}</version> -->
-<!--             <exclusions> -->
-<!--                 <exclusion> -->
-<!--                     <groupId>org.jboss.logging</groupId> -->
-<!--                     <artifactId>jboss-logging</artifactId> -->
-<!--                 </exclusion> -->
-<!--             </exclusions> -->
-<!--         </dependency> -->
+        <!-- <dependency> -->
+        <!-- <groupId>org.hibernate</groupId> -->
+        <!-- <artifactId>hibernate-core</artifactId> -->
+        <!-- <version>${org.hibernate.version}</version> -->
+        <!-- <exclusions> -->
+        <!-- <exclusion> -->
+        <!-- <groupId>org.jboss.logging</groupId> -->
+        <!-- <artifactId>jboss-logging</artifactId> -->
+        <!-- </exclusion> -->
+        <!-- </exclusions> -->
+        <!-- </dependency> -->
+        <!-- <dependency> -->
+        <!-- <groupId>org.hibernate</groupId> -->
+        <!-- <artifactId>hibernate-c3p0</artifactId> -->
+        <!-- <version>${org.hibernate.version}</version> -->
+        <!-- <exclusions> -->
+        <!-- <exclusion> -->
+        <!-- <groupId>org.jboss.logging</groupId> -->
+        <!-- <artifactId>jboss-logging</artifactId> -->
+        <!-- </exclusion> -->
+        <!-- </exclusions> -->
+        <!-- </dependency> -->
         <dependency>
             <groupId>com.aliyun.mns</groupId>
             <artifactId>aliyun-sdk-mns</artifactId>
@@ -334,17 +339,22 @@
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.6.1</version>
             <scope>provided</scope>
-<!--             <exclusions> -->
-<!--                 <exclusion> -->
-<!--                     <groupId>log4j</groupId> -->
-<!--                     <artifactId>log4j</artifactId> -->
-<!--                 </exclusion> -->
-<!--             </exclusions> -->
+            <!-- <exclusions> -->
+            <!-- <exclusion> -->
+            <!-- <groupId>log4j</groupId> -->
+            <!-- <artifactId>log4j</artifactId> -->
+            <!-- </exclusion> -->
+            <!-- </exclusions> -->
         </dependency>
+<!--         <dependency> -->
+<!--             <groupId>org.apache.activemq</groupId> -->
+<!--             <artifactId>activemq-all</artifactId> -->
+<!--             <version>5.8.0</version> -->
+<!--         </dependency> -->
     </dependencies>
     <repositories>
         <repository>
-            <id>vine</id>
+            <id>summer-nexus</id>
             <url>http://121.40.194.178:8081/nexus/content/groups/public</url>
         </repository>
     </repositories>

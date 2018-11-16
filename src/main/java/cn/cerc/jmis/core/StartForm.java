@@ -28,7 +28,7 @@ import cn.cerc.jmis.page.RedirectPage;
 
 @Controller
 @Scope(WebApplicationContext.SCOPE_REQUEST)
-@RequestMapping("/app")
+@RequestMapping("/forms")
 public class StartForm implements ApplicationContextAware {
     private static final Logger log = LoggerFactory.getLogger(StartForm.class);
     private ApplicationContext applicationContext;
