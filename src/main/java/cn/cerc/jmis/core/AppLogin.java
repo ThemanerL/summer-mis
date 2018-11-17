@@ -107,7 +107,7 @@ public class AppLogin extends AbstractJspPage implements IAppLogin {
     }
 
     @Override
-    public boolean checkSecurity(String token) throws IOException, ServletException {
+    public String checkSecurity(String token) throws IOException, ServletException {
         IForm form = this.getForm();
         String password = null;
         String userCode = null;
@@ -123,20 +123,19 @@ public class AppLogin extends AbstractJspPage implements IAppLogin {
 
             IHandle sess = (IHandle) form.getHandle().getProperty(null);
             if (sess.init(token)) {
-                return true;
+                return null;
             }
             if (form.logon()) {
-                return true;
+                return null;
             }
         } catch (Exception e) {
             this.add("loginMsg", e.getMessage());
         }
-        this.execute();
-        return false;
+        return this.execute();
     }
 
     @Override
-    public boolean checkLogin(String userCode, String password) throws ServletException, IOException {
+    public String checkLogin(String userCode, String password) throws ServletException, IOException {
         IForm form = this.getForm();
         HttpServletRequest req = this.getRequest();
 
@@ -155,7 +154,6 @@ public class AppLogin extends AbstractJspPage implements IAppLogin {
             log.debug(String.format("将手机号 %s 转化成帐号 %s", oldCode, userCode));
         }
 
-        boolean result = false;
         log.debug(String.format("进行用户帐号(%s)与密码认证", userCode));
         // 进行用户名、密码认证
         LocalService app;
@@ -172,7 +170,7 @@ public class AppLogin extends AbstractJspPage implements IAppLogin {
             if (sid != null && !sid.equals("")) {
                 log.debug(String.format("认证成功，取得sid(%s)", sid));
                 ((ClientDevice) this.getForm().getClient()).setSid(sid);
-                result = true;
+                return null;
             }
 
             // // 登记聚安应用帐号
@@ -194,31 +192,28 @@ public class AppLogin extends AbstractJspPage implements IAppLogin {
                 log.debug(String.format("用户帐号(%s)与密码认证失败", userCode));
                 req.getSession().setAttribute("loginMsg", app.getMessage());
                 if (!"".equals(supCorpNo) && form.getClient().getDevice().equals(ClientDevice.device_iphone)) {
-                    getResponse().sendRedirect("TFrmWelcome.check");
-                    return false;
+                    return "redirect:TFrmWelcome.check";
                 } else {
-                    this.execute();
+                    return this.execute();
                 }
             } else if (password == null || "".equals(password)) {
                 if (!"".equals(supCorpNo) && form.getClient().getDevice().equals(ClientDevice.device_iphone)) {
                     req.getSession().setAttribute("mobile", mobile);
-                    getResponse().sendRedirect("TFrmWelcome.check");
+                    return "redirect:TFrmWelcome.check";
                 } else {
-                    getResponse().sendRedirect("TFrmEasyReg?phone=" + mobile);
+                    return "redirect:TFrmEasyReg?phone=" + mobile;
                 }
-                return false;
             } else {
                 log.debug(String.format("用户帐号(%s)与密码认证失败", userCode));
                 req.getSession().setAttribute("loginMsg", app.getMessage());
                 if (!"".equals(supCorpNo) && form.getClient().getDevice().equals(ClientDevice.device_iphone)) {
-                    getResponse().sendRedirect("TFrmWelcome.check");
-                    return false;
+                    return "redirect:TFrmWelcome.check";
                 } else {
-                    this.execute();
+                    return this.execute();
                 }
             }
         }
-        return result;
+		return null;
     }
 
     private String getAccountFromTel(IHandle handle, String tel) throws ServletException, IOException {

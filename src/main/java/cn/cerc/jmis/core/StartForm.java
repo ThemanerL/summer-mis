@@ -20,6 +20,7 @@ import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.core.CustomHandle;
 import cn.cerc.jbean.core.IPassport;
 import cn.cerc.jbean.form.IForm;
+import cn.cerc.jdb.mysql.SqlSession;
 
 @Controller
 @Scope(WebApplicationContext.SCOPE_REQUEST)
@@ -58,7 +59,8 @@ public class StartForm implements ApplicationContextAware {
 
             handle.setProperty(Application.sessionId, request.getSession().getId());
             handle.setProperty(Application.deviceLanguage, clientDevice.getLanguage());
-
+            handle.setProperty(SqlSession.sessionId, handle.getConnection());
+            
             request.setAttribute("myappHandle", handle);
             request.setAttribute("_showMenu_", !ClientDevice.device_ee.equals(clientDevice.getDevice()));
 
@@ -72,9 +74,10 @@ public class StartForm implements ApplicationContextAware {
 
             // 执行自动登录
             appLogin.init(form);
-            if (!appLogin.checkSecurity(clientDevice.getSid())) {
+            String jspFile = appLogin.checkSecurity(clientDevice.getSid());
+            if (jspFile != null) {
                 log.warn(String.format("登录执行错误 %s", request.getRequestURL()));
-                return null;
+                return jspFile;
             }
 
             // 执行权限检查
