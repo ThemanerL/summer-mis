@@ -40,11 +40,6 @@ public class QueueConnection {
         return connection;
     }
 
-    public Session createSession() throws JMSException {
-        // 创建一个事务（这里通过参数可以设置事务的级别）
-        return connection.createSession(true, Session.SESSION_TRANSACTED);
-    }
-
     /**
      * 发送消息
      * 
