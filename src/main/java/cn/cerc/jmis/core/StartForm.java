@@ -14,12 +14,15 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.WebApplicationContext;
 
 import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.core.CustomHandle;
 import cn.cerc.jbean.core.IPassport;
 import cn.cerc.jbean.form.IForm;
+import cn.cerc.jbean.form.IPage;
+import cn.cerc.jdb.mysql.SqlConnection;
 import cn.cerc.jdb.mysql.SqlSession;
 
 @Controller
@@ -43,6 +46,9 @@ public class StartForm implements ApplicationContextAware {
     private AppLogin appLogin;
     @Autowired
     private IPassport passport;
+    @Autowired
+    @Qualifier("sqlConnection")
+    private SqlConnection sqlConnection;
 
     @RequestMapping("/{formId}.{funcId}")
     public String execute(@PathVariable String formId, @PathVariable String funcId) {
@@ -59,8 +65,8 @@ public class StartForm implements ApplicationContextAware {
 
             handle.setProperty(Application.sessionId, request.getSession().getId());
             handle.setProperty(Application.deviceLanguage, clientDevice.getLanguage());
-            handle.setProperty(SqlSession.sessionId, handle.getConnection());
-            
+            handle.setProperty(SqlSession.sessionId, sqlConnection.getSession());
+
             request.setAttribute("myappHandle", handle);
             request.setAttribute("_showMenu_", !ClientDevice.device_ee.equals(clientDevice.getDevice()));
 
@@ -88,7 +94,10 @@ public class StartForm implements ApplicationContextAware {
                 throw new RuntimeException("对不起，您没有权限执行此功能！");
             }
 
-            return form.execute().execute();
+            IPage page = form.execute();
+            if (page == null)
+                return null;
+            return page.execute();
         } catch (Exception e) {
             e.printStackTrace();
             return e.getMessage();
