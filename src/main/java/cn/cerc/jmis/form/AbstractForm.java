@@ -84,7 +84,8 @@ public abstract class AbstractForm extends AbstractHandle implements IForm {
     @Override
     public IClient getClient() {
         if (client == null) {
-            client = new ClientDevice(this);
+            client = new ClientDevice();
+            client.setRequest(request);
         }
         return client;
     }

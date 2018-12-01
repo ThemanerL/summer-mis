@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>cn.cerc</groupId>
     <artifactId>summer-mis</artifactId>
-    <version>1.6.1</version>
+    <version>1.6.2</version>
     <description>用于快速开发资讯管理系统（MIS），如进销存系统、财务系统、人力资源系统等</description>
     <url>https://github.com/cn-cerc/summer-mis</url>
     <properties>
@@ -127,7 +127,7 @@
         <dependency>
             <groupId>cn.cerc</groupId>
             <artifactId>summer-db</artifactId>
-            <version>1.6.1</version>
+            <version>1.6.2</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -239,33 +239,38 @@
             <version>${org.springframework.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.quartz-scheduler</groupId>
             <artifactId>quartz</artifactId>
             <version>${quartz.version}</version>
         </dependency>
         <!-- end -->
-<!--         <dependency> -->
-<!--             <groupId>org.hibernate</groupId> -->
-<!--             <artifactId>hibernate-core</artifactId> -->
-<!--             <version>${org.hibernate.version}</version> -->
-<!--             <exclusions> -->
-<!--                 <exclusion> -->
-<!--                     <groupId>org.jboss.logging</groupId> -->
-<!--                     <artifactId>jboss-logging</artifactId> -->
-<!--                 </exclusion> -->
-<!--             </exclusions> -->
-<!--         </dependency> -->
-<!--         <dependency> -->
-<!--             <groupId>org.hibernate</groupId> -->
-<!--             <artifactId>hibernate-c3p0</artifactId> -->
-<!--             <version>${org.hibernate.version}</version> -->
-<!--             <exclusions> -->
-<!--                 <exclusion> -->
-<!--                     <groupId>org.jboss.logging</groupId> -->
-<!--                     <artifactId>jboss-logging</artifactId> -->
-<!--                 </exclusion> -->
-<!--             </exclusions> -->
-<!--         </dependency> -->
+        <!-- <dependency> -->
+        <!-- <groupId>org.hibernate</groupId> -->
+        <!-- <artifactId>hibernate-core</artifactId> -->
+        <!-- <version>${org.hibernate.version}</version> -->
+        <!-- <exclusions> -->
+        <!-- <exclusion> -->
+        <!-- <groupId>org.jboss.logging</groupId> -->
+        <!-- <artifactId>jboss-logging</artifactId> -->
+        <!-- </exclusion> -->
+        <!-- </exclusions> -->
+        <!-- </dependency> -->
+        <!-- <dependency> -->
+        <!-- <groupId>org.hibernate</groupId> -->
+        <!-- <artifactId>hibernate-c3p0</artifactId> -->
+        <!-- <version>${org.hibernate.version}</version> -->
+        <!-- <exclusions> -->
+        <!-- <exclusion> -->
+        <!-- <groupId>org.jboss.logging</groupId> -->
+        <!-- <artifactId>jboss-logging</artifactId> -->
+        <!-- </exclusion> -->
+        <!-- </exclusions> -->
+        <!-- </dependency> -->
         <dependency>
             <groupId>com.aliyun.mns</groupId>
             <artifactId>aliyun-sdk-mns</artifactId>
@@ -334,17 +339,23 @@
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.6.1</version>
             <scope>provided</scope>
-<!--             <exclusions> -->
-<!--                 <exclusion> -->
-<!--                     <groupId>log4j</groupId> -->
-<!--                     <artifactId>log4j</artifactId> -->
-<!--                 </exclusion> -->
-<!--             </exclusions> -->
+            <!-- <exclusions> -->
+            <!-- <exclusion> -->
+            <!-- <groupId>log4j</groupId> -->
+            <!-- <artifactId>log4j</artifactId> -->
+            <!-- </exclusion> -->
+            <!-- </exclusions> -->
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.activemq/activemq-core -->
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-core</artifactId>
+            <version>5.7.0</version>
         </dependency>
     </dependencies>
     <repositories>
         <repository>
-            <id>vine</id>
+            <id>summer-nexus</id>
             <url>http://121.40.194.178:8081/nexus/content/groups/public</url>
         </repository>
     </repositories>

@@ -29,7 +29,7 @@ public class UIPageView extends AbstractJspPage {
     }
 
     @Override
-    public void execute() throws ServletException, IOException {
+    public String execute() throws ServletException, IOException {
         HttpServletRequest request = getRequest();
         IForm form = this.getForm();
         CustomHandle sess = (CustomHandle) form.getHandle().getProperty(null);
@@ -84,5 +84,6 @@ public class UIPageView extends AbstractJspPage {
         out.println("</head>");
         outBody(out);
         out.println("</html>");
+        return null;
     }
 }

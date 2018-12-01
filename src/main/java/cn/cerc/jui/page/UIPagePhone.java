@@ -48,7 +48,7 @@ public class UIPagePhone extends AbstractJspPage {
     }
 
     @Override
-    public void execute() throws ServletException, IOException {
+    public String execute() throws ServletException, IOException {
         HttpServletRequest request = getRequest();
 
         IForm form = this.getForm();
@@ -108,6 +108,7 @@ public class UIPagePhone extends AbstractJspPage {
         out.println("</head>");
         outBody(out);
         out.println("</html>");
+        return null;
     }
 
     @Deprecated // 请使用：getDocument().getContext()

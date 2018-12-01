@@ -2,6 +2,7 @@ package cn.cerc.jbean.core;
 
 import cn.cerc.jbean.form.IForm;
 import cn.cerc.jbean.rds.PassportRecord;
+import cn.cerc.jdb.core.IHandle;
 
 public interface IPassport {
 
@@ -27,4 +28,6 @@ public interface IPassport {
 
     // 返回指定程序的权限记录
     PassportRecord getRecord(String procCode);
+
+    void setHandle(IHandle handle);
 }

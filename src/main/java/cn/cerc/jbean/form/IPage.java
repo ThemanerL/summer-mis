@@ -11,7 +11,7 @@ public interface IPage {
 
     public IForm getForm();
 
-    public void execute() throws ServletException, IOException;
+    public String execute() throws ServletException, IOException;
 
     default public HttpServletRequest getRequest() {
         IForm form = getForm();

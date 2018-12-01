@@ -1,4 +1,4 @@
-package cn.cerc.jmis.page;
+package cn.cerc.jmis.core;
 
 import java.io.IOException;
 import java.util.Map;
@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.WebApplicationContext;
 
 import com.google.gson.Gson;
 
@@ -24,22 +27,24 @@ import cn.cerc.jdb.core.Utils;
 import cn.cerc.jmis.core.ClientDevice;
 import cn.cerc.jmis.core.RequestData;
 import cn.cerc.jmis.form.AbstractForm;
+import cn.cerc.jmis.page.AbstractJspPage;
 import cn.cerc.jmis.page.qrcode.SocketTool;
 import cn.cerc.security.sapi.JayunAPI;
 import cn.cerc.security.sapi.JayunSecurity;
 
-public class AppLoginPage extends AbstractJspPage implements IAppLogin {
-
-    private static final Logger log = LoggerFactory.getLogger(AppLoginPage.class);
+@Component
+@Scope(WebApplicationContext.SCOPE_REQUEST)
+public class AppLogin extends AbstractJspPage implements IAppLogin {
+    private static final Logger log = LoggerFactory.getLogger(AppLogin.class);
 
     // 配置在服务器的用户名下面 summer-application.properties
     public static final String Notify_Url = "app.notify_url";
 
-    public AppLoginPage() {
+    public AppLogin() {
         super(null);
     }
 
-    public AppLoginPage(IForm form) {
+    public AppLogin(IForm form) {
         super(form);
     }
 
@@ -72,7 +77,7 @@ public class AppLoginPage extends AbstractJspPage implements IAppLogin {
         this.add("socketUrl", socket_url);
 
         // 判断当前客户端类型
-        log.info("current client device type: {}", form.getClient().getDevice());
+        log.info("deviceType {}", form.getClient().getDevice());
         boolean isWeb = RequestData.webclient.equals(form.getClient().getId());
         this.add("isWeb", isWeb);
         if (!isWeb) {
@@ -149,7 +154,6 @@ public class AppLoginPage extends AbstractJspPage implements IAppLogin {
             log.debug(String.format("将手机号 %s 转化成帐号 %s", oldCode, userCode));
         }
 
-        boolean result = false;
         log.debug(String.format("进行用户帐号(%s)与密码认证", userCode));
         // 进行用户名、密码认证
         LocalService app;
@@ -166,7 +170,7 @@ public class AppLoginPage extends AbstractJspPage implements IAppLogin {
             if (sid != null && !sid.equals("")) {
                 log.debug(String.format("认证成功，取得sid(%s)", sid));
                 ((ClientDevice) this.getForm().getClient()).setSid(sid);
-                result = true;
+                return null;
             }
 
             // // 登记聚安应用帐号
@@ -209,7 +213,7 @@ public class AppLoginPage extends AbstractJspPage implements IAppLogin {
                 }
             }
         }
-        return null;
+		return null;
     }
 
     private String getAccountFromTel(IHandle handle, String tel) throws ServletException, IOException {

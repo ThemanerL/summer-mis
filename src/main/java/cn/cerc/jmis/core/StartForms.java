@@ -86,7 +86,7 @@ public class StartForms implements Filter {
             }
 
             // 设备讯息
-            ClientDevice info = new ClientDevice(form);
+            ClientDevice info = new ClientDevice();
             info.setRequest(req);
             req.setAttribute("_showMenu_", !ClientDevice.device_ee.equals(info.getDevice()));
             form.setClient(info);
@@ -102,9 +102,9 @@ public class StartForms implements Filter {
                     log.debug("进行安全检查，若未登录则显示登录对话框");
 
                     IAppLogin page = createLogin(form);
-                    if (page.checkSecurity(info.getSid())) {
-                        callForm(form, funcCode);
-                    }
+//                    if (page.checkSecurity(info.getSid())) {
+//                        callForm(form, funcCode);
+//                    }
                 } catch (Exception e) {
                     Throwable err = e.getCause();
                     if (err == null) {

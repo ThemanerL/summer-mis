@@ -20,10 +20,10 @@ public class UIPageLike extends UIPageDialog {
     }
 
     @Override
-    public void execute() throws ServletException, IOException {
+    public String execute() throws ServletException, IOException {
         if (menus != null)
             add("menus", menus);
-        super.execute();
+        return super.execute();
     }
 
     public UIMenuList getMenus() {

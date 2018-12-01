@@ -58,7 +58,7 @@ public class UIPageSearch extends AbstractJspPage {
     }
 
     @Override
-    public void execute() throws ServletException, IOException {
+    public String execute() throws ServletException, IOException {
         HttpServletRequest request = getRequest();
 
         // 添加分页控制
@@ -123,6 +123,7 @@ public class UIPageSearch extends AbstractJspPage {
         out.println("</head>");
         outBody(out);
         out.println("</html>");
+        return null;
     }
 
     public void appendContent(HtmlContent content) {

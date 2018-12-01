@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import cn.cerc.jbean.form.IForm;
 import cn.cerc.jbean.tools.IAppLogin;
@@ -17,8 +18,6 @@ public class Application {
 
     private static ApplicationContext serviceItems;
     private static String serviceFile = "classpath:app-services.xml";
-    private static ApplicationContext formItems;
-    private static String formFile = "classpath:app-forms.xml";
     private static ApplicationContext reportItems;
     private static String reportFile = "classpath:app-report.xml";
 
@@ -44,7 +43,9 @@ public class Application {
     public static final String webclient = "webclient";
     // 默认界面语言版本
     public static final String LangageDefault = "cn"; // 可选：cn/en
-
+    //
+    private static ApplicationContext applicationContext;
+    
     @Deprecated // 请改使用getAppConfig()
     public static AppConfig getConfig() {
         init();
@@ -102,22 +103,18 @@ public class Application {
 
         init();
 
-        formItems = getFormItems();
-        if (!formItems.containsBean(formId)) {
+        ApplicationContext applicationContext = WebApplicationContextUtils
+                .getRequiredWebApplicationContext(req.getServletContext());
+        
+        if (!applicationContext.containsBean(formId)) {
             throw new RuntimeException(String.format("form %s not find!", formId));
         }
 
-        IForm form = formItems.getBean(formId, IForm.class);
+        IForm form = applicationContext.getBean(formId, IForm.class);
         form.setRequest(req);
         form.setResponse(resp);
 
         return form;
-    }
-
-    public static ApplicationContext getFormItems() {
-        if (formItems == null)
-            formItems = new FileSystemXmlApplicationContext(formFile);
-        return formItems;
     }
 
     public static ApplicationContext getReportItems() {
@@ -170,5 +167,13 @@ public class Application {
             if (serviceItems.getBean(key) == null)
                 System.out.println(key);
         }
+    }
+
+    public static ApplicationContext getApplicationContext() {
+        return applicationContext;
+    }
+
+    public static void setApplicationContext(ApplicationContext context) {
+        applicationContext = context;
     }
 }

@@ -5,7 +5,9 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.WebApplicationContext;
 
 import cn.cerc.jbean.client.LocalService;
 import cn.cerc.jbean.other.BufferType;
@@ -17,6 +19,7 @@ import cn.cerc.jdb.core.Record;
 import cn.cerc.jdb.mysql.SqlSession;
 
 @Component
+@Scope(WebApplicationContext.SCOPE_REQUEST)
 public class CustomHandle implements IHandle, AutoCloseable {
     private static final Logger log = LoggerFactory.getLogger(CustomHandle.class);
     private Map<String, IConnection> connections = new HashMap<>();

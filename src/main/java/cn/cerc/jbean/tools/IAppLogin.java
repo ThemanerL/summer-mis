@@ -10,8 +10,8 @@ public interface IAppLogin {
 
     void init(IForm form);
 
-    boolean checkSecurity(String token) throws IOException, ServletException;
+    String checkSecurity(String token) throws IOException, ServletException;
 
-    boolean checkLogin(String userCode, String password) throws IOException, ServletException;
+    String checkLogin(String userCode, String password) throws IOException, ServletException;
 
 }
