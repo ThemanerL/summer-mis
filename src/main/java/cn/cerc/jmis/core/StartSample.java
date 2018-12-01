@@ -27,9 +27,9 @@ import cn.cerc.jdb.mysql.SqlSession;
 
 @Controller
 @Scope(WebApplicationContext.SCOPE_REQUEST)
-@RequestMapping("/forms")
-public class StartForm implements ApplicationContextAware {
-    private static final Logger log = LoggerFactory.getLogger(StartForm.class);
+@RequestMapping("/sample")
+public class StartSample implements ApplicationContextAware {
+    private static final Logger log = LoggerFactory.getLogger(StartSample.class);
     private ApplicationContext applicationContext;
     @Autowired
     private HttpServletRequest request;
