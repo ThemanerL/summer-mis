@@ -19,7 +19,7 @@ import cn.cerc.jbean.client.LocalService;
 import cn.cerc.jbean.core.AppConfig;
 import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.form.IForm;
-import cn.cerc.jbean.tools.IAppLogin;
+import cn.cerc.jbean.tools.AppLoginManage;
 import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.core.Record;
 import cn.cerc.jdb.core.ServerConfig;
@@ -34,7 +34,7 @@ import cn.cerc.security.sapi.JayunSecurity;
 
 @Component
 @Scope(WebApplicationContext.SCOPE_REQUEST)
-public class AppLogin extends AbstractJspPage implements IAppLogin {
+public class AppLogin extends AbstractJspPage implements AppLoginManage {
     private static final Logger log = LoggerFactory.getLogger(AppLogin.class);
 
     // 配置在服务器的用户名下面 summer-application.properties
@@ -107,7 +107,7 @@ public class AppLogin extends AbstractJspPage implements IAppLogin {
     }
 
     @Override
-    public String checkSecurity(String token) throws IOException, ServletException {
+    public String checkToken(String token) throws IOException, ServletException {
         IForm form = this.getForm();
         String password = null;
         String userCode = null;
