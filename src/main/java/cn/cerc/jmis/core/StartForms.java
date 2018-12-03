@@ -102,9 +102,12 @@ public class StartForms implements Filter {
                     log.debug("进行安全检查，若未登录则显示登录对话框");
 
                     IAppLogin page = createLogin(form);
-//                    if (page.checkSecurity(info.getSid())) {
-//                        callForm(form, funcCode);
-//                    }
+                    String result = page.checkSecurity(info.getSid());
+                    if (result != null) {
+                        String url = String.format("/WEB-INF/%s/%s", Application.getAppConfig().getPathForms(), result);
+                        request.getServletContext().getRequestDispatcher(url).forward(request, response);
+                    } else
+                        callForm(form, funcCode);
                 } catch (Exception e) {
                     Throwable err = e.getCause();
                     if (err == null) {
@@ -117,6 +120,7 @@ public class StartForms implements Filter {
                 }
             }
         } catch (Exception e) {
+            e.printStackTrace();
             log.error(childCode + ":" + e.getMessage());
             req.setAttribute("message", e.getMessage());
             AppConfig conf = Application.getAppConfig();
@@ -301,7 +305,16 @@ public class StartForms implements Filter {
             if (pageOutput != null) {
                 if (pageOutput instanceof IPage) {
                     IPage output = (IPage) pageOutput;
-                    output.execute();
+                    String cmd = output.execute();
+                    if (cmd != null) {
+                        if (cmd.startsWith("redirect:"))
+                            response.sendRedirect(cmd.substring(9));
+                        else {
+                            String url = String.format("/WEB-INF/%s/%s", Application.getAppConfig().getPathForms(),
+                                    cmd);
+                            request.getServletContext().getRequestDispatcher(url).forward(request, response);
+                        }
+                    }
                 } else {
                     log.warn(String.format("%s pageOutput is not IPage: %s", funcCode, pageOutput));
                     JspPage output = new JspPage(form);
