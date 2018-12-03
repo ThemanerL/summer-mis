@@ -14,7 +14,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.WebApplicationContext;
 
 import cn.cerc.jbean.core.Application;
@@ -42,8 +41,8 @@ public class StartSample implements ApplicationContextAware {
     @Qualifier("clientDevice")
     private ClientDevice clientDevice;
     @Autowired
-    @Qualifier("appLogin")
-    private AppLogin appLogin;
+    @Qualifier("loginManage")
+    private AppLogin loginManage;
     @Autowired
     private IPassport passport;
     @Autowired
@@ -79,8 +78,8 @@ public class StartSample implements ApplicationContextAware {
                 response.setContentType("text/html;charset=UTF-8");
 
             // 执行自动登录
-            appLogin.init(form);
-            String jspFile = appLogin.checkSecurity(clientDevice.getSid());
+            loginManage.init(form);
+            String jspFile = loginManage.checkToken(clientDevice.getSid());
             if (jspFile != null) {
                 log.warn(String.format("登录执行错误 %s", request.getRequestURL()));
                 return jspFile;

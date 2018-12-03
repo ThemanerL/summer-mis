@@ -16,7 +16,7 @@ import cn.cerc.jbean.client.LocalService;
 import cn.cerc.jbean.core.AppConfig;
 import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.form.IForm;
-import cn.cerc.jbean.tools.IAppLogin;
+import cn.cerc.jbean.tools.AppLoginManage;
 import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.core.Record;
 import cn.cerc.jdb.core.ServerConfig;
@@ -28,7 +28,7 @@ import cn.cerc.jmis.page.qrcode.SocketTool;
 import cn.cerc.security.sapi.JayunAPI;
 import cn.cerc.security.sapi.JayunSecurity;
 
-public class AppLoginPage extends AbstractJspPage implements IAppLogin {
+public class AppLoginPage extends AbstractJspPage implements AppLoginManage {
 
     private static final Logger log = LoggerFactory.getLogger(AppLoginPage.class);
 
@@ -102,7 +102,7 @@ public class AppLoginPage extends AbstractJspPage implements IAppLogin {
     }
 
     @Override
-    public String checkSecurity(String token) throws IOException, ServletException {
+    public String checkToken(String token) throws IOException, ServletException {
         IForm form = this.getForm();
         String password = null;
         String userCode = null;
@@ -149,7 +149,6 @@ public class AppLoginPage extends AbstractJspPage implements IAppLogin {
             log.debug(String.format("将手机号 %s 转化成帐号 %s", oldCode, userCode));
         }
 
-        boolean result = false;
         log.debug(String.format("进行用户帐号(%s)与密码认证", userCode));
         // 进行用户名、密码认证
         LocalService app;
@@ -166,7 +165,6 @@ public class AppLoginPage extends AbstractJspPage implements IAppLogin {
             if (sid != null && !sid.equals("")) {
                 log.debug(String.format("认证成功，取得sid(%s)", sid));
                 ((ClientDevice) this.getForm().getClient()).setSid(sid);
-                result = true;
             }
 
             // // 登记聚安应用帐号

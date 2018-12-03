@@ -7,7 +7,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import cn.cerc.jbean.form.IForm;
-import cn.cerc.jbean.tools.IAppLogin;
+import cn.cerc.jbean.tools.AppLoginManage;
 import cn.cerc.jdb.core.IHandle;
 
 public class Application {
@@ -88,13 +88,14 @@ public class Application {
     public static IService getService(IHandle handle, String serviceCode) {
         init();
 
-        if (context.containsBean(serviceCode)) {
-            IService bean = context.getBean(serviceCode, IService.class);
-            if (handle != null)
-                bean.init(handle);
-            return bean;
-        }
-        return null;
+        if (!context.containsBean(serviceCode))
+            return null;
+
+        IService bean = context.getBean(serviceCode, IService.class);
+        if (handle != null)
+            bean.init(handle);
+        
+        return bean;
     }
 
     public static IForm getForm(HttpServletRequest req, HttpServletResponse resp, String formId) {
@@ -106,7 +107,7 @@ public class Application {
 //        ApplicationContext applicationContext = WebApplicationContextUtils
 //                .getRequiredWebApplicationContext(req.getServletContext());
 
-        if (!context.containsBean(formId)) 
+        if (!context.containsBean(formId))
             throw new RuntimeException(String.format("form %s not find!", formId));
 
         IForm form = context.getBean(formId, IForm.class);
@@ -135,16 +136,6 @@ public class Application {
             if (appConfig == null)
                 throw new RuntimeException(String.format("%s 中没有找到 bean: AppConfig", xmlFile));
         }
-    }
-
-    public static IAppLogin getAppLogin(IForm form) {
-        init();
-        if (!context.containsBean("AppLogin")) {
-            throw new RuntimeException(String.format("%s 中没有找到 bean: AppLogin", xmlFile));
-        }
-        IAppLogin result = context.getBean("AppLogin", IAppLogin.class);
-        result.init(form);
-        return result;
     }
 
     public static String getLangage() {

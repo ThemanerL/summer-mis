@@ -26,7 +26,7 @@ import cn.cerc.jbean.form.IForm;
 import cn.cerc.jbean.form.IPage;
 import cn.cerc.jbean.other.BufferType;
 import cn.cerc.jbean.other.MemoryBuffer;
-import cn.cerc.jbean.tools.IAppLogin;
+import cn.cerc.jbean.tools.AppLoginManage;
 import cn.cerc.jdb.core.ServerConfig;
 import cn.cerc.jmis.form.Webpage;
 import cn.cerc.jmis.page.ErrorPage;
@@ -101,12 +101,14 @@ public class StartForms implements Filter {
 
                     log.debug("进行安全检查，若未登录则显示登录对话框");
 
-                    IAppLogin page = createLogin(form);
-                    String result = page.checkSecurity(info.getSid());
+                    AppLoginManage page = Application.getContext().getBean("loginManage", AppLoginManage.class);
+                    page.init(form);
+                    String result = page.checkToken(info.getSid());
                     if (result != null) {
+                        // 若需要登录，则跳转到登录页
                         String url = String.format("/WEB-INF/%s/%s", Application.getAppConfig().getPathForms(), result);
                         request.getServletContext().getRequestDispatcher(url).forward(request, response);
-                    } else
+                    } else // 已授权通过
                         callForm(form, funcCode);
                 } catch (Exception e) {
                     Throwable err = e.getCause();
@@ -128,11 +130,6 @@ public class StartForms implements Filter {
             req.getRequestDispatcher(conf.getJspErrorFile()).forward(req, resp);
             return;
         }
-    }
-
-    // 创建登录与权限控制器
-    protected IAppLogin createLogin(IForm form) {
-        return Application.getAppLogin(form);
     }
 
     // 创建环境管理控制器
