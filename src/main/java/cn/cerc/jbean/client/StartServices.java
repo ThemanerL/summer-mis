@@ -186,7 +186,7 @@ public class StartServices extends HttpServlet {
         if (services != null)
             return;
         services = new HashMap<>();
-        for (String serviceCode : Application.getServices().getBeanDefinitionNames()) {
+        for (String serviceCode : Application.getContext().getBeanDefinitionNames()) {
             IService service = Application.getService(null, serviceCode);
             if (service instanceof IRestful) {
                 String path = ((IRestful) service).getRestPath();
