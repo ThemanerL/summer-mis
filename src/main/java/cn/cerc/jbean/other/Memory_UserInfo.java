@@ -1,5 +1,6 @@
 package cn.cerc.jbean.other;
 
+import cn.cerc.jbean.core.Application;
 import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.core.Record;
 import cn.cerc.jdb.mysql.SqlQuery;
@@ -10,10 +11,11 @@ public class Memory_UserInfo {
     public static MemoryBuffer get(IHandle sess, String usercode) {
         MemoryBuffer buff = new MemoryBuffer(BufferType.getAccount, usercode);
         if (buff.isNull()) {
+            SystemTable systemTable = Application.getBean("systemTable", SystemTable.class);
             SqlQuery ds = new SqlQuery(sess);
             ds.add("select a.Code_,a.Enabled_,a.Name_,a.SuperUser_,a.DiyRole_,a.RoleCode_,oi.Type_,a.ImageUrl_ ");
-            ds.add("from %s a ", SystemTable.get(SystemTable.getUserInfo));
-            ds.add("inner join %s oi on a.CorpNo_=oi.CorpNo_ ", SystemTable.get(SystemTable.getBookInfo));
+            ds.add("from %s a ", systemTable.getUserInfo());
+            ds.add("inner join %s oi on a.CorpNo_=oi.CorpNo_ ", systemTable.getBookInfo());
             ds.add("where a.Code_='%s'", usercode);
             ds.open();
             if (ds.eof())

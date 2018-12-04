@@ -8,6 +8,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Ignore;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import cn.cerc.jbean.core.DataValidateException;
 import cn.cerc.jbean.core.ServiceException;
@@ -20,6 +21,8 @@ import cn.cerc.jdb.mysql.SqlQuery;
 
 public class SvrUserLoginTest {
     // private static final Logger log = Logger.getLogger(TAppLoginTest.class);
+    @Autowired
+    private SystemTable systemTable;
 
     // 测试帐号找不到时的提示
     @Test(expected = ServiceException.class)
@@ -83,7 +86,7 @@ public class SvrUserLoginTest {
             // 检查验证码是否存在
             SqlQuery ds = new SqlQuery(handle);
 
-            ds.add("select * from %s", SystemTable.get(SystemTable.getDeviceVerify));
+            ds.add("select * from %s", systemTable.getDeviceVerify());
             ds.add("where CorpNo_='%s'", corpNo);
             ds.add("and UserCode_='%s'", userCode);
             ds.add("and MachineCode_='%s'", deviceId);

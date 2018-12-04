@@ -1,5 +1,7 @@
 package cn.cerc.jmis.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import cn.cerc.jbean.core.CustomService;
 import cn.cerc.jbean.other.SystemTable;
 import cn.cerc.jdb.core.DataSet;
@@ -9,6 +11,8 @@ import cn.cerc.jdb.mysql.BuildQuery;
 import cn.cerc.jdb.mysql.SqlQuery;
 
 public class SvrCustomMenus extends CustomService {
+    @Autowired
+    private SystemTable systemTable;
 
     public boolean append() {
         DataSet dataIn = getDataIn();
@@ -17,11 +21,11 @@ public class SvrCustomMenus extends CustomService {
         BuildQuery f2 = new BuildQuery(this);
 
         f1.byField("Custom_", true);
-        f1.add("select * from %s ", SystemTable.get(SystemTable.getAppMenus));
+        f1.add("select * from %s ", systemTable.getAppMenus());
         SqlQuery ds1 = f1.open();
 
         f2.byField("CorpNo_", corpNo);
-        f2.add("select * from %s ", SystemTable.get(SystemTable.getCustomMenus));
+        f2.add("select * from %s ", systemTable.getCustomMenus());
         SqlQuery ds2 = f2.open();
 
         while (!ds2.eof()) {
@@ -51,7 +55,7 @@ public class SvrCustomMenus extends CustomService {
     }
 
     public boolean search() {
-        if (!SystemTable.ManageBook.equals(handle.getCorpNo()))
+        if (!systemTable.getManageBook().equals(handle.getCorpNo()))
             throw new RuntimeException("您不是运营商账号不允许操作！");
 
         Record headIn = getDataIn().getHead();
@@ -64,9 +68,9 @@ public class SvrCustomMenus extends CustomService {
         if (headIn.exists("Custom"))
             f.byParam("c.CorpNo_ !='' and c.CorpNo_ is Not null");
         f.add("select s.Code_,s.Name_,c.Code_ as CostomCode_,oi.ShortName_,c.Remark_,c.CorpNo_,c.AppUser_,c.AppDate_ ");
-        f.add("from %s s ", SystemTable.get(SystemTable.getAppMenus));
-        f.add("left join %s c on s.Code_ = c.Code_", SystemTable.get(SystemTable.getCustomMenus));
-        f.add("left join %s oi on oi.CorpNo_ = c.CorpNo_", SystemTable.get(SystemTable.getBookInfo));
+        f.add("from %s s ", systemTable.getAppMenus());
+        f.add("left join %s c on s.Code_ = c.Code_", systemTable.getCustomMenus());
+        f.add("left join %s oi on oi.CorpNo_ = c.CorpNo_", systemTable.getBookInfo());
         getDataOut().appendDataSet(f.open());
 
         return true;

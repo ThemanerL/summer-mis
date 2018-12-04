@@ -2,6 +2,7 @@ package cn.cerc.jbean.services;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.core.CustomHandle;
@@ -16,6 +17,8 @@ import cn.cerc.jdb.mysql.SqlQuery;
 
 public class AppSessionRestore extends CustomService {
     private static final Logger log = LoggerFactory.getLogger(AppSessionRestore.class);
+    @Autowired
+    private SystemTable systemTable;
 
     public boolean byUserCode() throws ServiceException, UserNotFindException {
         Record headIn = getDataIn().getHead();
@@ -24,7 +27,7 @@ public class AppSessionRestore extends CustomService {
 
         SqlQuery cdsUser = new SqlQuery(this);
         cdsUser.add("select ID_,Code_,RoleCode_,DiyRole_,CorpNo_, Name_ as UserName_,ProxyUsers_");
-        cdsUser.add("from %s ", SystemTable.get(SystemTable.getUserInfo));
+        cdsUser.add("from %s ", systemTable.getUserInfo());
         cdsUser.add("where Code_= '%s' ", userCode);
         cdsUser.open();
         if (cdsUser.eof()) {
@@ -44,7 +47,7 @@ public class AppSessionRestore extends CustomService {
 
         SqlQuery cdsCurrent = new SqlQuery(this);
         cdsCurrent.add("select CorpNo_,UserID_,LoginTime_,Account_ as UserCode_,Language_ ");
-        cdsCurrent.add("from %s", SystemTable.get(SystemTable.getCurrentUser));
+        cdsCurrent.add("from %s", systemTable.getCurrentUser());
         cdsCurrent.add("where loginID_= '%s' ", token);
         cdsCurrent.open();
         if (cdsCurrent.eof()) {
@@ -57,7 +60,7 @@ public class AppSessionRestore extends CustomService {
 
         SqlQuery cdsUser = new SqlQuery(this);
         cdsUser.add("select ID_,Code_,DiyRole_,RoleCode_,CorpNo_, Name_ as UserName_,ProxyUsers_");
-        cdsUser.add("from %s", SystemTable.get(SystemTable.getUserInfo), userId);
+        cdsUser.add("from %s", systemTable.getUserInfo(), userId);
         cdsUser.add("where ID_='%s'", userId);
         cdsUser.open();
         if (cdsUser.eof()) {

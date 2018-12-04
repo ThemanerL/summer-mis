@@ -11,6 +11,8 @@ import java.util.TreeSet;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.google.gson.Gson;
 
@@ -21,15 +23,17 @@ import cn.cerc.jdb.mysql.SqlQuery;
 /**
  * 扫描待翻译的中文
  */
+@Component
 public class ExportChinese {
     private static final Logger log = LoggerFactory.getLogger(ExportChinese.class);
     private Set<String> items = new TreeSet<>();
+    @Autowired
+    private SystemTable systemTable;
 
     /**
      * 扫描指定路径的java文件
      * 
-     * @param srcPath
-     *            路径
+     * @param srcPath 路径
      */
     public void scanFile(String srcPath) {
 
@@ -68,12 +72,11 @@ public class ExportChinese {
     /**
      * 写入字典
      * 
-     * @param handle
-     *            上下文环境
+     * @param handle 上下文环境
      */
     public void writeDict(IHandle handle) {
         SqlQuery ds = new SqlQuery(handle);
-        ds.add("select * from %s", SystemTable.getLangDict);
+        ds.add("select * from %s", systemTable.getLangDict());
         ds.open();
         for (String text : this.getItems()) {
             if (!ds.locate("cn_", text)) {

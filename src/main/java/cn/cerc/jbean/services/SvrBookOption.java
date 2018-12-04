@@ -1,5 +1,7 @@
 package cn.cerc.jbean.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import cn.cerc.jbean.core.AbstractService;
 import cn.cerc.jbean.core.IStatus;
 import cn.cerc.jbean.core.ServiceException;
@@ -9,13 +11,15 @@ import cn.cerc.jdb.core.Record;
 import cn.cerc.jdb.mysql.SqlQuery;
 
 public class SvrBookOption extends AbstractService {
+    @Autowired
+    private SystemTable systemTable;
 
     @Override
     public IStatus execute(DataSet dataIn, DataSet dataOut) throws ServiceException {
         Record head = dataIn.getHead();
 
         SqlQuery ds = new SqlQuery(this);
-        ds.add("select Value_ from %s ", SystemTable.get(SystemTable.getBookOptions));
+        ds.add("select Value_ from %s ", systemTable.getBookOptions());
         ds.add("where CorpNo_ = '%s' and Code_ = '%s'", this.getCorpNo(), head.getString("Code_"));
         ds.open();
         dataOut.appendDataSet(ds);

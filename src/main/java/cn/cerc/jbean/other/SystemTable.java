@@ -1,59 +1,67 @@
 package cn.cerc.jbean.other;
 
-import cn.cerc.jbean.core.Application;
-
-public class SystemTable {
+public interface SystemTable {
     // 帐套资料表
-    public static final String getBookInfo = "OurInfo";
+    public String getBookInfo(); // "OurInfo";
     // 帐套参数档
-    public static final String getBookOptions = "VineOptions";
+
+    public String getBookOptions(); // "VineOptions";
     // 应用菜单表
-    public static final String getAppMenus = "SysFormDef";
+
+    public String getAppMenus(); // "SysFormDef";
     // 客户客制化菜单
-    public static final String getCustomMenus = "cusmenu";
+
+    public String getCustomMenus(); // "cusmenu";
     // 用户自定义菜单
-    public static final String getUserMenus = "UserMenu";
+
+    public String getUserMenus(); // "UserMenu";
 
     // 用户资料表
-    public static final String getUserInfo = "Account";
+    public String getUserInfo(); // "Account";
     // 用户参数表
-    public static final String getUserOptions = "UserOptions";
+
+    public String getUserOptions(); // "UserOptions";
     // 用户角色表
-    public static final String getUserRoles = "UserRoles";
+
+    public String getUserRoles(); // "UserRoles";
     // 角色权限表
-    public static final String getRoleAccess = "UserAccess";
+
+    public String getRoleAccess(); // "UserAccess";
     // 用户设备认证记录表
-    public static final String getDeviceVerify = "AccountVerify";
-    //安全手机管控表
-    public final static String getSecurityMobile = "s_securityMobile";
+
+    public String getDeviceVerify(); // "AccountVerify";
+    // 安全手机管控表
+
+    public String getSecurityMobile(); // "s_securityMobile";
 
     // 当前在线用户
-    public static final String getCurrentUser = "CurrentUser";
+    public String getCurrentUser(); // "CurrentUser";
     // 记录用户需要查看的消息
-    public static final String getUserMessages = "message_temp";
+
+    public String getUserMessages(); // "message_temp";
     // 记录用户的关键操作
-    public static final String getUserLogs = "UserLogs";
+
+    public String getUserLogs(); // "UserLogs";
     // 记录应用服务被调用的历史
-    public static final String getAppLogs = "AppServiceLogs";
+
+    public String getAppLogs(); // "AppServiceLogs";
     // 记录网页被调用的历史
-    public static final String getPageLogs = "WebPageLogs";
+
+    public String getPageLogs(); // "WebPageLogs";
     // 记录在线用户数
-    public static final String getOnlineUsers = "onlineusers";
+
+    public String getOnlineUsers(); // "onlineusers";
 
     // 运营商帐套代码
-    public static final String ManageBook = "000000";
+    public String getManageBook(); // "000000";
 
     // 多语言数据字典: 旧版本
-    public static final String getLangDict = "s_langDict";
+    public String getLangDict(); // "s_langDict";
+
     // 多语言数据字典: 新版本
-    public static final String getLanguage = "s_language";
-
-    public static String get(String tableCode) {
-        return Application.getAppConfig().getParam(tableCode, tableCode);
-    }
-
-    // 表格列自定义存储表，建议存于MongoDB
-    public static String getGridManager() {
-        return "s_gridManager";
-    }
+    public String getLanguage(); // "s_language";
+//
+//    public static String get(String tableCode) {
+//        return Application.getAppConfig().getParam(tableCode, tableCode);
+//    }
 }

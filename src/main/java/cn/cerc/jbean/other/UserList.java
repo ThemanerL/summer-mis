@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import cn.cerc.jbean.core.Application;
 import cn.cerc.jdb.cache.Redis;
 import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.mysql.SqlQuery;
@@ -18,10 +19,10 @@ import cn.cerc.jdb.mysql.SqlSession;
 
 public class UserList implements IDataList {
     private static final Logger log = LoggerFactory.getLogger(UserList.class);
+    private static final int Version = 4;
     private IHandle handle;
     private Map<String, UserRecord> buff = new HashMap<>();
     private String buffKey;
-    private static final int Version = 4;
 
     public UserList(IHandle handle) {
         super();
@@ -73,11 +74,12 @@ public class UserList implements IDataList {
             return;
         }
 
+        SystemTable systemTable = Application.getBean("systemTable", SystemTable.class);
         // 从数据库中读取
         SqlQuery ds = new SqlQuery(handle);
         ds.add("select ID_,CorpNo_,Code_,Name_,QQ_,Mobile_,SuperUser_,");
         ds.add("LastRemindDate_,EmailAddress_,RoleCode_,ProxyUsers_,Enabled_,DiyRole_ ");
-        ds.add("from %s ", SystemTable.get(SystemTable.getUserInfo));
+        ds.add("from %s ", systemTable.getUserInfo());
         ds.add("where CorpNo_='%s'", handle.getCorpNo());
         ds.open();
         while (ds.fetch()) {
@@ -119,9 +121,10 @@ public class UserList implements IDataList {
         value.put(UserOptions.ShowOutUP, 0);
         value.put(UserOptions.ShowWholesaleUP, 0);
         value.put(UserOptions.ShowBottomUP, 0);
-        SqlQuery ds = new SqlQuery(handle);
 
-        ds.add("select Code_,Value_ from %s ", SystemTable.get(SystemTable.getUserOptions));
+        SystemTable systemTable = Application.getBean("systemTable", SystemTable.class);
+        SqlQuery ds = new SqlQuery(handle);
+        ds.add("select Code_,Value_ from %s ", systemTable.getUserOptions());
         ds.add("where UserCode_='%s' and (Code_='%s' or Code_='%s' or Code_='%s' or Code_='%s')", userCode,
                 UserOptions.ShowInUP, UserOptions.ShowOutUP, UserOptions.ShowWholesaleUP, UserOptions.ShowBottomUP);
         ds.open();
@@ -150,20 +153,21 @@ public class UserList implements IDataList {
         String buffKey = String.format("%d.%s.%s.%d", BufferType.getObject.ordinal(), corpNo, this.getClass().getName(),
                 Version);
         Redis.delete(buffKey);
-        SqlQuery ds = new SqlQuery(handle);
 
-        ds.add("select ID_ from %s where Code_='%s'", SystemTable.get(SystemTable.getUserInfo), userCode);
+        SystemTable systemTable = Application.getBean("systemTable", SystemTable.class);
+        SqlQuery ds = new SqlQuery(handle);
+        ds.add("select ID_ from %s where Code_='%s'", systemTable.getUserInfo(), userCode);
         ds.open();
         if (ds.eof())
             throw new UserNotFindException(userCode);
 
         SqlSession conn = (SqlSession) handle.getProperty(SqlSession.sessionId);
         String sql = String.format("update %s set CorpNo_='%s',ShareAccount_=1 where Code_='%s'",
-                SystemTable.get(SystemTable.getUserInfo), corpNo, userCode);
+                systemTable.getUserInfo(), corpNo, userCode);
         conn.execute(sql);
 
         sql = String.format("update %s set Name_='%s' where UserCode_='%s' and Code_='GroupCode'",
-                SystemTable.get(SystemTable.getUserOptions), roleCode, userCode);
+                systemTable.getUserOptions(), roleCode, userCode);
         conn.execute(sql);
 
         log.info(String.format("%s 已被切换到 corpNo=%s, roleCode=%s", userCode, corpNo, roleCode));

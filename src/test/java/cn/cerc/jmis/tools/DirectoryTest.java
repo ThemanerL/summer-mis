@@ -3,6 +3,7 @@ package cn.cerc.jmis.tools;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import cn.cerc.jbean.core.AppHandle;
 import cn.cerc.jbean.other.SystemTable;
@@ -11,6 +12,8 @@ import cn.cerc.jdb.core.Utils;
 import cn.cerc.jdb.mysql.SqlQuery;
 
 public class DirectoryTest {
+    @Autowired
+    private SystemTable systemTable;
     private AppHandle handle = new AppHandle();
 
     @Before
@@ -50,7 +53,7 @@ public class DirectoryTest {
             return 0;
         }
         SqlQuery dsLang = new SqlQuery(handle);
-        dsLang.add("select * from %s", SystemTable.getLanguage);
+        dsLang.add("select * from %s", systemTable.getLanguage());
         dsLang.add("where key_='%s' and lang_='en'", text);
         dsLang.open();
         if (dsLang.eof()) {

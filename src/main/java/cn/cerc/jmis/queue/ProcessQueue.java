@@ -2,6 +2,7 @@ package cn.cerc.jmis.queue;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import cn.cerc.jbean.client.LocalService;
 import cn.cerc.jbean.core.BookHandle;
@@ -17,6 +18,8 @@ import net.sf.json.JSONObject;
 
 public class ProcessQueue extends AbstractTask {
     private static final Logger log = LoggerFactory.getLogger(ProcessQueue.class);
+    @Autowired
+    private SystemTable systemTable;
 
     @Override
     public void execute() throws Exception {
@@ -60,10 +63,10 @@ public class ProcessQueue extends AbstractTask {
         // 更新消息状态
         BatchScript bs = new BatchScript(this);
         if (svr.exec()) {
-            bs.add("update %s set Process_=%s,Content_='%s' where UID_=%s", SystemTable.getUserMessages,
+            bs.add("update %s set Process_=%s,Content_='%s' where UID_=%s", systemTable.getUserMessages(),
                     MessageProcess.ok.ordinal(), content.toString(), msgId);
         } else {
-            bs.add("update %s set Process_=%s,Content_='%s' where UID_=%s", SystemTable.getUserMessages,
+            bs.add("update %s set Process_=%s,Content_='%s' where UID_=%s", systemTable.getUserMessages(),
                     MessageProcess.wait.ordinal(), content.toString(), msgId);
         }
         bs.exec();
