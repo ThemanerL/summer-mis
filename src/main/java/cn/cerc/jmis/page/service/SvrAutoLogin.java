@@ -21,7 +21,6 @@ import cn.cerc.jmis.core.RequestData;
 import cn.cerc.jmis.services.SvrUserLogin;
 
 public class SvrAutoLogin {
-
     private static final Logger log = LoggerFactory.getLogger(SvrAutoLogin.class);
 
     private IHandle handle;
@@ -40,8 +39,9 @@ public class SvrAutoLogin {
         }
         String deviceId = form.getClient().getId();
 
+        SystemTable systemTable = Application.getBean("systemTable", SystemTable.class);
         SqlQuery dsUser = new SqlQuery(handle);
-        dsUser.add("select * from %s where Code_='%s'", SystemTable.get(SystemTable.getUserInfo), userCode);
+        dsUser.add("select * from %s where Code_='%s'", systemTable.getUserInfo(), userCode);
         dsUser.open();
         if (dsUser.eof()) {
             this.setMessage(String.format("该帐号(%s)并不存在，禁止登录！", userCode));
@@ -52,7 +52,7 @@ public class SvrAutoLogin {
             CustomHandle sess = (CustomHandle) handle.getProperty(null);
             String sql = String.format(
                     "update %s set LastTime_=now(),Used_=1 where UserCode_='%s' and MachineCode_='%s'",
-                    SystemTable.get(SystemTable.getDeviceVerify), userCode, deviceId);
+                    systemTable.getDeviceVerify(), userCode, deviceId);
             sess.getConnection().execute(sql);
 
             String token = utils.guidFixStr();

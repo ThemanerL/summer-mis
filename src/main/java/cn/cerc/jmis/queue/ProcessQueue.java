@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 
 import cn.cerc.jbean.client.LocalService;
 import cn.cerc.jbean.core.BookHandle;
-import cn.cerc.jbean.other.SystemTable;
 import cn.cerc.jdb.core.ServerConfig;
 import cn.cerc.jdb.mysql.BatchScript;
 import cn.cerc.jdb.queue.QueueMode;
@@ -60,10 +59,10 @@ public class ProcessQueue extends AbstractTask {
         // 更新消息状态
         BatchScript bs = new BatchScript(this);
         if (svr.exec()) {
-            bs.add("update %s set Process_=%s,Content_='%s' where UID_=%s", SystemTable.getUserMessages,
+            bs.add("update %s set Process_=%s,Content_='%s' where UID_=%s", systemTable.getUserMessages(),
                     MessageProcess.ok.ordinal(), content.toString(), msgId);
         } else {
-            bs.add("update %s set Process_=%s,Content_='%s' where UID_=%s", SystemTable.getUserMessages,
+            bs.add("update %s set Process_=%s,Content_='%s' where UID_=%s", systemTable.getUserMessages(),
                     MessageProcess.wait.ordinal(), content.toString(), msgId);
         }
         bs.exec();

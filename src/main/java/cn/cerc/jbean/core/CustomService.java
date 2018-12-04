@@ -5,7 +5,9 @@ import java.lang.reflect.Method;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import cn.cerc.jbean.other.SystemTable;
 import cn.cerc.jdb.core.DataSet;
 import cn.cerc.jdb.core.IHandle;
 
@@ -17,6 +19,8 @@ public class CustomService extends AbstractHandle implements IService, IRestful 
     private String message = "";
     private StringBuffer msg = null;
     private String restPath;
+    @Autowired
+    public SystemTable systemTable;
 
     public CustomService() {
         super();

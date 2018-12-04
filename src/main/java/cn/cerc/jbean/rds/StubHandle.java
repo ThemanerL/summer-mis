@@ -28,16 +28,16 @@ public class StubHandle implements IHandle, AutoCloseable {
     public StubHandle(String corpNo) {
         handle = Application.getHandle();
 
-        String userCode;
-        SqlQuery ds = new SqlQuery(this);
+        SystemTable systemTable = Application.getBean("systemTable", SystemTable.class);
 
+        SqlQuery ds = new SqlQuery(this);
         ds.setMaximum(1);
-        ds.add("select Code_ from " + SystemTable.get(SystemTable.getUserInfo));
+        ds.add("select Code_ from " + systemTable.getUserInfo());
         ds.add("where CorpNo_='%s'", corpNo);
         ds.open();
         if (ds.eof())
             throw new RuntimeException("找不到默认帐号：CorpNo=" + corpNo);
-        userCode = ds.getString("Code_");
+        String userCode = ds.getString("Code_");
 
         handle.init(corpNo, userCode, clientIP);
     }

@@ -3,6 +3,7 @@ package cn.cerc.jbean.other;
 import static cn.cerc.jdb.other.utils.copy;
 import static cn.cerc.jdb.other.utils.newGuid;
 
+import cn.cerc.jbean.core.Application;
 import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.core.Utils;
 import cn.cerc.jdb.mysql.BatchScript;
@@ -71,10 +72,10 @@ public class HistoryRecord {
         default:
             mth = 0;
         }
+        SystemTable systemTable = Application.getBean("systemTable", SystemTable.class);
         BatchScript bs = new BatchScript(handle);
         bs.add("insert into %s (CorpNo_,Level_,Log_,AppUser_,UpdateKey_) values ('%s',%d,'%s','%s','%s')",
-                SystemTable.get(SystemTable.getUserLogs), corpNo, mth, Utils.safeString(copy(log, 1, 80)), userCode,
-                newGuid());
+                systemTable.getUserLogs(), corpNo, mth, Utils.safeString(copy(log, 1, 80)), userCode, newGuid());
         bs.exec();
     }
 }

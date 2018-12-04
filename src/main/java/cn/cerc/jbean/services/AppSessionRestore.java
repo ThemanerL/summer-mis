@@ -8,7 +8,6 @@ import cn.cerc.jbean.core.CustomHandle;
 import cn.cerc.jbean.core.CustomService;
 import cn.cerc.jbean.core.DataValidateException;
 import cn.cerc.jbean.core.ServiceException;
-import cn.cerc.jbean.other.SystemTable;
 import cn.cerc.jbean.other.UserNotFindException;
 import cn.cerc.jdb.core.Record;
 import cn.cerc.jdb.core.TDateTime;
@@ -24,7 +23,7 @@ public class AppSessionRestore extends CustomService {
 
         SqlQuery cdsUser = new SqlQuery(this);
         cdsUser.add("select ID_,Code_,RoleCode_,DiyRole_,CorpNo_, Name_ as UserName_,ProxyUsers_");
-        cdsUser.add("from %s ", SystemTable.get(SystemTable.getUserInfo));
+        cdsUser.add("from %s ", systemTable.getUserInfo());
         cdsUser.add("where Code_= '%s' ", userCode);
         cdsUser.open();
         if (cdsUser.eof()) {
@@ -44,7 +43,7 @@ public class AppSessionRestore extends CustomService {
 
         SqlQuery cdsCurrent = new SqlQuery(this);
         cdsCurrent.add("select CorpNo_,UserID_,LoginTime_,Account_ as UserCode_,Language_ ");
-        cdsCurrent.add("from %s", SystemTable.get(SystemTable.getCurrentUser));
+        cdsCurrent.add("from %s", systemTable.getCurrentUser());
         cdsCurrent.add("where loginID_= '%s' ", token);
         cdsCurrent.open();
         if (cdsCurrent.eof()) {
@@ -57,7 +56,7 @@ public class AppSessionRestore extends CustomService {
 
         SqlQuery cdsUser = new SqlQuery(this);
         cdsUser.add("select ID_,Code_,DiyRole_,RoleCode_,CorpNo_, Name_ as UserName_,ProxyUsers_");
-        cdsUser.add("from %s", SystemTable.get(SystemTable.getUserInfo), userId);
+        cdsUser.add("from %s", systemTable.getUserInfo(), userId);
         cdsUser.add("where ID_='%s'", userId);
         cdsUser.open();
         if (cdsUser.eof()) {

@@ -6,7 +6,6 @@ import java.math.BigInteger;
 
 import cn.cerc.jbean.core.CustomService;
 import cn.cerc.jbean.other.BufferType;
-import cn.cerc.jbean.other.SystemTable;
 import cn.cerc.jdb.cache.Redis;
 import cn.cerc.jdb.core.Record;
 import cn.cerc.jdb.core.TDateTime;
@@ -26,7 +25,7 @@ public class SvrUserMessages extends CustomService {
     public boolean getWaitList() {
         SqlQuery ds = new SqlQuery(this);
         ds.setMaximum(5);
-        ds.add("select ms.UID_ from %s ms", SystemTable.get(SystemTable.getUserMessages));
+        ds.add("select ms.UID_ from %s ms", systemTable.getUserMessages());
         ds.add("where ms.Level_=%s", MessageLevel.Service.ordinal());
         ds.add("and ms.Process_=%s", MessageProcess.wait.ordinal());
         ds.open();
@@ -51,7 +50,7 @@ public class SvrUserMessages extends CustomService {
             // 若已存在同一公司别同一种回算请求在排队或者执行中，则不重复插入回算请求
             SqlQuery ds2 = new SqlQuery(handle);
             ds2.setMaximum(1);
-            ds2.add("select UID_ from %s ", SystemTable.get(SystemTable.getUserMessages));
+            ds2.add("select UID_ from %s ", systemTable.getUserMessages());
             ds2.add("where CorpNo_='%s' ", corpNo);
             ds2.add("and Subject_='%s' ", subject);
             ds2.add("and Level_=4 and (Process_ = 1 or Process_=2)");
@@ -64,7 +63,7 @@ public class SvrUserMessages extends CustomService {
         }
 
         SqlQuery cdsMsg = new SqlQuery(this);
-        cdsMsg.add("select * from %s", SystemTable.get(SystemTable.getUserMessages));
+        cdsMsg.add("select * from %s", systemTable.getUserMessages());
         cdsMsg.setMaximum(0);
         cdsMsg.open();
 
@@ -101,7 +100,7 @@ public class SvrUserMessages extends CustomService {
         String msgId = getDataIn().getHead().getString("msgId");
 
         SqlQuery ds = new SqlQuery(this);
-        ds.add("select * from %s", SystemTable.get(SystemTable.getUserMessages));
+        ds.add("select * from %s", systemTable.getUserMessages());
         ds.add("where Level_=%s", MessageLevel.Service.ordinal());
         ds.add("and Process_=%s", MessageProcess.wait.ordinal());
         ds.add("and UID_='%s'", msgId);
@@ -126,7 +125,7 @@ public class SvrUserMessages extends CustomService {
         int process = getDataIn().getHead().getInt("process");
 
         SqlQuery cdsMsg = new SqlQuery(this);
-        cdsMsg.add("select * from %s", SystemTable.get(SystemTable.getUserMessages));
+        cdsMsg.add("select * from %s", systemTable.getUserMessages());
         cdsMsg.add("where UID_='%s'", msgId);
         cdsMsg.open();
         if (cdsMsg.eof()) {

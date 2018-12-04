@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cn.cerc.jbean.client.LocalService;
+import cn.cerc.jbean.core.Application;
 import cn.cerc.jdb.core.DataSet;
 import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.core.TDate;
@@ -233,9 +234,9 @@ public class BookOptions {
 
         try (MemoryBuffer buff = new MemoryBuffer(BufferType.getVineOptions, handle.getCorpNo(), ACode)) {
             if (buff.isNull()) {
+                SystemTable systemTable = Application.getBean("systemTable", SystemTable.class);
                 BuildQuery f = new BuildQuery(handle);
-
-                f.add("select Value_ from %s ", SystemTable.get(SystemTable.getBookOptions));
+                f.add("select Value_ from %s ", systemTable.getBookOptions());
                 f.byField("CorpNo_", handle.getCorpNo());
                 f.byField("Code_", ACode);
                 f.open();
@@ -309,10 +310,10 @@ public class BookOptions {
         // String result = getOption(owner, paramKey, "201301";
         try (MemoryBuffer buff = new MemoryBuffer(BufferType.getVineOptions, handle.getCorpNo(), paramKey)) {
             if (buff.isNull() || buff.getString("Value_").equals("")) {
+                SystemTable systemTable = Application.getBean("systemTable", SystemTable.class);
                 BuildQuery f = new BuildQuery(handle);
-
                 String corpNo = handle.getCorpNo();
-                f.add("select * from %s ", SystemTable.get(SystemTable.getBookOptions));
+                f.add("select * from %s ", systemTable.getBookOptions());
                 f.byField("CorpNo_", corpNo);
                 f.byField("Code_", paramKey);
                 SqlQuery ds = f.open();
@@ -342,11 +343,11 @@ public class BookOptions {
 
     // 从系统帐套中取开帐日期
     private static TDate getBookCreateDate(IHandle handle) {
+        SystemTable systemTable = Application.getBean("systemTable", SystemTable.class);
         BuildQuery f = new BuildQuery(handle);
-
         String corpNo = handle.getCorpNo();
         f.byField("CorpNo_", corpNo);
-        f.add("select AppDate_ from %s", SystemTable.get(SystemTable.getBookInfo));
+        f.add("select AppDate_ from %s", systemTable.getBookInfo());
         SqlQuery ds = f.open();
         if (ds.size() == 0)
             throw new RuntimeException(String.format("没有找到帐套：%s", corpNo));
@@ -363,10 +364,10 @@ public class BookOptions {
 
     // 增加账套参数
     public void appendToCorpOption(String corpNo, String paramKey, String def) {
+        SystemTable systemTable = Application.getBean("systemTable", SystemTable.class);
         SqlQuery cdsTmp = new SqlQuery(handle);
-
-        cdsTmp.add("select * from %s where CorpNo_=N'%s' and Code_='%s' ", SystemTable.get(SystemTable.getBookOptions),
-                corpNo, paramKey);
+        cdsTmp.add("select * from %s where CorpNo_=N'%s' and Code_='%s' ", systemTable.getBookOptions(), corpNo,
+                paramKey);
         cdsTmp.open();
         if (!cdsTmp.eof())
             return;

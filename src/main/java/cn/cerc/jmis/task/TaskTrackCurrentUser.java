@@ -1,12 +1,14 @@
 package cn.cerc.jmis.task;
 
-import cn.cerc.jbean.other.SystemTable;
+import org.springframework.stereotype.Component;
+
 import cn.cerc.jdb.core.TDateTime;
 import cn.cerc.jdb.mysql.SqlSession;
 
 /**
  * 清理在线用户记录表
  */
+@Component
 public class TaskTrackCurrentUser extends AbstractTask {
 
     @Override
@@ -16,12 +18,12 @@ public class TaskTrackCurrentUser extends AbstractTask {
 
         // 删除超过100天的登录记录
         StringBuffer sql1 = new StringBuffer();
-        sql1.append(String.format("delete from %s where datediff(now(),LoginTime_)>100", SystemTable.getCurrentUser));
+        sql1.append(String.format("delete from %s where datediff(now(),LoginTime_)>100", systemTable.getCurrentUser()));
         conn.execute(sql1.toString());
 
         // 清除所有未正常登录的用户记录
         StringBuffer sql2 = new StringBuffer();
-        sql2.append(String.format("update %s set Viability_=-1,LogoutTime_='%s' ", SystemTable.getCurrentUser,
+        sql2.append(String.format("update %s set Viability_=-1,LogoutTime_='%s' ", systemTable.getCurrentUser(),
                 TDateTime.Now()));
 
         // 在线达24小时以上的用户
