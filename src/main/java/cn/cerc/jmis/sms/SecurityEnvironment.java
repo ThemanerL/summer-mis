@@ -2,10 +2,9 @@ package cn.cerc.jmis.sms;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import cn.cerc.jbean.core.AbstractHandle;
+import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.core.DataValidateException;
 import cn.cerc.jbean.form.IForm;
 import cn.cerc.jbean.other.SystemTable;
@@ -15,11 +14,8 @@ import cn.cerc.jmis.form.AbstractForm;
 import cn.cerc.jmis.language.R;
 import cn.cerc.jmis.page.AbstractJspPage;
 
-@Component
 public class SecurityEnvironment {
     private static final Logger log = LoggerFactory.getLogger(SecurityEnvironment.class);
-    @Autowired
-    private SystemTable systemTable;
 
     // 用于Form中，向UI(jsp)传递当前是否安全，若不安全则显示输入验证码画面
     public boolean check(AbstractJspPage jspPage) {
@@ -75,6 +71,7 @@ public class SecurityEnvironment {
 
         }
 
+        SystemTable systemTable = Application.getBean("systemTable", SystemTable.class);
         SqlQuery ds2 = new SqlQuery(form.getHandle());
         ds2.add("select * from %s", systemTable.getSecurityMobile());
         ds2.add("where mobile_='%s'", mobile);
@@ -114,7 +111,8 @@ public class SecurityEnvironment {
         if (securityCode == null) {
             DataValidateException.stopRun(R.asString(form, "关键操作，请输入安全手机的验证码"), true);
         }
-        PhoneVerify mv = new PhoneVerify(form).init();
+        PhoneVerify mv = new PhoneVerify(form);
+        mv.init();
         String mobile = mv.getMobile();
         switch (mv.checkVerify(securityCode)) {
         case PASS:
@@ -138,6 +136,7 @@ public class SecurityEnvironment {
         if ("".equals(mobile)) {
             return;
         }
+        SystemTable systemTable = Application.getBean("systemTable", SystemTable.class);
         if (!mobile.startsWith("+")) {
             SqlQuery ds = new SqlQuery(form.getHandle());
             ds.add("select countryCode_ from %s", systemTable.getUserInfo());
@@ -184,6 +183,7 @@ public class SecurityEnvironment {
     }
 
     public String getUserSecuirtyMobile(IForm form) {
+        SystemTable systemTable = Application.getBean("systemTable", SystemTable.class);
         SqlQuery ds1 = new SqlQuery(form.getHandle());
         ds1.add("SELECT mobile_,securityMobile_,countryCode_ FROM %s", systemTable.getUserInfo());
         ds1.add("WHERE id_='%s'", form.getHandle().getUserCode());

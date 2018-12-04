@@ -28,6 +28,10 @@ public class PhoneVerify {
     private String message = "";
     private int expires = 900; // 验证码有效时间，单位：秒
 
+    public PhoneVerify(IHandle handle) {
+        this.handle = handle;
+    }
+
     public PhoneVerify(IHandle handle, String mobile) {
         this.handle = handle;
         this.init(mobile);
