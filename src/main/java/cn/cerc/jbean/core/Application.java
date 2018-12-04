@@ -7,7 +7,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import cn.cerc.jbean.form.IForm;
-import cn.cerc.jbean.tools.AppLoginManage;
 import cn.cerc.jdb.core.IHandle;
 
 public class Application {
@@ -46,12 +45,6 @@ public class Application {
     public static ApplicationContext getContext() {
         init();
         return context;
-    }
-
-    @Deprecated // 请改使用getAppConfig
-    public static AppConfig getConfig() {
-        init();
-        return appConfig;
     }
 
     public static AppConfig getAppConfig() {
@@ -94,7 +87,7 @@ public class Application {
         IService bean = context.getBean(serviceCode, IService.class);
         if (handle != null)
             bean.init(handle);
-        
+
         return bean;
     }
 
