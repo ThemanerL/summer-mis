@@ -4,11 +4,8 @@ import static cn.cerc.jdb.other.utils.copy;
 
 import java.math.BigInteger;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import cn.cerc.jbean.core.CustomService;
 import cn.cerc.jbean.other.BufferType;
-import cn.cerc.jbean.other.SystemTable;
 import cn.cerc.jdb.cache.Redis;
 import cn.cerc.jdb.core.Record;
 import cn.cerc.jdb.core.TDateTime;
@@ -21,8 +18,6 @@ import cn.cerc.jmis.queue.AsyncService;
 
 //用户消息操作
 public class SvrUserMessages extends CustomService {
-    @Autowired
-    private SystemTable systemTable;
 
     /**
      * @return 取出所有的等待处理的消息列表

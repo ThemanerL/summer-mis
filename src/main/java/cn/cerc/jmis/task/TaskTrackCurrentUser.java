@@ -1,9 +1,7 @@
 package cn.cerc.jmis.task;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import cn.cerc.jbean.other.SystemTable;
 import cn.cerc.jdb.core.TDateTime;
 import cn.cerc.jdb.mysql.SqlSession;
 
@@ -12,8 +10,6 @@ import cn.cerc.jdb.mysql.SqlSession;
  */
 @Component
 public class TaskTrackCurrentUser extends AbstractTask {
-    @Autowired
-    private SystemTable systemTable;
 
     @Override
     public void execute() {

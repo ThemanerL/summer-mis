@@ -11,11 +11,11 @@ import java.util.TreeSet;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.google.gson.Gson;
 
+import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.other.SystemTable;
 import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.mysql.SqlQuery;
@@ -27,8 +27,6 @@ import cn.cerc.jdb.mysql.SqlQuery;
 public class ExportChinese {
     private static final Logger log = LoggerFactory.getLogger(ExportChinese.class);
     private Set<String> items = new TreeSet<>();
-    @Autowired
-    private SystemTable systemTable;
 
     /**
      * 扫描指定路径的java文件
@@ -75,6 +73,7 @@ public class ExportChinese {
      * @param handle 上下文环境
      */
     public void writeDict(IHandle handle) {
+        SystemTable systemTable = Application.getBean("systemTable", SystemTable.class);
         SqlQuery ds = new SqlQuery(handle);
         ds.add("select * from %s", systemTable.getLangDict());
         ds.open();

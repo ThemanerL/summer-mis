@@ -8,8 +8,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Ignore;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
+import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.core.DataValidateException;
 import cn.cerc.jbean.core.ServiceException;
 import cn.cerc.jbean.other.BufferType;
@@ -21,8 +21,6 @@ import cn.cerc.jdb.mysql.SqlQuery;
 
 public class SvrUserLoginTest {
     // private static final Logger log = Logger.getLogger(TAppLoginTest.class);
-    @Autowired
-    private SystemTable systemTable;
 
     // 测试帐号找不到时的提示
     @Test(expected = ServiceException.class)
@@ -74,6 +72,7 @@ public class SvrUserLoginTest {
     @Test
     @Ignore(value = "此处用于测试在5分钟内不允许重复申请验证码，耗时很长")
     public void test_sendVerifyCode() throws InterruptedException, DataValidateException {
+        SystemTable systemTable = Application.getBean("systemTable", SystemTable.class);
         String corpNo = "911001";
         String userCode = "91100123";
         String deviceId = "TEST";

@@ -2,7 +2,6 @@ package cn.cerc.jmis.services;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import cn.cerc.jbean.client.LocalService;
@@ -14,7 +13,6 @@ import cn.cerc.jbean.core.Webfunc;
 import cn.cerc.jbean.other.BookVersion;
 import cn.cerc.jbean.other.BufferType;
 import cn.cerc.jbean.other.MemoryBuffer;
-import cn.cerc.jbean.other.SystemTable;
 import cn.cerc.jdb.core.DataSet;
 import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.core.MD5;
@@ -39,8 +37,6 @@ public class SvrUserLogin extends CustomService {
     private static String GuidNull = "";
     private static int Max_Viability = 1;
     public static int TimeOut = 5; // 效验代码超时时间（分钟）
-    @Autowired
-    private SystemTable systemTable;
 
     /*
      * 用户登录入口

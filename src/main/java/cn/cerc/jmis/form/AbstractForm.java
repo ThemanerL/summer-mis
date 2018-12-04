@@ -6,10 +6,13 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import cn.cerc.jbean.core.AbstractHandle;
 import cn.cerc.jbean.core.CustomHandle;
 import cn.cerc.jbean.form.IClient;
 import cn.cerc.jbean.form.IForm;
+import cn.cerc.jbean.other.SystemTable;
 import cn.cerc.jmis.core.ClientDevice;
 
 public abstract class AbstractForm extends AbstractHandle implements IForm {
@@ -20,6 +23,8 @@ public abstract class AbstractForm extends AbstractHandle implements IForm {
     private String caption;
     private String parent;
     private String permission;
+    @Autowired
+    public SystemTable systemTable;
 
     public Map<String, String> getParams() {
         return params;

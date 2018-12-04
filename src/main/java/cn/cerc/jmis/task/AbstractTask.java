@@ -2,10 +2,12 @@ package cn.cerc.jmis.task;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import cn.cerc.jbean.core.AbstractHandle;
 import cn.cerc.jbean.core.AppHandle;
 import cn.cerc.jbean.core.Application;
+import cn.cerc.jbean.other.SystemTable;
 
 public abstract class AbstractTask extends AbstractHandle implements Runnable {
     private static final Logger log = LoggerFactory.getLogger(AbstractTask.class);
@@ -13,6 +15,8 @@ public abstract class AbstractTask extends AbstractHandle implements Runnable {
     /** 缓存时间/秒 **/
     private int interval;
     private String time = "";
+    @Autowired
+    public SystemTable systemTable;
 
     public String getDescribe() {
         return describe;

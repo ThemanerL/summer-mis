@@ -1,9 +1,6 @@
 package cn.cerc.jmis.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import cn.cerc.jbean.core.CustomService;
-import cn.cerc.jbean.other.SystemTable;
 import cn.cerc.jdb.core.DataSet;
 import cn.cerc.jdb.core.Record;
 import cn.cerc.jdb.core.TDateTime;
@@ -11,8 +8,6 @@ import cn.cerc.jdb.mysql.BuildQuery;
 import cn.cerc.jdb.mysql.SqlQuery;
 
 public class SvrCustomMenus extends CustomService {
-    @Autowired
-    private SystemTable systemTable;
 
     public boolean append() {
         DataSet dataIn = getDataIn();

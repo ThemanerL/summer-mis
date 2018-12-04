@@ -2,11 +2,9 @@ package cn.cerc.jmis.queue;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import cn.cerc.jbean.client.LocalService;
 import cn.cerc.jbean.core.BookHandle;
-import cn.cerc.jbean.other.SystemTable;
 import cn.cerc.jdb.core.ServerConfig;
 import cn.cerc.jdb.mysql.BatchScript;
 import cn.cerc.jdb.queue.QueueMode;
@@ -18,8 +16,6 @@ import net.sf.json.JSONObject;
 
 public class ProcessQueue extends AbstractTask {
     private static final Logger log = LoggerFactory.getLogger(ProcessQueue.class);
-    @Autowired
-    private SystemTable systemTable;
 
     @Override
     public void execute() throws Exception {

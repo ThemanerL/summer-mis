@@ -2,14 +2,12 @@ package cn.cerc.jbean.services;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.core.CustomHandle;
 import cn.cerc.jbean.core.CustomService;
 import cn.cerc.jbean.core.DataValidateException;
 import cn.cerc.jbean.core.ServiceException;
-import cn.cerc.jbean.other.SystemTable;
 import cn.cerc.jbean.other.UserNotFindException;
 import cn.cerc.jdb.core.Record;
 import cn.cerc.jdb.core.TDateTime;
@@ -17,8 +15,6 @@ import cn.cerc.jdb.mysql.SqlQuery;
 
 public class AppSessionRestore extends CustomService {
     private static final Logger log = LoggerFactory.getLogger(AppSessionRestore.class);
-    @Autowired
-    private SystemTable systemTable;
 
     public boolean byUserCode() throws ServiceException, UserNotFindException {
         Record headIn = getDataIn().getHead();
