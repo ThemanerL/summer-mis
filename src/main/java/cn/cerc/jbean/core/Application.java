@@ -56,8 +56,11 @@ public class Application {
 
     public static IHandle getHandle() {
         init();
+        if (context.containsBean("handle"))
+            return context.getBean("handle", IHandle.class);
+
         if (!context.containsBean("AppHandle"))
-            throw new RuntimeException(String.format("%s 中没有找到 bean: AppHandle", xmlFile));
+            throw new RuntimeException(String.format("%s 中没有找到 bean: handle 或  AppHandle", xmlFile));
 
         return context.getBean("AppHandle", IHandle.class);
     }

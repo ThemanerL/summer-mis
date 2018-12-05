@@ -1,15 +1,18 @@
-package cn.cerc.jbean.core;
+package cn.cerc.mis.core;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 
+import cn.cerc.db.core.MysqlConnection;
 import cn.cerc.jbean.client.LocalService;
+import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.other.BufferType;
 import cn.cerc.jbean.other.MemoryBuffer;
 import cn.cerc.jdb.core.IConnection;
@@ -17,16 +20,20 @@ import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.core.ISession;
 import cn.cerc.jdb.core.Record;
 import cn.cerc.jdb.mysql.SqlSession;
+import cn.cerc.jdb.queue.QueueConnection;
 
 @Component
 @Scope(WebApplicationContext.SCOPE_REQUEST)
-@Deprecated // 请改使用 HandleDefault
-public class CustomHandle implements IHandle, AutoCloseable {
-    private static final Logger log = LoggerFactory.getLogger(CustomHandle.class);
+public class HandleDefault implements IHandle, AutoCloseable {
+    private static final Logger log = LoggerFactory.getLogger(HandleDefault.class);
     private Map<String, IConnection> connections = new HashMap<>();
     private Map<String, Object> params = new HashMap<>();
+    @Autowired
+    private MysqlConnection mysqlConnection;
+    @Autowired
+    private QueueConnection queueConnection;
 
-    public CustomHandle() {
+    public HandleDefault() {
         params.put(Application.sessionId, "");
         params.put(Application.ProxyUsers, "");
         params.put(Application.clientIP, "0.0.0.0");
@@ -145,6 +152,12 @@ public class CustomHandle implements IHandle, AutoCloseable {
         if (key == null) {
             return this;
         }
+
+        if ("sqlConnection".equals(key))
+            return mysqlConnection;
+
+        if ("aliyunQueueSession".equals(key))
+            return queueConnection;
 
         Object result = params.get(key);
         if (result == null && !params.containsKey(key) && connections.containsKey(key)) {
