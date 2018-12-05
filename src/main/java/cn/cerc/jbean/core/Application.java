@@ -11,15 +11,15 @@ import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.core.ServerConfig;
 
 public class Application {
-//    private static final Logger log = LoggerFactory.getLogger(Application.class);
+    // private static final Logger log = LoggerFactory.getLogger(Application.class);
     private static String xmlFile = "classpath:application.xml";
     private static ApplicationContext context;
     private static AppConfig appConfig;
 
-//    private static ApplicationContext serviceItems;
-//    private static String serviceFile = "classpath:app-services.xml";
-//    private static ApplicationContext reportItems;
-//    private static String reportFile = "classpath:app-report.xml";
+    // private static ApplicationContext serviceItems;
+    // private static String serviceFile = "classpath:app-services.xml";
+    // private static ApplicationContext reportItems;
+    // private static String reportFile = "classpath:app-report.xml";
 
     // Tomcat JSESSION.ID
     public static final String sessionId = "sessionId";
@@ -88,14 +88,24 @@ public class Application {
         return bean;
     }
 
+    public static <T> T get(IHandle handle, String beanId, Class<T> requiredType) {
+        init();
+        T bean = context.getBean(beanId, requiredType);
+        if (bean != null && handle != null) {
+            if (bean instanceof IService)
+                ((IService) bean).init(handle);
+        }
+        return bean;
+    }
+
     public static IForm getForm(HttpServletRequest req, HttpServletResponse resp, String formId) {
         if (formId == null || formId.equals("") || formId.equals("service"))
             return null;
 
         init();
 
-//        ApplicationContext applicationContext = WebApplicationContextUtils
-//                .getRequiredWebApplicationContext(req.getServletContext());
+        // ApplicationContext applicationContext = WebApplicationContextUtils
+        // .getRequiredWebApplicationContext(req.getServletContext());
 
         if (!context.containsBean(formId))
             throw new RuntimeException(String.format("form %s not find!", formId));
