@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.WebApplicationContext;
 
+import cn.cerc.db.core.MysqlConnection;
 import cn.cerc.jbean.core.Application;
-import cn.cerc.jbean.core.CustomHandle;
 import cn.cerc.jbean.core.IPassport;
 import cn.cerc.jbean.form.IForm;
 import cn.cerc.jbean.form.IPage;
-import cn.cerc.jdb.mysql.SqlConnection;
+import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.mysql.SqlSession;
 
 @Controller
@@ -35,8 +35,8 @@ public class StartSample implements ApplicationContextAware {
     @Autowired
     private HttpServletResponse response;
     @Autowired
-    @Qualifier("customHandle")
-    private CustomHandle handle;
+    @Qualifier("handle")
+    private IHandle handle;
     @Autowired
     @Qualifier("clientDevice")
     private ClientDevice clientDevice;
@@ -46,8 +46,8 @@ public class StartSample implements ApplicationContextAware {
     @Autowired
     private IPassport passport;
     @Autowired
-    @Qualifier("sqlConnection")
-    private SqlConnection sqlConnection;
+    @Qualifier("mysqlConnection")
+    private MysqlConnection sqlConnection;
 
     @RequestMapping("/{formId}.{funcId}")
     public String execute(@PathVariable String formId, @PathVariable String funcId) {

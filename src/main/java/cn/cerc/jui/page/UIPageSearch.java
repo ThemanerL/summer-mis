@@ -10,7 +10,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 import cn.cerc.jbean.core.Application;
-import cn.cerc.jbean.core.CustomHandle;
 import cn.cerc.jbean.form.IForm;
 import cn.cerc.jbean.other.MemoryBuffer;
 import cn.cerc.jbean.rds.PassportRecord;
@@ -30,6 +29,7 @@ import cn.cerc.jui.parts.RightMenus;
 import cn.cerc.jui.parts.UIComponent;
 import cn.cerc.jui.parts.UIFormHorizontal;
 import cn.cerc.jui.parts.UIFormVertical;
+import cn.cerc.mis.core.HandleDefault;
 
 /**
  * 主体子页面
@@ -69,7 +69,7 @@ public class UIPageSearch extends AbstractJspPage {
             this.put("_operaPages_", operaPages);
         }
         IForm form = this.getForm();
-        CustomHandle sess = (CustomHandle) form.getHandle().getProperty(null);
+        HandleDefault sess = (HandleDefault) form.getHandle().getProperty(null);
         if (sess.logon()) {
             List<UrlRecord> rightMenus = getHeader().getRightMenus();
             RightMenus menus = Application.getBean("RightMenus", RightMenus.class);

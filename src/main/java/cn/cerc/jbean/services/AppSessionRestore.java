@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cn.cerc.jbean.core.Application;
-import cn.cerc.jbean.core.CustomHandle;
 import cn.cerc.jbean.core.CustomService;
 import cn.cerc.jbean.core.DataValidateException;
 import cn.cerc.jbean.core.ServiceException;
@@ -12,6 +11,7 @@ import cn.cerc.jbean.other.UserNotFindException;
 import cn.cerc.jdb.core.Record;
 import cn.cerc.jdb.core.TDateTime;
 import cn.cerc.jdb.mysql.SqlQuery;
+import cn.cerc.mis.core.HandleDefault;
 
 public class AppSessionRestore extends CustomService {
     private static final Logger log = LoggerFactory.getLogger(AppSessionRestore.class);
@@ -48,7 +48,7 @@ public class AppSessionRestore extends CustomService {
         cdsCurrent.open();
         if (cdsCurrent.eof()) {
             log.warn(String.format("token %s 没有找到！", token));
-            CustomHandle sess = (CustomHandle) this.getProperty(null);
+            HandleDefault sess = (HandleDefault) this.getProperty(null);
             sess.setProperty(Application.token, null);
             return false;
         }
@@ -61,7 +61,7 @@ public class AppSessionRestore extends CustomService {
         cdsUser.open();
         if (cdsUser.eof()) {
             log.warn(String.format("userId %s 没有找到！", userId));
-            CustomHandle sess = (CustomHandle) this.getProperty(null);
+            HandleDefault sess = (HandleDefault) this.getProperty(null);
             sess.setProperty(Application.token, null);
             return false;
         }

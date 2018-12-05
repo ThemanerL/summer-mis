@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import cn.cerc.db.core.ServerConfig;
 import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.core.IService;
 import cn.cerc.jbean.core.IStatus;
@@ -20,7 +21,6 @@ import cn.cerc.jdb.core.DataSet;
 import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.core.MD5;
 import cn.cerc.jdb.core.Record;
-import cn.cerc.jdb.core.ServerConfig;
 import cn.cerc.jdb.core.ServerVersion;
 
 public class LocalService implements IServiceProxy {

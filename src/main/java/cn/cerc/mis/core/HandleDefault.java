@@ -6,10 +6,11 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.WebApplicationContext;
 
+import cn.cerc.db.core.AliyunQueueConnection;
 import cn.cerc.db.core.MysqlConnection;
 import cn.cerc.jbean.client.LocalService;
 import cn.cerc.jbean.core.Application;
@@ -20,10 +21,11 @@ import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.core.ISession;
 import cn.cerc.jdb.core.Record;
 import cn.cerc.jdb.mysql.SqlSession;
-import cn.cerc.jdb.queue.QueueConnection;
+import cn.cerc.jdb.queue.QueueSession;
 
 @Component
-@Scope(WebApplicationContext.SCOPE_REQUEST)
+// @Scope(WebApplicationContext.SCOPE_REQUEST)
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class HandleDefault implements IHandle, AutoCloseable {
     private static final Logger log = LoggerFactory.getLogger(HandleDefault.class);
     private Map<String, IConnection> connections = new HashMap<>();
@@ -31,7 +33,7 @@ public class HandleDefault implements IHandle, AutoCloseable {
     @Autowired
     private MysqlConnection mysqlConnection;
     @Autowired
-    private QueueConnection queueConnection;
+    private AliyunQueueConnection queueConnection;
 
     public HandleDefault() {
         params.put(Application.sessionId, "");
@@ -156,8 +158,11 @@ public class HandleDefault implements IHandle, AutoCloseable {
         if ("sqlConnection".equals(key))
             return mysqlConnection;
 
-        if ("aliyunQueueSession".equals(key))
-            return queueConnection;
+        if (QueueSession.sessionId.equals(key))
+            return queueConnection.getSession();
+
+        if (SqlSession.sessionId.equals(key))
+            return mysqlConnection.getSession();
 
         Object result = params.get(key);
         if (result == null && !params.containsKey(key) && connections.containsKey(key)) {

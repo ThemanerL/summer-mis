@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cn.cerc.jbean.core.Application;
-import cn.cerc.jbean.core.CustomHandle;
 import cn.cerc.jbean.form.IForm;
 import cn.cerc.jbean.other.BufferType;
 import cn.cerc.jbean.other.ISystemTable;
@@ -19,6 +18,7 @@ import cn.cerc.jdb.other.utils;
 import cn.cerc.jmis.core.ClientDevice;
 import cn.cerc.jmis.core.RequestData;
 import cn.cerc.jmis.services.SvrUserLogin;
+import cn.cerc.mis.core.HandleDefault;
 
 public class SvrAutoLogin {
     private static final Logger log = LoggerFactory.getLogger(SvrAutoLogin.class);
@@ -49,7 +49,7 @@ public class SvrAutoLogin {
         }
 
         try (Transaction tx = new Transaction(handle)) {
-            CustomHandle sess = (CustomHandle) handle.getProperty(null);
+            HandleDefault sess = (HandleDefault) handle.getProperty(null);
             String sql = String.format(
                     "update %s set LastTime_=now(),Used_=1 where UserCode_='%s' and MachineCode_='%s'",
                     systemTable.getDeviceVerify(), userCode, deviceId);

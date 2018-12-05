@@ -17,8 +17,9 @@ import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 
+import cn.cerc.db.core.IAppConfig;
+import cn.cerc.db.core.ServerConfig;
 import cn.cerc.jbean.client.LocalService;
-import cn.cerc.jbean.core.AppConfig;
 import cn.cerc.jbean.core.AppHandle;
 import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.core.PageException;
@@ -27,7 +28,6 @@ import cn.cerc.jbean.form.IPage;
 import cn.cerc.jbean.other.BufferType;
 import cn.cerc.jbean.other.MemoryBuffer;
 import cn.cerc.jbean.tools.IAppLoginManage;
-import cn.cerc.jdb.core.ServerConfig;
 import cn.cerc.jmis.form.Webpage;
 import cn.cerc.jmis.page.JspPage;
 import cn.cerc.jmis.page.RedirectPage;
@@ -131,7 +131,7 @@ public class StartForms implements Filter {
     }
 
     // 取得页面默认设置，如出错时指向哪个页面
-    protected AppConfig createConfig() {
+    protected IAppConfig createConfig() {
         return Application.getAppConfig();
     }
 
@@ -346,7 +346,7 @@ public class StartForms implements Filter {
                     url = args[2];
                 else {
                     String sid = (String) req.getAttribute(RequestData.appSession_Key);
-                    AppConfig conf = Application.getAppConfig();
+                    IAppConfig conf = Application.getAppConfig();
                     if (sid != null && !"".equals(sid))
                         url = conf.getFormDefault();
                     else

@@ -6,15 +6,15 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
+import cn.cerc.db.core.IAppConfig;
+import cn.cerc.db.core.ServerConfig;
 import cn.cerc.jbean.form.IForm;
 import cn.cerc.jdb.core.IHandle;
-import cn.cerc.jdb.core.ServerConfig;
 
 public class Application {
     // private static final Logger log = LoggerFactory.getLogger(Application.class);
     private static String xmlFile = "classpath:application.xml";
     private static ApplicationContext context;
-    private static AppConfig appConfig;
 
     // private static ApplicationContext serviceItems;
     // private static String serviceFile = "classpath:app-services.xml";
@@ -49,20 +49,32 @@ public class Application {
         return context;
     }
 
-    public static AppConfig getAppConfig() {
+    public static IAppConfig getAppConfig() {
         init();
-        return appConfig;
+
+        if (context.containsBean("AppConfig")) // 请不要再使用这个beanId
+            return context.getBean("AppConfig", IAppConfig.class);
+
+        if (context.containsBean("appConfig"))
+            return context.getBean("appConfig", IAppConfig.class);
+        else
+            throw new RuntimeException(String.format("%s 中没有找到 bean: appConfig", xmlFile));
     }
 
     public static IHandle getHandle() {
         init();
+
+        if (context.containsBean("AppHandle")) // 请不要再使用这个beanId
+            return context.getBean("AppHandle", IHandle.class);
+
         if (context.containsBean("handle"))
             return context.getBean("handle", IHandle.class);
 
-        if (!context.containsBean("AppHandle"))
-            throw new RuntimeException(String.format("%s 中没有找到 bean: handle 或  AppHandle", xmlFile));
+        if (context.containsBean("handleDefault"))
+            return context.getBean("handleDefault", IHandle.class);
+        else
+            throw new RuntimeException(String.format("%s 中没有找到 bean: handle 及  handleDefault", xmlFile));
 
-        return context.getBean("AppHandle", IHandle.class);
     }
 
     public static IPassport getPassport(IHandle handle) {
@@ -133,12 +145,9 @@ public class Application {
         return form;
     }
 
-    private static void init() {
+    private static synchronized void init() {
         if (context == null) {
             context = new FileSystemXmlApplicationContext(xmlFile);
-            appConfig = context.getBean("AppConfig", AppConfig.class);
-            if (appConfig == null)
-                throw new RuntimeException(String.format("%s 中没有找到 bean: AppConfig", xmlFile));
         }
     }
 

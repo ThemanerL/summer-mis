@@ -11,7 +11,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import cn.cerc.jbean.core.AppConfig;
+import cn.cerc.db.core.IAppConfig;
 import cn.cerc.jbean.core.AppHandle;
 import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.form.IForm;
@@ -20,6 +20,7 @@ import cn.cerc.jbean.form.IPage;
 public class StartApp implements Filter {
     // private static final Logger log = Logger.getLogger(AppStart.class);
 
+    @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
@@ -35,7 +36,7 @@ public class StartApp implements Filter {
                 req.getSession().setAttribute(ClientDevice.deviceType_key,
                         req.getParameter(ClientDevice.deviceType_key));
 
-            AppConfig conf = Application.getAppConfig();
+            IAppConfig conf = Application.getAppConfig();
             resp.sendRedirect(String.format("/%s/%s", conf.getPathForms(), conf.getFormWelcome()));
             return;
         } else if (uri.equals("/MobileConfig")) {

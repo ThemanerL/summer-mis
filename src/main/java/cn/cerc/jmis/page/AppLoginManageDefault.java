@@ -12,14 +12,14 @@ import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 
+import cn.cerc.db.core.IAppConfig;
+import cn.cerc.db.core.ServerConfig;
 import cn.cerc.jbean.client.LocalService;
-import cn.cerc.jbean.core.AppConfig;
 import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.form.IForm;
 import cn.cerc.jbean.tools.IAppLoginManage;
 import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.core.Record;
-import cn.cerc.jdb.core.ServerConfig;
 import cn.cerc.jdb.core.Utils;
 import cn.cerc.jmis.core.ClientDevice;
 import cn.cerc.jmis.core.RequestData;
@@ -46,11 +46,11 @@ public class AppLoginManageDefault extends AbstractJspPage implements IAppLoginM
     @Override
     public void init(IForm form) {
         this.setForm(form);
-        AppConfig conf = Application.getAppConfig();
+        IAppConfig conf = Application.getAppConfig();
         this.setJspFile(conf.getJspLoginFile());
         this.add("homePage", conf.getFormWelcome());
         this.add("needVerify", "false");
-        ServerConfig config = new ServerConfig();
+        ServerConfig config = ServerConfig.getInstance();
         String logoUrl = config.getProperty("vine.mall.logoUrl", "");
         if (!"".equals(logoUrl)) {
             this.add("logoUrl", logoUrl);

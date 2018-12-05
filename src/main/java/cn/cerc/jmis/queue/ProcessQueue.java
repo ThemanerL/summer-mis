@@ -3,9 +3,9 @@ package cn.cerc.jmis.queue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import cn.cerc.db.core.ServerConfig;
 import cn.cerc.jbean.client.LocalService;
 import cn.cerc.jbean.core.BookHandle;
-import cn.cerc.jdb.core.ServerConfig;
 import cn.cerc.jdb.mysql.BatchScript;
 import cn.cerc.jdb.queue.QueueMode;
 import cn.cerc.jdb.queue.QueueQuery;

@@ -4,9 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import cn.cerc.db.core.ServerConfig;
 import cn.cerc.jbean.client.LocalService;
 import cn.cerc.jbean.core.Application;
-import cn.cerc.jbean.core.CustomHandle;
 import cn.cerc.jbean.core.CustomService;
 import cn.cerc.jbean.core.DataValidateException;
 import cn.cerc.jbean.core.Webfunc;
@@ -17,7 +17,6 @@ import cn.cerc.jdb.core.DataSet;
 import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.core.MD5;
 import cn.cerc.jdb.core.Record;
-import cn.cerc.jdb.core.ServerConfig;
 import cn.cerc.jdb.core.TDateTime;
 import cn.cerc.jdb.jiguang.ClientType;
 import cn.cerc.jdb.mysql.BuildQuery;
@@ -27,6 +26,7 @@ import cn.cerc.jdb.mysql.Transaction;
 import cn.cerc.jdb.oss.OssSession;
 import cn.cerc.jdb.other.utils;
 import cn.cerc.jmis.language.R;
+import cn.cerc.mis.core.HandleDefault;
 
 /**
  * 用于用户登录
@@ -53,7 +53,7 @@ public class SvrUserLogin extends CustomService {
             device_name = "unknow";
         }
 
-        CustomHandle sess = (CustomHandle) this.getProperty(null);
+        HandleDefault sess = (HandleDefault) this.getProperty(null);
         if (headIn.exists("ClientIP_")) {
             sess.setProperty(Application.clientIP, headIn.getString("ClientIP_"));
         } else {

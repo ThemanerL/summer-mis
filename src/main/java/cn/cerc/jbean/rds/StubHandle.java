@@ -1,15 +1,15 @@
 package cn.cerc.jbean.rds;
 
+import cn.cerc.db.core.AliyunQueueConnection;
+import cn.cerc.db.core.MysqlConnection;
+import cn.cerc.db.core.ServerConfig;
 import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.other.ISystemTable;
 import cn.cerc.jdb.core.IHandle;
-import cn.cerc.jdb.core.ServerConfig;
 import cn.cerc.jdb.jiguang.JiguangConnection;
 import cn.cerc.jdb.jiguang.JiguangSession;
-import cn.cerc.jdb.mysql.SqlConnection;
 import cn.cerc.jdb.mysql.SqlQuery;
 import cn.cerc.jdb.mysql.SqlSession;
-import cn.cerc.jdb.queue.QueueConnection;
 import cn.cerc.jdb.queue.QueueSession;
 
 public class StubHandle implements IHandle, AutoCloseable {
@@ -72,13 +72,13 @@ public class StubHandle implements IHandle, AutoCloseable {
             return null;
         Object obj = handle.getProperty(key);
         if (obj == null && SqlSession.sessionId.equals(key)) {
-            SqlConnection conn = new SqlConnection();
+            MysqlConnection conn = new MysqlConnection();
             conn.setConfig(ServerConfig.getInstance());
             obj = conn.getSession();
             handle.setProperty(key, obj);
         }
         if (obj == null && QueueSession.sessionId.equals(key)) {
-            QueueConnection conn = new QueueConnection();
+            AliyunQueueConnection conn = new AliyunQueueConnection();
             conn.setConfig(ServerConfig.getInstance());
             obj = conn.getSession();
             handle.setProperty(key, obj);

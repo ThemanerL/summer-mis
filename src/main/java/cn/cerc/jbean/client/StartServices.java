@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cn.cerc.jbean.core.AppConfig;
+import cn.cerc.db.core.IAppConfig;
 import cn.cerc.jbean.core.AppHandle;
 import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.core.IRestful;
@@ -54,7 +54,7 @@ public class StartServices extends HttpServlet {
     private void doProcess(String method, HttpServletRequest req, HttpServletResponse resp)
             throws UnsupportedEncodingException, IOException {
         String uri = req.getRequestURI();
-        AppConfig conf = Application.getAppConfig();
+        IAppConfig conf = Application.getAppConfig();
         if (!uri.startsWith("/" + conf.getPathServices()))
             return;
 
