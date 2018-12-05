@@ -4,7 +4,7 @@ import java.util.List;
 
 import cn.cerc.jdb.core.IHandle;
 
-public interface IAppMenus {
+public interface IAppMenu {
 
     // 返回系统菜单定义
     public MenuItem getItem(String menuId);
