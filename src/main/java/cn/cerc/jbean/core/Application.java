@@ -88,8 +88,13 @@ public class Application {
         return bean;
     }
 
-    public static <T> T get(IHandle handle, String beanId, Class<T> requiredType) {
+    public static <T> T get(IHandle handle, Class<T> requiredType) {
         init();
+
+        String[] items = requiredType.getName().split("\\.");
+        String itemId = items[items.length - 1];
+        String beanId = itemId.substring(0, 1).toLowerCase() + itemId.substring(1);
+
         T bean = context.getBean(beanId, requiredType);
         if (bean != null && handle != null) {
             if (bean instanceof IService)

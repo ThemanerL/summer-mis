@@ -22,24 +22,6 @@ public class CustomService extends AbstractHandle implements IService, IRestful 
     @Autowired
     public ISystemTable systemTable;
 
-    public CustomService() {
-        super();
-    }
-
-    public CustomService(IHandle handle) {
-        super();
-        this.init(handle);
-    }
-
-    public CustomService(CustomService owner, boolean refData) {
-        super();
-        this.init(owner);
-        if (refData) {
-            this.dataIn = owner.getDataIn();
-            this.dataOut = owner.getDataOut();
-        }
-    }
-
     @Override
     public void init(IHandle handle) {
         this.handle = handle;

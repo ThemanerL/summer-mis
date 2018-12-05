@@ -9,8 +9,8 @@ import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.core.CustomHandle;
 import cn.cerc.jbean.form.IForm;
 import cn.cerc.jbean.other.BufferType;
-import cn.cerc.jbean.other.MemoryBuffer;
 import cn.cerc.jbean.other.ISystemTable;
+import cn.cerc.jbean.other.MemoryBuffer;
 import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.core.TDateTime;
 import cn.cerc.jdb.mysql.SqlQuery;
@@ -72,8 +72,7 @@ public class SvrAutoLogin {
             }
 
             // 更新当前用户总数
-            SvrUserLogin svrUserLogin = new SvrUserLogin();
-            svrUserLogin.init(sess);
+            SvrUserLogin svrUserLogin = Application.get(sess, SvrUserLogin.class);
             svrUserLogin.updateCurrentUser("unknow", "", form.getClient().getLanguage());
 
             try (MemoryBuffer buff = new MemoryBuffer(BufferType.getSessionInfo, userId, deviceId)) {
@@ -85,8 +84,7 @@ public class SvrAutoLogin {
             }
 
             // 检查设备码
-            SvrUserLogin svrLogin = new SvrUserLogin();
-            svrLogin.init(handle);
+            SvrUserLogin svrLogin = Application.get(handle, SvrUserLogin.class);
             svrLogin.enrollMachineInfo(dsUser.getString("CorpNo_"), userCode, deviceId, "浏览器");
 
             // 设置登录信息
