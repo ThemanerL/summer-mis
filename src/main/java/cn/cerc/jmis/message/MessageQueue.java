@@ -1,8 +1,8 @@
 package cn.cerc.jmis.message;
 
+import cn.cerc.db.core.ServerConfig;
 import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.core.Record;
-import cn.cerc.jdb.core.ServerConfig;
 import cn.cerc.jdb.core.ServerVersion;
 import cn.cerc.jdb.queue.QueueDB;
 import cn.cerc.jdb.queue.QueueMode;
