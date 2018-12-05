@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 import com.google.gson.Gson;
 
 import cn.cerc.jbean.core.Application;
-import cn.cerc.jbean.other.SystemTable;
+import cn.cerc.jbean.other.ISystemTable;
 import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.mysql.SqlQuery;
 
@@ -73,7 +73,7 @@ public class ExportChinese {
      * @param handle 上下文环境
      */
     public void writeDict(IHandle handle) {
-        SystemTable systemTable = Application.getBean("systemTable", SystemTable.class);
+        ISystemTable systemTable = Application.getBean("systemTable", ISystemTable.class);
         SqlQuery ds = new SqlQuery(handle);
         ds.add("select * from %s", systemTable.getLangDict());
         ds.open();

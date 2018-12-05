@@ -72,7 +72,7 @@ public class HistoryRecord {
         default:
             mth = 0;
         }
-        SystemTable systemTable = Application.getBean("systemTable", SystemTable.class);
+        ISystemTable systemTable = Application.getBean("systemTable", ISystemTable.class);
         BatchScript bs = new BatchScript(handle);
         bs.add("insert into %s (CorpNo_,Level_,Log_,AppUser_,UpdateKey_) values ('%s',%d,'%s','%s','%s')",
                 systemTable.getUserLogs(), corpNo, mth, Utils.safeString(copy(log, 1, 80)), userCode, newGuid());

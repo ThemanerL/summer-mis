@@ -11,7 +11,7 @@ public class Memory_UserInfo {
     public static MemoryBuffer get(IHandle sess, String usercode) {
         MemoryBuffer buff = new MemoryBuffer(BufferType.getAccount, usercode);
         if (buff.isNull()) {
-            SystemTable systemTable = Application.getBean("systemTable", SystemTable.class);
+            ISystemTable systemTable = Application.getBean("systemTable", ISystemTable.class);
             SqlQuery ds = new SqlQuery(sess);
             ds.add("select a.Code_,a.Enabled_,a.Name_,a.SuperUser_,a.DiyRole_,a.RoleCode_,oi.Type_,a.ImageUrl_ ");
             ds.add("from %s a ", systemTable.getUserInfo());

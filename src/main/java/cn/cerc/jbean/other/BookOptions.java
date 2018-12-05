@@ -234,7 +234,7 @@ public class BookOptions {
 
         try (MemoryBuffer buff = new MemoryBuffer(BufferType.getVineOptions, handle.getCorpNo(), ACode)) {
             if (buff.isNull()) {
-                SystemTable systemTable = Application.getBean("systemTable", SystemTable.class);
+                ISystemTable systemTable = Application.getBean("systemTable", ISystemTable.class);
                 BuildQuery f = new BuildQuery(handle);
                 f.add("select Value_ from %s ", systemTable.getBookOptions());
                 f.byField("CorpNo_", handle.getCorpNo());
@@ -310,7 +310,7 @@ public class BookOptions {
         // String result = getOption(owner, paramKey, "201301";
         try (MemoryBuffer buff = new MemoryBuffer(BufferType.getVineOptions, handle.getCorpNo(), paramKey)) {
             if (buff.isNull() || buff.getString("Value_").equals("")) {
-                SystemTable systemTable = Application.getBean("systemTable", SystemTable.class);
+                ISystemTable systemTable = Application.getBean("systemTable", ISystemTable.class);
                 BuildQuery f = new BuildQuery(handle);
                 String corpNo = handle.getCorpNo();
                 f.add("select * from %s ", systemTable.getBookOptions());
@@ -343,7 +343,7 @@ public class BookOptions {
 
     // 从系统帐套中取开帐日期
     private static TDate getBookCreateDate(IHandle handle) {
-        SystemTable systemTable = Application.getBean("systemTable", SystemTable.class);
+        ISystemTable systemTable = Application.getBean("systemTable", ISystemTable.class);
         BuildQuery f = new BuildQuery(handle);
         String corpNo = handle.getCorpNo();
         f.byField("CorpNo_", corpNo);
@@ -364,7 +364,7 @@ public class BookOptions {
 
     // 增加账套参数
     public void appendToCorpOption(String corpNo, String paramKey, String def) {
-        SystemTable systemTable = Application.getBean("systemTable", SystemTable.class);
+        ISystemTable systemTable = Application.getBean("systemTable", ISystemTable.class);
         SqlQuery cdsTmp = new SqlQuery(handle);
         cdsTmp.add("select * from %s where CorpNo_=N'%s' and Code_='%s' ", systemTable.getBookOptions(), corpNo,
                 paramKey);

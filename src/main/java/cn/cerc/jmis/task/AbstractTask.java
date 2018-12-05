@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import cn.cerc.jbean.core.AbstractHandle;
 import cn.cerc.jbean.core.AppHandle;
 import cn.cerc.jbean.core.Application;
-import cn.cerc.jbean.other.SystemTable;
+import cn.cerc.jbean.other.ISystemTable;
 
 public abstract class AbstractTask extends AbstractHandle implements Runnable {
     private static final Logger log = LoggerFactory.getLogger(AbstractTask.class);
@@ -16,7 +16,7 @@ public abstract class AbstractTask extends AbstractHandle implements Runnable {
     private int interval;
     private String time = "";
     @Autowired
-    public SystemTable systemTable;
+    public ISystemTable systemTable;
 
     public String getDescribe() {
         return describe;

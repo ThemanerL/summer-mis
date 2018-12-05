@@ -1,6 +1,6 @@
 package cn.cerc.jbean.other;
 
-public interface SystemTable {
+public interface ISystemTable {
     // 帐套资料表
     public String getBookInfo(); // "OurInfo";
     // 帐套参数档

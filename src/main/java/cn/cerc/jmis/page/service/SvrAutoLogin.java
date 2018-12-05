@@ -10,7 +10,7 @@ import cn.cerc.jbean.core.CustomHandle;
 import cn.cerc.jbean.form.IForm;
 import cn.cerc.jbean.other.BufferType;
 import cn.cerc.jbean.other.MemoryBuffer;
-import cn.cerc.jbean.other.SystemTable;
+import cn.cerc.jbean.other.ISystemTable;
 import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.core.TDateTime;
 import cn.cerc.jdb.mysql.SqlQuery;
@@ -39,7 +39,7 @@ public class SvrAutoLogin {
         }
         String deviceId = form.getClient().getId();
 
-        SystemTable systemTable = Application.getBean("systemTable", SystemTable.class);
+        ISystemTable systemTable = Application.getBean("systemTable", ISystemTable.class);
         SqlQuery dsUser = new SqlQuery(handle);
         dsUser.add("select * from %s where Code_='%s'", systemTable.getUserInfo(), userCode);
         dsUser.open();

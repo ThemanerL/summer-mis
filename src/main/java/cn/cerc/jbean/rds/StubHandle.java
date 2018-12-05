@@ -1,7 +1,7 @@
 package cn.cerc.jbean.rds;
 
 import cn.cerc.jbean.core.Application;
-import cn.cerc.jbean.other.SystemTable;
+import cn.cerc.jbean.other.ISystemTable;
 import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.core.ServerConfig;
 import cn.cerc.jdb.jiguang.JiguangConnection;
@@ -28,7 +28,7 @@ public class StubHandle implements IHandle, AutoCloseable {
     public StubHandle(String corpNo) {
         handle = Application.getHandle();
 
-        SystemTable systemTable = Application.getBean("systemTable", SystemTable.class);
+        ISystemTable systemTable = Application.getBean("systemTable", ISystemTable.class);
 
         SqlQuery ds = new SqlQuery(this);
         ds.setMaximum(1);

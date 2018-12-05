@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.other.BufferType;
 import cn.cerc.jbean.other.MemoryBuffer;
-import cn.cerc.jbean.other.SystemTable;
+import cn.cerc.jbean.other.ISystemTable;
 import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.core.Utils;
 import cn.cerc.jdb.mysql.SqlQuery;
@@ -40,7 +40,7 @@ public class PhoneVerify {
     public PhoneVerify init(String mobile) {
         this.mobile = mobile;
 
-        SystemTable systemTable = Application.getBean("systemTable", SystemTable.class);
+        ISystemTable systemTable = Application.getBean("systemTable", ISystemTable.class);
         // 取安全手机号，若取不到则默认等于帐号
         SqlQuery ds = new SqlQuery(handle);
         ds.add("select UID_,countryCode_,securityMobile_ from %s", systemTable.getUserInfo());
@@ -61,7 +61,7 @@ public class PhoneVerify {
     }
 
     public PhoneVerify init() {
-        SystemTable systemTable = Application.getBean("systemTable", SystemTable.class);
+        ISystemTable systemTable = Application.getBean("systemTable", ISystemTable.class);
         // 取安全手机号，若取不到则默认等于帐号
         SqlQuery ds = new SqlQuery(handle);
         ds.add("select UID_,countryCode_,mobile_,securityMobile_ from %s", systemTable.getUserInfo());

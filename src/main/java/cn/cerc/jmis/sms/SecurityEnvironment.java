@@ -7,7 +7,7 @@ import cn.cerc.jbean.core.AbstractHandle;
 import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.core.DataValidateException;
 import cn.cerc.jbean.form.IForm;
-import cn.cerc.jbean.other.SystemTable;
+import cn.cerc.jbean.other.ISystemTable;
 import cn.cerc.jdb.core.TDateTime;
 import cn.cerc.jdb.mysql.SqlQuery;
 import cn.cerc.jmis.form.AbstractForm;
@@ -71,7 +71,7 @@ public class SecurityEnvironment {
 
         }
 
-        SystemTable systemTable = Application.getBean("systemTable", SystemTable.class);
+        ISystemTable systemTable = Application.getBean("systemTable", ISystemTable.class);
         SqlQuery ds2 = new SqlQuery(form.getHandle());
         ds2.add("select * from %s", systemTable.getSecurityMobile());
         ds2.add("where mobile_='%s'", mobile);
@@ -136,7 +136,7 @@ public class SecurityEnvironment {
         if ("".equals(mobile)) {
             return;
         }
-        SystemTable systemTable = Application.getBean("systemTable", SystemTable.class);
+        ISystemTable systemTable = Application.getBean("systemTable", ISystemTable.class);
         if (!mobile.startsWith("+")) {
             SqlQuery ds = new SqlQuery(form.getHandle());
             ds.add("select countryCode_ from %s", systemTable.getUserInfo());
@@ -183,7 +183,7 @@ public class SecurityEnvironment {
     }
 
     public String getUserSecuirtyMobile(IForm form) {
-        SystemTable systemTable = Application.getBean("systemTable", SystemTable.class);
+        ISystemTable systemTable = Application.getBean("systemTable", ISystemTable.class);
         SqlQuery ds1 = new SqlQuery(form.getHandle());
         ds1.add("SELECT mobile_,securityMobile_,countryCode_ FROM %s", systemTable.getUserInfo());
         ds1.add("WHERE id_='%s'", form.getHandle().getUserCode());

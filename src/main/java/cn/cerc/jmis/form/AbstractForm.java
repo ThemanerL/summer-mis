@@ -12,7 +12,7 @@ import cn.cerc.jbean.core.AbstractHandle;
 import cn.cerc.jbean.core.CustomHandle;
 import cn.cerc.jbean.form.IClient;
 import cn.cerc.jbean.form.IForm;
-import cn.cerc.jbean.other.SystemTable;
+import cn.cerc.jbean.other.ISystemTable;
 import cn.cerc.jmis.core.ClientDevice;
 
 public abstract class AbstractForm extends AbstractHandle implements IForm {
@@ -24,7 +24,7 @@ public abstract class AbstractForm extends AbstractHandle implements IForm {
     private String parent;
     private String permission;
     @Autowired
-    public SystemTable systemTable;
+    public ISystemTable systemTable;
 
     public Map<String, String> getParams() {
         return params;

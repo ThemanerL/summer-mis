@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import cn.cerc.jbean.other.SystemTable;
+import cn.cerc.jbean.other.ISystemTable;
 import cn.cerc.jdb.core.DataSet;
 import cn.cerc.jdb.core.IHandle;
 
@@ -20,7 +20,7 @@ public class CustomService extends AbstractHandle implements IService, IRestful 
     private StringBuffer msg = null;
     private String restPath;
     @Autowired
-    public SystemTable systemTable;
+    public ISystemTable systemTable;
 
     public CustomService() {
         super();
