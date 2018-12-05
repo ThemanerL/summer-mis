@@ -11,6 +11,7 @@ import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.core.ServerConfig;
 
 public class Application {
+//    private static final Logger log = LoggerFactory.getLogger(Application.class);
     private static String xmlFile = "classpath:application.xml";
     private static ApplicationContext context;
     private static AppConfig appConfig;

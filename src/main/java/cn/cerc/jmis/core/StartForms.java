@@ -29,7 +29,6 @@ import cn.cerc.jbean.other.MemoryBuffer;
 import cn.cerc.jbean.tools.AppLoginManage;
 import cn.cerc.jdb.core.ServerConfig;
 import cn.cerc.jmis.form.Webpage;
-import cn.cerc.jmis.page.ErrorPage;
 import cn.cerc.jmis.page.JspPage;
 import cn.cerc.jmis.page.RedirectPage;
 
@@ -54,8 +53,7 @@ public class StartForms implements Filter {
 
         String childCode = getRequestCode(req);
         if (childCode == null) {
-            req.setAttribute("message", "无效的请求：" + childCode);
-            req.getRequestDispatcher(Application.getAppConfig().getJspErrorFile()).forward(req, resp);
+            outputErrorPage(req, resp, new RuntimeException("无效的请求：" + childCode));
             return;
         }
 
@@ -79,9 +77,7 @@ public class StartForms implements Filter {
         try {
             form = createForm(req, resp, formId);
             if (form == null) {
-                req.setAttribute("message", "error servlet:" + req.getServletPath());
-                AppConfig conf = createConfig();
-                req.getRequestDispatcher(conf.getJspErrorFile()).forward(req, resp);
+                outputErrorPage(req, resp, new RuntimeException("error servlet:" + req.getServletPath()));
                 return;
             }
 
@@ -116,24 +112,11 @@ public class StartForms implements Filter {
                         callForm(form, funcCode);
                     }
                 } catch (Exception e) {
-                    Throwable err = e.getCause();
-                    if (err == null) {
-                        err = e;
-                    }
-                    // 重定向到错误页面
-                    req.setAttribute("msg", err.getMessage());
-                    ErrorPage opera = new ErrorPage(form, err);
-                    opera.execute();
+                    outputErrorPage(req, resp, e);
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
-            log.error(childCode + ":" + e.getMessage());
-            req.setAttribute("message", e.getMessage());
-            AppConfig conf = Application.getAppConfig();
-            // 重定向到错误页面
-            req.getRequestDispatcher(conf.getJspErrorFile()).forward(req, resp);
-            return;
+            outputErrorPage(req, resp, e);
         }
     }
 
@@ -325,11 +308,7 @@ public class StartForms implements Filter {
                 }
             }
         } catch (Exception e) {
-            Throwable err = e.getCause();
-            if (err == null)
-                err = e;
-            ErrorPage opera = new ErrorPage(form, err);
-            opera.execute();
+            outputErrorPage(request, response, e);
         } finally {
             if (method != null) {
                 long timeout = 1000;
@@ -413,5 +392,25 @@ public class StartForms implements Filter {
     @Override
     public void destroy() {
 
+    }
+
+    private static void outputErrorPage(HttpServletRequest request, HttpServletResponse response, Throwable e)
+            throws ServletException, IOException {
+        Throwable err = e.getCause();
+        if (err == null) {
+            err = e;
+        }
+        IErrorPage errorPage = Application.getBean("errorPage", IErrorPage.class);
+        if (errorPage != null) {
+            String result = errorPage.getErrorPage(request, response, err);
+            if (result != null) {
+                String url = String.format("/WEB-INF/%s/%s", Application.getAppConfig().getPathForms(), result);
+                request.getServletContext().getRequestDispatcher(url).forward(request, response);
+            }
+        } else {
+            log.warn("not define bean: errorPage");
+            log.error(err.getMessage());
+            err.printStackTrace();
+        }
     }
 }

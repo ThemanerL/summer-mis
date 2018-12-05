@@ -16,11 +16,6 @@ public class AppConfig implements IConfig {
         this.params = params;
     }
 
-    // 本地配置文件，主要是配置外围连接参数，如数据库等
-    public String getConfigFile() {
-        return getParam("configFile", "vine.properties");
-    }
-
     public String getPathForms() {
         return getParam("pathForms", "forms");
     }
@@ -59,14 +54,6 @@ public class AppConfig implements IConfig {
      */
     public String getFormVerifyDevice() {
         return getParam("formVerifyDevice", "VerifyDevice");
-    }
-
-    /**
-     * 
-     * @return 出错时要显示的 jsp 文件
-     */
-    public String getJspErrorFile() {
-        return getParam("jspErrorFile", "common/error.jsp");
     }
 
     /**
