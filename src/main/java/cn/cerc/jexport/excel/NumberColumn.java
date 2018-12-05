@@ -14,6 +14,6 @@ public class NumberColumn extends Column {
 
     @Override
     public Object getValue() {
-        return utils.strToFloatDef(utils.formatFloat("0.####", getRecord().getDouble(getCode())), 0);
+        return utils.strToDoubleDef(utils.formatFloat("0.####", getRecord().getDouble(getCode())), 0);
     }
 }
