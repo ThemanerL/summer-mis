@@ -26,7 +26,7 @@ import cn.cerc.jbean.form.IForm;
 import cn.cerc.jbean.form.IPage;
 import cn.cerc.jbean.other.BufferType;
 import cn.cerc.jbean.other.MemoryBuffer;
-import cn.cerc.jbean.tools.AppLoginManage;
+import cn.cerc.jbean.tools.IAppLoginManage;
 import cn.cerc.jdb.core.ServerConfig;
 import cn.cerc.jmis.form.Webpage;
 import cn.cerc.jmis.page.JspPage;
@@ -98,7 +98,8 @@ public class StartForms implements Filter {
                     log.debug("进行安全检查，若未登录则显示登录对话框");
 
                     if (!form.logon()) {
-                        AppLoginManage page = Application.getContext().getBean("loginManage", AppLoginManage.class);
+                        IAppLoginManage page = Application.getContext().getBean("appLoginManage",
+                                IAppLoginManage.class);
                         page.init(form);
                         String result = page.checkToken(info.getSid());
                         if (result != null) {

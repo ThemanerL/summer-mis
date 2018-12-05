@@ -16,7 +16,7 @@ import cn.cerc.jbean.client.LocalService;
 import cn.cerc.jbean.core.AppConfig;
 import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.form.IForm;
-import cn.cerc.jbean.tools.AppLoginManage;
+import cn.cerc.jbean.tools.IAppLoginManage;
 import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.core.Record;
 import cn.cerc.jdb.core.ServerConfig;
@@ -28,18 +28,18 @@ import cn.cerc.jmis.page.qrcode.SocketTool;
 import cn.cerc.security.sapi.JayunAPI;
 import cn.cerc.security.sapi.JayunSecurity;
 
-public class AppLoginPage extends AbstractJspPage implements AppLoginManage {
+public class AppLoginManageDefault extends AbstractJspPage implements IAppLoginManage {
 
-    private static final Logger log = LoggerFactory.getLogger(AppLoginPage.class);
+    private static final Logger log = LoggerFactory.getLogger(AppLoginManageDefault.class);
 
     // 配置在服务器的用户名下面 summer-application.properties
     public static final String Notify_Url = "app.notify_url";
 
-    public AppLoginPage() {
+    public AppLoginManageDefault() {
         super(null);
     }
 
-    public AppLoginPage(IForm form) {
+    public AppLoginManageDefault(IForm form) {
         super(form);
     }
 

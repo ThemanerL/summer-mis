@@ -41,7 +41,7 @@ public class StartSample implements ApplicationContextAware {
     @Qualifier("clientDevice")
     private ClientDevice clientDevice;
     @Autowired
-    @Qualifier("loginManage")
+    @Qualifier("appLoginManage")
     private AppLogin loginManage;
     @Autowired
     private IPassport passport;

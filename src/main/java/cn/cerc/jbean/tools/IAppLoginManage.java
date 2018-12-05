@@ -6,7 +6,7 @@ import javax.servlet.ServletException;
 
 import cn.cerc.jbean.form.IForm;
 
-public interface AppLoginManage {
+public interface IAppLoginManage {
 
     void init(IForm form);
 
