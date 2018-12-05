@@ -128,7 +128,6 @@
             <groupId>cn.cerc</groupId>
             <artifactId>summer-db</artifactId>
             <version>1.6.2</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>cn.cerc</groupId>
