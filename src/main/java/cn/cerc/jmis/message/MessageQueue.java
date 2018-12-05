@@ -13,7 +13,6 @@ import cn.cerc.jdb.queue.QueueQuery;
  * 
  * 注意：公司别和用户代码必须配套
  */
-@Deprecated
 public class MessageQueue {
     private String corpNo;
     private String userCode;

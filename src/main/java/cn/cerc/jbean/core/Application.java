@@ -146,9 +146,8 @@ public class Application {
     }
 
     private static synchronized void init() {
-        if (context == null) {
+        if (context == null)
             context = new FileSystemXmlApplicationContext(xmlFile);
-        }
     }
 
     public static String getLangage() {
