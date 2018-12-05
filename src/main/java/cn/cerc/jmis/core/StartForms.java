@@ -101,12 +101,16 @@ public class StartForms implements Filter {
                         IAppLoginManage page = Application.getContext().getBean("appLoginManage",
                                 IAppLoginManage.class);
                         page.init(form);
-                        String result = page.checkToken(info.getSid());
-                        if (result != null) {
+                        String cmd = page.checkToken(info.getSid());
+                        if (cmd != null) {
                             // 若需要登录，则跳转到登录页
-                            String url = String.format("/WEB-INF/%s/%s", Application.getAppConfig().getPathForms(),
-                                    result);
-                            request.getServletContext().getRequestDispatcher(url).forward(request, response);
+                            if (cmd.startsWith("redirect:")) {
+                                resp.sendRedirect(cmd.substring(9));
+                            } else {
+                                String url = String.format("/WEB-INF/%s/%s", Application.getAppConfig().getPathForms(),
+                                        cmd);
+                                request.getServletContext().getRequestDispatcher(url).forward(request, response);
+                            }
                         } else // 已授权通过
                             callForm(form, funcCode);
                     } else {

@@ -93,7 +93,13 @@ public class Application {
 
         String[] items = requiredType.getName().split("\\.");
         String itemId = items[items.length - 1];
-        String beanId = itemId.substring(0, 1).toLowerCase() + itemId.substring(1);
+
+        String beanId;
+        if (itemId.substring(0, 2).toUpperCase().equals(itemId.substring(0, 2))) {
+            beanId = itemId;
+        } else {
+            beanId = itemId.substring(0, 1).toLowerCase() + itemId.substring(1);
+        }
 
         T bean = context.getBean(beanId, requiredType);
         if (bean != null && handle != null) {
