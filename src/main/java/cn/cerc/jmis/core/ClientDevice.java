@@ -14,7 +14,7 @@ import cn.cerc.jbean.other.MemoryBuffer;
 @Component
 @Scope(WebApplicationContext.SCOPE_SESSION)
 public class ClientDevice implements IClient {
-    // private static final Logger log = Logger.getLogger(DeviceInfo.class);
+    // private static final Logger log = Logger.LoggerFactory(DeviceInfo.class);
     private String sid; // application session id;
     private String deviceId; // device id
     private String deviceType; // phone/pad/ee/pc

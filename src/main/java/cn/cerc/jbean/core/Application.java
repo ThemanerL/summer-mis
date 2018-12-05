@@ -8,6 +8,7 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import cn.cerc.jbean.form.IForm;
 import cn.cerc.jdb.core.IHandle;
+import cn.cerc.jdb.core.ServerConfig;
 
 public class Application {
     private static String xmlFile = "classpath:application.xml";
@@ -16,8 +17,8 @@ public class Application {
 
 //    private static ApplicationContext serviceItems;
 //    private static String serviceFile = "classpath:app-services.xml";
-    private static ApplicationContext reportItems;
-    private static String reportFile = "classpath:app-report.xml";
+//    private static ApplicationContext reportItems;
+//    private static String reportFile = "classpath:app-report.xml";
 
     // Tomcat JSESSION.ID
     public static final String sessionId = "sessionId";
@@ -62,10 +63,10 @@ public class Application {
 
     public static IPassport getPassport(IHandle handle) {
         init();
-        AbstractHandle bean = getBean("Passport", AbstractHandle.class);
-        if (handle != null)
+        IPassport bean = getBean("Passport", IPassport.class);
+        if (bean != null && handle != null)
             bean.setHandle(handle);
-        return (IPassport) bean;
+        return bean;
     }
 
     public static boolean containsBean(String beanCode) {
@@ -80,14 +81,9 @@ public class Application {
 
     public static IService getService(IHandle handle, String serviceCode) {
         init();
-
-        if (!context.containsBean(serviceCode))
-            return null;
-
         IService bean = context.getBean(serviceCode, IService.class);
-        if (handle != null)
+        if (bean != null && handle != null)
             bean.init(handle);
-
         return bean;
     }
 
@@ -104,22 +100,12 @@ public class Application {
             throw new RuntimeException(String.format("form %s not find!", formId));
 
         IForm form = context.getBean(formId, IForm.class);
-        form.setRequest(req);
-        form.setResponse(resp);
+        if (form != null) {
+            form.setRequest(req);
+            form.setResponse(resp);
+        }
 
         return form;
-    }
-
-    public static ApplicationContext getReportItems() {
-        if (reportItems == null)
-            reportItems = new FileSystemXmlApplicationContext(reportFile);
-        return reportItems;
-    }
-
-    @Deprecated // 请改使用 getApplicationContext
-    public static ApplicationContext getServices() {
-        init();
-        return context;
     }
 
     private static void init() {
@@ -133,7 +119,7 @@ public class Application {
 
     public static String getLangage() {
         init();
-        String lang = cn.cerc.jdb.core.ServerConfig.getInstance().getProperty(deviceLanguage);
+        String lang = ServerConfig.getInstance().getProperty(deviceLanguage);
         if (lang == null || "".equals(lang) || LangageDefault.equals(lang))
             return LangageDefault;
         else if ("en".equals(lang))
