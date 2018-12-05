@@ -1,4 +1,4 @@
-package cn.cerc.jmis.queue;
+package cn.cerc.mis.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,8 +14,8 @@ import cn.cerc.jmis.message.MessageProcess;
 import cn.cerc.jmis.task.AbstractTask;
 import net.sf.json.JSONObject;
 
-public class ProcessQueue extends AbstractTask {
-    private static final Logger log = LoggerFactory.getLogger(ProcessQueue.class);
+public class ProcessQueueDefault extends AbstractTask {
+    private static final Logger log = LoggerFactory.getLogger(ProcessQueueDefault.class);
 
     @Override
     public void execute() throws Exception {
@@ -79,7 +79,7 @@ public class ProcessQueue extends AbstractTask {
     }
 
     public static void main(String[] args) {
-        ProcessQueue obj = new ProcessQueue();
+        ProcessQueueDefault obj = new ProcessQueueDefault();
         obj.run();
     }
 }

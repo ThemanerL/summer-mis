@@ -34,7 +34,7 @@
         <property name="jobDetail">
             <!-- 调度业务 -->
             <bean class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-                <property name="targetObject" ref="ProcessQueue" />
+                <property name="targetObject" ref="processQueue" />
                 <property name="targetMethod" value="run" />
             </bean>
         </property>
