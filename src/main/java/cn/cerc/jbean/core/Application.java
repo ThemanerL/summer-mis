@@ -63,7 +63,7 @@ public class Application {
 
     public static IPassport getPassport(IHandle handle) {
         init();
-        IPassport bean = getBean("Passport", IPassport.class);
+        IPassport bean = getBean("passport", IPassport.class);
         if (bean != null && handle != null)
             bean.setHandle(handle);
         return bean;
