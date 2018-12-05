@@ -6,9 +6,9 @@ import java.io.PrintWriter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import cn.cerc.jmis.core.IErrorPage;
+import cn.cerc.jmis.core.IAppErrorPage;
 
-public class ErrorPageDefault implements IErrorPage {
+public class AppErrorPageDefault implements IAppErrorPage {
 
     @Override
     public String getErrorPage(HttpServletRequest req, HttpServletResponse resp, Throwable error) {

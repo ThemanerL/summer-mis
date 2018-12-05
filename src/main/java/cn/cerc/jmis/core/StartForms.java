@@ -401,7 +401,7 @@ public class StartForms implements Filter {
         if (err == null) {
             err = e;
         }
-        IErrorPage errorPage = Application.getBean("errorPage", IErrorPage.class);
+        IAppErrorPage errorPage = Application.getBean("appErrorPage", IAppErrorPage.class);
         if (errorPage != null) {
             String result = errorPage.getErrorPage(request, response, err);
             if (result != null) {
