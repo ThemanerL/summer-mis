@@ -98,7 +98,7 @@ public class StartForms implements Filter {
                     log.debug("进行安全检查，若未登录则显示登录对话框");
 
                     if (!form.logon()) {
-                        IAppLoginManage page = Application.getContext().getBean("appLoginManage",
+                        IAppLoginManage page = Application.getBean("appLoginManage",
                                 IAppLoginManage.class);
                         page.init(form);
                         String cmd = page.checkToken(info.getSid());
