@@ -1,6 +1,6 @@
 package cn.cerc.jui.phone;
 
-import cn.cerc.jpage.core.HtmlWriter;
+import cn.cerc.jui.core.HtmlWriter;
 import cn.cerc.jui.parts.UIActionForm;
 import cn.cerc.jui.parts.UIComponent;
 import cn.cerc.jui.vcl.UIButton;

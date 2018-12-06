@@ -3,7 +3,7 @@ package cn.cerc.jui.vcl;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import cn.cerc.jpage.core.HtmlWriter;
+import cn.cerc.jui.core.HtmlWriter;
 import cn.cerc.jui.parts.UIComponent;
 
 public class UIOption extends UIComponent {

@@ -1,6 +1,6 @@
 package cn.cerc.jui.parts;
 
-import cn.cerc.jpage.core.HtmlWriter;
+import cn.cerc.jui.core.HtmlWriter;
 
 public class UIBottom extends UIComponent {
     private String caption;

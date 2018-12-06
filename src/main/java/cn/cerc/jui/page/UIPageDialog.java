@@ -14,12 +14,12 @@ import cn.cerc.mis.form.AbstractForm;
 import cn.cerc.mis.page.AbstractJspPage;
 import cn.cerc.mis.page.ExportFile;
 import cn.cerc.mis.page.IMenuBar;
-import cn.cerc.jpage.core.Component;
-import cn.cerc.jpage.core.MutiGrid;
-import cn.cerc.jpage.core.UrlRecord;
-import cn.cerc.jpage.grid.AbstractGrid;
-import cn.cerc.jpage.grid.MutiPage;
-import cn.cerc.jpage.other.OperaPages;
+import cn.cerc.jui.core.Component;
+import cn.cerc.jui.core.MutiGrid;
+import cn.cerc.jui.core.UrlRecord;
+import cn.cerc.jui.grid.AbstractGrid;
+import cn.cerc.jui.grid.MutiPage;
+import cn.cerc.jui.other.OperaPages;
 import cn.cerc.jui.parts.RightMenus;
 import cn.cerc.mis.core.HandleDefault;
 

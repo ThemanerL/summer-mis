@@ -3,7 +3,7 @@ package cn.cerc.jui.phone;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.cerc.jpage.core.HtmlWriter;
+import cn.cerc.jui.core.HtmlWriter;
 import cn.cerc.jui.parts.UIComponent;
 import cn.cerc.jui.vcl.UIButton;
 import cn.cerc.jui.vcl.UIImage;

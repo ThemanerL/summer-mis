@@ -5,11 +5,11 @@ import java.util.List;
 
 import cn.cerc.core.DataSet;
 import cn.cerc.core.Record;
-import cn.cerc.jpage.core.Component;
-import cn.cerc.jpage.core.DataSource;
-import cn.cerc.jpage.core.HtmlWriter;
-import cn.cerc.jpage.core.IField;
-import cn.cerc.jpage.fields.AbstractField;
+import cn.cerc.jui.core.Component;
+import cn.cerc.jui.core.DataSource;
+import cn.cerc.jui.core.HtmlWriter;
+import cn.cerc.jui.core.IField;
+import cn.cerc.jui.fields.AbstractField;
 import cn.cerc.jui.UIConfig;
 import cn.cerc.jui.vcl.UIText;
 

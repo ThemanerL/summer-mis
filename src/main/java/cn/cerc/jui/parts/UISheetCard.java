@@ -1,8 +1,8 @@
 package cn.cerc.jui.parts;
 
-import cn.cerc.jpage.core.Component;
-import cn.cerc.jpage.core.HtmlWriter;
-import cn.cerc.jpage.other.UrlMenu;
+import cn.cerc.jui.core.Component;
+import cn.cerc.jui.core.HtmlWriter;
+import cn.cerc.jui.other.UrlMenu;
 
 public class UISheetCard extends UISheet {
     private UrlMenu url;

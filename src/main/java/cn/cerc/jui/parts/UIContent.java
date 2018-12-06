@@ -5,8 +5,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import cn.cerc.jpage.core.HtmlContent;
-import cn.cerc.jpage.core.HtmlWriter;
+import cn.cerc.jui.core.HtmlContent;
+import cn.cerc.jui.core.HtmlWriter;
 
 public class UIContent extends UIComponent {
     private List<HtmlContent> contents = new ArrayList<>();

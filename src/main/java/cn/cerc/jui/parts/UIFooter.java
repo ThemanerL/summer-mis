@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import cn.cerc.mis.form.IForm;
 import cn.cerc.mis.page.AbstractJspPage;
-import cn.cerc.jpage.core.Component;
-import cn.cerc.jpage.core.HtmlWriter;
+import cn.cerc.jui.core.Component;
+import cn.cerc.jui.core.HtmlWriter;
 
 public class UIFooter extends UIComponent {
     private static final int MAX_MENUS = 6;

@@ -6,9 +6,9 @@ import java.util.List;
 import cn.cerc.mis.core.Application;
 import cn.cerc.mis.form.IForm;
 import cn.cerc.mis.page.AbstractJspPage;
-import cn.cerc.jpage.core.Component;
-import cn.cerc.jpage.core.HtmlWriter;
-import cn.cerc.jpage.core.UrlRecord;
+import cn.cerc.jui.core.Component;
+import cn.cerc.jui.core.HtmlWriter;
+import cn.cerc.jui.core.UrlRecord;
 
 public class UIHeader extends UIComponent {
     private static final int MAX_MENUS = 4;

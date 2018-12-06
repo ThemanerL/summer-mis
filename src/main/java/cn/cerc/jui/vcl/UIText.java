@@ -3,7 +3,7 @@ package cn.cerc.jui.vcl;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.cerc.jpage.core.HtmlWriter;
+import cn.cerc.jui.core.HtmlWriter;
 import cn.cerc.jui.parts.UIComponent;
 
 /*

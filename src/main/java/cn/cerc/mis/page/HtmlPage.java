@@ -7,7 +7,7 @@ import javax.servlet.ServletException;
 
 import cn.cerc.mis.form.IForm;
 import cn.cerc.mis.form.IPage;
-import cn.cerc.jpage.core.HtmlWriter;
+import cn.cerc.jui.core.HtmlWriter;
 
 public class HtmlPage implements IPage {
     private IForm form;

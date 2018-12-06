@@ -1,6 +1,6 @@
 package cn.cerc.jui.vcl.ext;
 
-import cn.cerc.jpage.core.HtmlWriter;
+import cn.cerc.jui.core.HtmlWriter;
 import cn.cerc.jui.parts.UIComponent;
 
 public class UISpan extends UIComponent {

@@ -12,8 +12,8 @@ import cn.cerc.mis.form.IForm;
 import cn.cerc.mis.form.AbstractForm;
 import cn.cerc.mis.page.AbstractJspPage;
 import cn.cerc.mis.page.IMenuBar;
-import cn.cerc.jpage.core.Component;
-import cn.cerc.jpage.core.UrlRecord;
+import cn.cerc.jui.core.Component;
+import cn.cerc.jui.core.UrlRecord;
 import cn.cerc.jui.parts.RightMenus;
 import cn.cerc.mis.core.HandleDefault;
 

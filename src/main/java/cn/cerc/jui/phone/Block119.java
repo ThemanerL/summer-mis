@@ -2,8 +2,8 @@ package cn.cerc.jui.phone;
 
 import org.apache.commons.lang.StringUtils;
 
-import cn.cerc.jpage.core.HtmlWriter;
-import cn.cerc.jpage.core.UrlRecord;
+import cn.cerc.jui.core.HtmlWriter;
+import cn.cerc.jui.core.UrlRecord;
 import cn.cerc.jui.parts.UIComponent;
 import cn.cerc.jui.vcl.UIImage;
 import cn.cerc.jui.vcl.ext.UISpan;

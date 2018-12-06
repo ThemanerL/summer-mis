@@ -3,7 +3,7 @@ package cn.cerc.mis.tools;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
-import cn.cerc.jpage.core.Component;
+import cn.cerc.jui.core.Component;
 import cn.cerc.jui.parts.UISheetHelp;
 
 public class PageHelp {

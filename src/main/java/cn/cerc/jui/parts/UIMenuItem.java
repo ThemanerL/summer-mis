@@ -1,7 +1,7 @@
 package cn.cerc.jui.parts;
 
 import cn.cerc.mis.core.MenuItem;
-import cn.cerc.jpage.core.HtmlWriter;
+import cn.cerc.jui.core.HtmlWriter;
 
 public class UIMenuItem extends UIComponent {
     private String img = "";

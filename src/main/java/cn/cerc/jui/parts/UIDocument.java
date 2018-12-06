@@ -1,8 +1,8 @@
 package cn.cerc.jui.parts;
 
 import cn.cerc.mis.page.AbstractJspPage;
-import cn.cerc.jpage.core.Component;
-import cn.cerc.jpage.core.HtmlWriter;
+import cn.cerc.jui.core.Component;
+import cn.cerc.jui.core.HtmlWriter;
 
 public class UIDocument extends UIComponent {
     private UIControl control; // 可选存在

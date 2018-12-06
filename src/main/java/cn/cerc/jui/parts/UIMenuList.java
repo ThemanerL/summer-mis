@@ -3,7 +3,7 @@ package cn.cerc.jui.parts;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.cerc.jpage.core.HtmlWriter;
+import cn.cerc.jui.core.HtmlWriter;
 
 public class UIMenuList extends UIComponent {
     private List<UIMenuItem> items = new ArrayList<>();

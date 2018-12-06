@@ -3,8 +3,8 @@ package cn.cerc.jui.parts;
 import java.util.HashMap;
 import java.util.Map;
 
-import cn.cerc.jpage.core.Component;
-import cn.cerc.jpage.core.HtmlWriter;
+import cn.cerc.jui.core.Component;
+import cn.cerc.jui.core.HtmlWriter;
 import cn.cerc.jui.vcl.UIGroupBox;
 
 public class UIActionForm extends UIComponent {
