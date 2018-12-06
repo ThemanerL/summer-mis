@@ -1,6 +1,6 @@
 package cn.cerc.jexport.excel;
 
-import cn.cerc.jdb.other.utils;
+import cn.cerc.db.other.utils;
 
 public class NumberColumn extends Column {
 

@@ -3,7 +3,7 @@ package cn.cerc.jbean.form;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import cn.cerc.jdb.core.IHandle;
+import cn.cerc.core.IHandle;
 
 public interface IForm {
     // 页面标题

@@ -16,7 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cn.cerc.db.core.ServerConfig;
-import cn.cerc.jdb.core.IHandle;
+import cn.cerc.core.IHandle;
 
 public class AlipayJs {
     private static Logger log = LoggerFactory.getLogger(AlipayJs.class);

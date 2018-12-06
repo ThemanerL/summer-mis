@@ -1,12 +1,12 @@
 package cn.cerc.jmis.message;
 
+import cn.cerc.core.IHandle;
+import cn.cerc.core.Record;
 import cn.cerc.db.core.ServerConfig;
-import cn.cerc.jdb.core.IHandle;
-import cn.cerc.jdb.core.Record;
-import cn.cerc.jdb.core.ServerVersion;
-import cn.cerc.jdb.queue.QueueDB;
-import cn.cerc.jdb.queue.QueueMode;
-import cn.cerc.jdb.queue.QueueQuery;
+import cn.cerc.db.core.ServerVersion;
+import cn.cerc.db.queue.QueueDB;
+import cn.cerc.db.queue.QueueMode;
+import cn.cerc.db.queue.QueueQuery;
 
 /**
  * 消息发送队列

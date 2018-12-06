@@ -1,6 +1,6 @@
 package cn.cerc.jpage.core;
 
-import cn.cerc.jdb.core.DataSet;
+import cn.cerc.core.DataSet;
 
 public interface DataSource {
 

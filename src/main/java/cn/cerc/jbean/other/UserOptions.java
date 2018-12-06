@@ -3,9 +3,10 @@ package cn.cerc.jbean.other;
 import java.util.HashMap;
 import java.util.Map;
 
+import cn.cerc.core.IHandle;
+import cn.cerc.core.TDateTime;
+import cn.cerc.db.other.utils;
 import cn.cerc.jbean.client.LocalService;
-import cn.cerc.jdb.core.IHandle;
-import cn.cerc.jdb.core.TDateTime;
 
 public class UserOptions {
     // 用户级参数
@@ -135,14 +136,14 @@ public class UserOptions {
         String HideHistoryDateTime = GetUserOption(session, "HideHistoryDateTime");
 
         if (HideHistoryDateTime.equals("")) {
-            FDay.value = cn.cerc.jdb.other.utils.strToIntDef(GetUserOption(session, "HideHistoryDay"), 7);
+            FDay.value = utils.strToIntDef(GetUserOption(session, "HideHistoryDay"), 7);
             return true;
         }
 
         if (TDateTime.Now().compareTo(TDateTime.fromDate(HideHistoryDateTime)) < 0)
-            FDay.value = cn.cerc.jdb.other.utils.strToIntDef(GetUserOption(session, "HideHistoryTmpDay"), 0);
+            FDay.value = utils.strToIntDef(GetUserOption(session, "HideHistoryTmpDay"), 0);
         else
-            FDay.value = cn.cerc.jdb.other.utils.strToIntDef(GetUserOption(session, "HideHistoryDay"), 7);
+            FDay.value = utils.strToIntDef(GetUserOption(session, "HideHistoryDay"), 7);
         return true;
     }
 

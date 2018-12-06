@@ -9,15 +9,15 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import cn.cerc.core.Record;
+import cn.cerc.db.mysql.SqlQuery;
 import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.core.DataValidateException;
 import cn.cerc.jbean.core.ServiceException;
 import cn.cerc.jbean.other.BufferType;
-import cn.cerc.jbean.other.MemoryBuffer;
 import cn.cerc.jbean.other.ISystemTable;
+import cn.cerc.jbean.other.MemoryBuffer;
 import cn.cerc.jbean.rds.StubHandle;
-import cn.cerc.jdb.core.Record;
-import cn.cerc.jdb.mysql.SqlQuery;
 
 public class SvrUserLoginTest {
     // private static final Logger log = Logger.getLogger(TAppLoginTest.class);

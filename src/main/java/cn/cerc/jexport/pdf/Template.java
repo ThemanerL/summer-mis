@@ -15,8 +15,8 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
-import cn.cerc.jdb.core.DataSet;
-import cn.cerc.jdb.core.Record;
+import cn.cerc.core.DataSet;
+import cn.cerc.core.Record;
 import cn.cerc.jexport.excel.Column;
 
 public class Template {

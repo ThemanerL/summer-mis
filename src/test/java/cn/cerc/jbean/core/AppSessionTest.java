@@ -7,7 +7,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import cn.cerc.jbean.other.UserNotFindException;
-import cn.cerc.jdb.core.IHandle;
+import cn.cerc.core.IHandle;
 
 public class AppSessionTest {
     private IHandle handle;

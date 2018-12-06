@@ -6,7 +6,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import cn.cerc.jbean.rds.StubHandle;
-import cn.cerc.jdb.core.IHandle;
+import cn.cerc.core.IHandle;
 
 public class BookHandleTest {
     private StubHandle handle = new StubHandle();

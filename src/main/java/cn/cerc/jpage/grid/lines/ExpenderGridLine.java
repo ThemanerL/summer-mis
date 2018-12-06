@@ -1,6 +1,6 @@
 package cn.cerc.jpage.grid.lines;
 
-import cn.cerc.jdb.core.DataSet;
+import cn.cerc.core.DataSet;
 import cn.cerc.jpage.core.DataSource;
 import cn.cerc.jpage.core.HtmlWriter;
 import cn.cerc.jpage.core.IColumn;

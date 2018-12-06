@@ -15,8 +15,8 @@ import cn.cerc.jbean.book.IBookSource;
 import cn.cerc.jbean.book.IResetBook;
 import cn.cerc.jbean.book.VirtualData;
 import cn.cerc.jbean.other.BookOptions;
-import cn.cerc.jdb.core.IHandle;
-import cn.cerc.jdb.core.TDateTime;
+import cn.cerc.core.IHandle;
+import cn.cerc.core.TDateTime;
 
 public class ResetManager implements IBookManage {
     private static final Logger log = LoggerFactory.getLogger(ResetManager.class);

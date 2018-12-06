@@ -11,11 +11,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import cn.cerc.core.IHandle;
+import cn.cerc.db.cache.Redis;
+import cn.cerc.db.mysql.SqlQuery;
+import cn.cerc.db.mysql.SqlSession;
 import cn.cerc.jbean.core.Application;
-import cn.cerc.jdb.cache.Redis;
-import cn.cerc.jdb.core.IHandle;
-import cn.cerc.jdb.mysql.SqlQuery;
-import cn.cerc.jdb.mysql.SqlSession;
 
 public class UserList implements IDataList {
     private static final Logger log = LoggerFactory.getLogger(UserList.class);

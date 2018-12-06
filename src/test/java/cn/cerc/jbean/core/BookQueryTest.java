@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import cn.cerc.jbean.other.ISystemTable;
 import cn.cerc.jbean.rds.StubHandle;
-import cn.cerc.jdb.core.TDateTime;
+import cn.cerc.core.TDateTime;
 
 public class BookQueryTest {
 

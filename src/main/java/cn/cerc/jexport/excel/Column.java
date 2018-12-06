@@ -1,6 +1,6 @@
 package cn.cerc.jexport.excel;
 
-import cn.cerc.jdb.core.Record;
+import cn.cerc.core.Record;
 
 public abstract class Column {
     public static final String LEFT = "left";

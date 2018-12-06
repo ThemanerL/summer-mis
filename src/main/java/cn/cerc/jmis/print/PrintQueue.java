@@ -1,9 +1,9 @@
 package cn.cerc.jmis.print;
 
-import cn.cerc.jdb.core.IHandle;
-import cn.cerc.jdb.core.Record;
-import cn.cerc.jdb.queue.QueueMode;
-import cn.cerc.jdb.queue.QueueQuery;
+import cn.cerc.core.IHandle;
+import cn.cerc.core.Record;
+import cn.cerc.db.queue.QueueMode;
+import cn.cerc.db.queue.QueueQuery;
 
 public class PrintQueue {
     // 设置共享打印服务的设置记录之UID

@@ -2,7 +2,7 @@ package cn.cerc.jexport.excel;
 
 import java.util.List;
 
-import cn.cerc.jdb.core.Record;
+import cn.cerc.core.Record;
 import jxl.write.Label;
 import jxl.write.WritableSheet;
 import jxl.write.WriteException;

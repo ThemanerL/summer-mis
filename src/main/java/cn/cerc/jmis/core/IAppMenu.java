@@ -2,7 +2,7 @@ package cn.cerc.jmis.core;
 
 import java.util.List;
 
-import cn.cerc.jdb.core.IHandle;
+import cn.cerc.core.IHandle;
 
 public interface IAppMenu {
 

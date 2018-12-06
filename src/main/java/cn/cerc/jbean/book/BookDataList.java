@@ -8,7 +8,7 @@ import java.util.List;
 import com.google.gson.Gson;
 
 import cn.cerc.jbean.tools.DurationSection;
-import cn.cerc.jdb.core.TDateTime;
+import cn.cerc.core.TDateTime;
 
 public class BookDataList implements Iterable<IBookData>, Iterator<IBookData> {
     private List<IBookData> items = new ArrayList<>();

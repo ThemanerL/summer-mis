@@ -1,15 +1,14 @@
 package cn.cerc.jmis.services;
 
-import static cn.cerc.jdb.other.utils.copy;
-
 import java.math.BigInteger;
 
+import cn.cerc.core.Record;
+import cn.cerc.core.TDateTime;
+import cn.cerc.db.cache.Redis;
+import cn.cerc.db.mysql.SqlQuery;
+import cn.cerc.db.other.utils;
 import cn.cerc.jbean.core.CustomService;
 import cn.cerc.jbean.other.BufferType;
-import cn.cerc.jdb.cache.Redis;
-import cn.cerc.jdb.core.Record;
-import cn.cerc.jdb.core.TDateTime;
-import cn.cerc.jdb.mysql.SqlQuery;
 import cn.cerc.jmis.message.JPushRecord;
 import cn.cerc.jmis.message.MessageLevel;
 import cn.cerc.jmis.message.MessageProcess;
@@ -146,7 +145,7 @@ public class SvrUserMessages extends CustomService {
     private void pushToJiGuang(SqlQuery cdsMsg) {
         String subject = cdsMsg.getString("Subject_");
         if ("".equals(subject)) {
-            subject = copy(cdsMsg.getString("Content_"), 1, 80);
+            subject = utils.copy(cdsMsg.getString("Content_"), 1, 80);
         }
         if (cdsMsg.getInt("Level_") == MessageLevel.Service.ordinal()) {
             subject += "【" + AsyncService.getProcessTitle(cdsMsg.getInt("Process_")) + "】";

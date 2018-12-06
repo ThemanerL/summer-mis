@@ -4,8 +4,8 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.cerc.jdb.core.DataSet;
-import cn.cerc.jdb.core.Record;
+import cn.cerc.core.DataSet;
+import cn.cerc.core.Record;
 import cn.cerc.jpage.core.HtmlWriter;
 import cn.cerc.jpage.core.IColumn;
 import cn.cerc.jpage.core.IField;

@@ -7,8 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cn.cerc.jbean.client.LocalService;
-import cn.cerc.jdb.core.IHandle;
-import cn.cerc.jdb.core.Record;
+import cn.cerc.core.IHandle;
+import cn.cerc.core.Record;
 
 public class ResourceBuffer {
     private static final Logger log = LoggerFactory.getLogger(ResourceBuffer.class);

@@ -2,11 +2,11 @@ package cn.cerc.jmis.services;
 
 import org.springframework.stereotype.Component;
 
+import cn.cerc.core.Record;
+import cn.cerc.core.TDateTime;
+import cn.cerc.db.mysql.SqlQuery;
 import cn.cerc.jbean.core.CustomService;
 import cn.cerc.jbean.core.DataValidateException;
-import cn.cerc.jdb.core.Record;
-import cn.cerc.jdb.core.TDateTime;
-import cn.cerc.jdb.mysql.SqlQuery;
 
 @Component
 public class SvrLanguage extends CustomService {

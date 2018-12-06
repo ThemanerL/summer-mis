@@ -5,8 +5,8 @@ import java.io.Serializable;
 import com.aliyun.mns.client.CloudQueue;
 import com.google.gson.Gson;
 
-import cn.cerc.jdb.core.IHandle;
-import cn.cerc.jdb.queue.QueueSession;
+import cn.cerc.core.IHandle;
+import cn.cerc.db.queue.QueueSession;
 
 public class MailRecord implements Serializable {
     private static final long serialVersionUID = 1L;

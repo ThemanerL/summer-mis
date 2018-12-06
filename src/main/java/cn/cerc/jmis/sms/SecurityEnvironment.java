@@ -3,13 +3,13 @@ package cn.cerc.jmis.sms;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import cn.cerc.core.TDateTime;
+import cn.cerc.db.mysql.SqlQuery;
 import cn.cerc.jbean.core.AbstractHandle;
 import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.core.DataValidateException;
 import cn.cerc.jbean.form.IForm;
 import cn.cerc.jbean.other.ISystemTable;
-import cn.cerc.jdb.core.TDateTime;
-import cn.cerc.jdb.mysql.SqlQuery;
 import cn.cerc.jmis.form.AbstractForm;
 import cn.cerc.jmis.language.R;
 import cn.cerc.jmis.page.AbstractJspPage;

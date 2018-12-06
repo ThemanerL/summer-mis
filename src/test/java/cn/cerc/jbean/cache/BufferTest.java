@@ -2,7 +2,7 @@ package cn.cerc.jbean.cache;
 
 import org.junit.Test;
 
-import cn.cerc.jdb.cache.Buffer;
+import cn.cerc.db.cache.Buffer;
 
 public class BufferTest {
 

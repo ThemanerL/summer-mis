@@ -1,8 +1,8 @@
 package cn.cerc.jmis.message;
 
 import cn.cerc.jbean.client.LocalService;
-import cn.cerc.jdb.core.IHandle;
-import cn.cerc.jdb.core.Record;
+import cn.cerc.core.IHandle;
+import cn.cerc.core.Record;
 
 /**
  * 专用于消息发送

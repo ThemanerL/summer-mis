@@ -2,8 +2,8 @@ package cn.cerc.jmis.task;
 
 import org.springframework.stereotype.Component;
 
-import cn.cerc.jdb.core.TDateTime;
-import cn.cerc.jdb.mysql.SqlSession;
+import cn.cerc.core.TDateTime;
+import cn.cerc.db.mysql.SqlSession;
 
 /**
  * 清理在线用户记录表

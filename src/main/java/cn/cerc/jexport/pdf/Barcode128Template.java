@@ -12,7 +12,7 @@ import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfWriter;
 
-import cn.cerc.jdb.core.DataSet;
+import cn.cerc.core.DataSet;
 
 public class Barcode128Template extends Template {
     private float fontSize;

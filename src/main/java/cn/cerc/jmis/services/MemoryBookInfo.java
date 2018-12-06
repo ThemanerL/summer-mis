@@ -5,9 +5,9 @@ import com.google.gson.Gson;
 import cn.cerc.jbean.client.LocalService;
 import cn.cerc.jbean.other.BookVersion;
 import cn.cerc.jbean.other.BufferType;
-import cn.cerc.jdb.cache.Redis;
-import cn.cerc.jdb.core.IHandle;
-import cn.cerc.jdb.core.Record;
+import cn.cerc.db.cache.Redis;
+import cn.cerc.core.IHandle;
+import cn.cerc.core.Record;
 
 public class MemoryBookInfo {
     private static final String buffVersion = "4";

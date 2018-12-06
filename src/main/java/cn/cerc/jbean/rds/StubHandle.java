@@ -1,16 +1,16 @@
 package cn.cerc.jbean.rds;
 
-import cn.cerc.db.core.AliyunQueueConnection;
+import cn.cerc.core.IHandle;
 import cn.cerc.db.core.MysqlConnection;
 import cn.cerc.db.core.ServerConfig;
+import cn.cerc.db.jiguang.JiguangConnection;
+import cn.cerc.db.jiguang.JiguangSession;
+import cn.cerc.db.mysql.SqlQuery;
+import cn.cerc.db.mysql.SqlSession;
+import cn.cerc.db.queue.AliyunQueueConnection;
+import cn.cerc.db.queue.QueueSession;
 import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.other.ISystemTable;
-import cn.cerc.jdb.core.IHandle;
-import cn.cerc.jdb.jiguang.JiguangConnection;
-import cn.cerc.jdb.jiguang.JiguangSession;
-import cn.cerc.jdb.mysql.SqlQuery;
-import cn.cerc.jdb.mysql.SqlSession;
-import cn.cerc.jdb.queue.QueueSession;
 
 public class StubHandle implements IHandle, AutoCloseable {
     public static final String DefaultBook = "999001";

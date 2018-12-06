@@ -8,8 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import cn.cerc.jbean.other.ISystemTable;
-import cn.cerc.jdb.core.DataSet;
-import cn.cerc.jdb.core.IHandle;
+import cn.cerc.core.DataSet;
+import cn.cerc.core.IHandle;
 
 public class CustomService extends AbstractHandle implements IService, IRestful {
     private static final Logger log = LoggerFactory.getLogger(CustomService.class);

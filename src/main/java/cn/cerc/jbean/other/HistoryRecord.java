@@ -1,12 +1,12 @@
 package cn.cerc.jbean.other;
 
-import static cn.cerc.jdb.other.utils.copy;
-import static cn.cerc.jdb.other.utils.newGuid;
+import static cn.cerc.db.other.utils.copy;
+import static cn.cerc.db.other.utils.newGuid;
 
+import cn.cerc.core.IHandle;
+import cn.cerc.core.Utils;
+import cn.cerc.db.mysql.BatchScript;
 import cn.cerc.jbean.core.Application;
-import cn.cerc.jdb.core.IHandle;
-import cn.cerc.jdb.core.Utils;
-import cn.cerc.jdb.mysql.BatchScript;
 
 public class HistoryRecord {
     private IHandle handle;

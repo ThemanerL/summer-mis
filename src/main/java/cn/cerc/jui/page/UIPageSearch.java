@@ -13,7 +13,7 @@ import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.form.IForm;
 import cn.cerc.jbean.other.MemoryBuffer;
 import cn.cerc.jbean.rds.PassportRecord;
-import cn.cerc.jdb.core.DataSet;
+import cn.cerc.core.DataSet;
 import cn.cerc.jmis.form.AbstractForm;
 import cn.cerc.jmis.page.AbstractJspPage;
 import cn.cerc.jmis.page.ExportFile;

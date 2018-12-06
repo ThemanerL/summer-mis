@@ -7,7 +7,7 @@ import java.net.URL;
 import java.util.Map;
 
 import cn.cerc.db.core.ServerConfig;
-import cn.cerc.jdb.core.IHandle;
+import cn.cerc.core.IHandle;
 
 public class AlipayNotify {
     // 合作身份者ID

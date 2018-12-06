@@ -3,7 +3,7 @@ package cn.cerc.jpage.fields;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.cerc.jdb.core.Record;
+import cn.cerc.core.Record;
 import cn.cerc.jui.parts.UIComponent;
 
 public class RadioField extends AbstractField {

@@ -8,7 +8,7 @@ import java.io.IOException;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import cn.cerc.jdb.core.DataSet;
+import cn.cerc.core.DataSet;
 import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
 

@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import cn.cerc.jdb.core.DataSet;
+import cn.cerc.core.DataSet;
 import cn.cerc.jpage.grid.MutiPage;
 import cn.cerc.jpage.other.BeanRecord;
 import cn.cerc.jpage.other.BuildRecord;

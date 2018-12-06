@@ -1,6 +1,6 @@
 package cn.cerc.jbean.tools;
 
-import cn.cerc.jdb.core.TDateTime;
+import cn.cerc.core.TDateTime;
 
 public class DurationSection {
     private TDateTime dateFrom;

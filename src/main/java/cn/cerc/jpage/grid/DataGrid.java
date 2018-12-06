@@ -1,9 +1,8 @@
 package cn.cerc.jpage.grid;
 
-import static cn.cerc.jdb.other.utils.roundTo;
-
+import cn.cerc.core.DataSet;
+import cn.cerc.db.other.utils;
 import cn.cerc.jbean.form.IForm;
-import cn.cerc.jdb.core.DataSet;
 import cn.cerc.jpage.core.HtmlWriter;
 import cn.cerc.jpage.core.IField;
 import cn.cerc.jpage.grid.lines.AbstractGridLine;
@@ -64,7 +63,7 @@ public class DataGrid extends AbstractGrid {
             if (field.getWidth() == 0)
                 html.print(" style=\"display:none\"");
             else {
-                double val = roundTo(field.getWidth() / sumFieldWidth * 100, -2);
+                double val = utils.roundTo(field.getWidth() / sumFieldWidth * 100, -2);
                 html.print(" width=\"%f%%\"", val);
             }
 

@@ -5,7 +5,7 @@ import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.core.CustomService;
 import cn.cerc.jbean.core.IStatus;
 import cn.cerc.jbean.core.ServiceStatus;
-import cn.cerc.jdb.core.DataSet;
+import cn.cerc.core.DataSet;
 
 public class Microservice extends CustomService {
     // 代理位置

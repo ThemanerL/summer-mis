@@ -1,10 +1,10 @@
 package cn.cerc.jmis.message;
 
+import cn.cerc.core.DataSet;
+import cn.cerc.core.IHandle;
+import cn.cerc.db.jiguang.ClientType;
+import cn.cerc.db.jiguang.JiguangPush;
 import cn.cerc.jbean.client.LocalService;
-import cn.cerc.jdb.core.DataSet;
-import cn.cerc.jdb.core.IHandle;
-import cn.cerc.jdb.jiguang.ClientType;
-import cn.cerc.jdb.jiguang.JiguangPush;
 
 /**
  * 往指定用户的所有移动设备发送消息

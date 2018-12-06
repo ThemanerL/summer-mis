@@ -3,8 +3,8 @@ package cn.cerc.jexport.excel;
 import java.util.Date;
 import java.util.List;
 
-import cn.cerc.jdb.core.DataSet;
-import cn.cerc.jdb.core.TDate;
+import cn.cerc.core.DataSet;
+import cn.cerc.core.TDate;
 import jxl.write.DateFormat;
 import jxl.write.DateTime;
 import jxl.write.Label;

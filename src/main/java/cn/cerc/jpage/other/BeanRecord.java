@@ -7,7 +7,7 @@ import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
 
-import cn.cerc.jdb.core.Record;
+import cn.cerc.core.Record;
 
 public class BeanRecord<T> implements AutoCloseable, BuildRecord {
 

@@ -5,9 +5,9 @@ import java.math.BigInteger;
 
 import javax.servlet.http.HttpServletRequest;
 
-import cn.cerc.jdb.core.IRecord;
-import cn.cerc.jdb.core.TDate;
-import cn.cerc.jdb.core.TDateTime;
+import cn.cerc.core.IRecord;
+import cn.cerc.core.TDate;
+import cn.cerc.core.TDateTime;
 
 public class RequestRecord implements IRecord {
     private HttpServletRequest req = null;

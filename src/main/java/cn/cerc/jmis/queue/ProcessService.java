@@ -6,9 +6,9 @@ import org.slf4j.LoggerFactory;
 import cn.cerc.jbean.client.AutoService;
 import cn.cerc.jbean.client.LocalService;
 import cn.cerc.jbean.rds.StubHandle;
-import cn.cerc.jdb.core.DataSet;
-import cn.cerc.jdb.core.Record;
-import cn.cerc.jdb.core.TDateTime;
+import cn.cerc.core.DataSet;
+import cn.cerc.core.Record;
+import cn.cerc.core.TDateTime;
 import cn.cerc.jmis.message.MessageProcess;
 import cn.cerc.jmis.task.AbstractTask;
 

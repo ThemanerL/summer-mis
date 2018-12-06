@@ -1,7 +1,7 @@
 package cn.cerc.jbean.core;
 
-import cn.cerc.jdb.core.DataSet;
-import cn.cerc.jdb.core.IHandle;
+import cn.cerc.core.DataSet;
+import cn.cerc.core.IHandle;
 
 public interface IService {
     public void init(IHandle handle);

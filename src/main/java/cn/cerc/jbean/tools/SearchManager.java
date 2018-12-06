@@ -12,8 +12,8 @@ import cn.cerc.jbean.book.IBookEnroll;
 import cn.cerc.jbean.book.IBookManage;
 import cn.cerc.jbean.book.IBookSource;
 import cn.cerc.jbean.other.BookOptions;
-import cn.cerc.jdb.core.IHandle;
-import cn.cerc.jdb.core.TDateTime;
+import cn.cerc.core.IHandle;
+import cn.cerc.core.TDateTime;
 
 public class SearchManager implements IBookManage {
     private static final Logger log = LoggerFactory.getLogger(SearchManager.class);

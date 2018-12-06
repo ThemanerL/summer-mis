@@ -1,6 +1,6 @@
 package cn.cerc.jbean.client;
 
-import cn.cerc.jdb.core.DataSet;
+import cn.cerc.core.DataSet;
 
 public class ServiceRecord implements AutoCloseable {
     private String service;

@@ -2,7 +2,7 @@ package cn.cerc.jimport.excel;
 
 import java.text.DecimalFormat;
 
-import cn.cerc.jdb.other.utils;
+import cn.cerc.db.other.utils;
 
 public class NumberColumn extends Column {
     @Override
@@ -18,6 +18,6 @@ public class NumberColumn extends Column {
         } else {
             result = "0";
         }
-        return cn.cerc.jdb.other.utils.isNumeric(utils.formatFloat("0.######", Double.parseDouble(result)));
+        return utils.isNumeric(utils.formatFloat("0.######", Double.parseDouble(result)));
     }
 }

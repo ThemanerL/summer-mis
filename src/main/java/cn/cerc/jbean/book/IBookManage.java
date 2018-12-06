@@ -1,7 +1,7 @@
 package cn.cerc.jbean.book;
 
-import cn.cerc.jdb.core.IHandle;
-import cn.cerc.jdb.core.TDateTime;
+import cn.cerc.core.IHandle;
+import cn.cerc.core.TDateTime;
 
 public interface IBookManage {
     // 取得环境

@@ -1,6 +1,6 @@
 package cn.cerc.jpage.fields;
 
-import cn.cerc.jdb.core.Record;
+import cn.cerc.core.Record;
 import cn.cerc.jui.parts.UIComponent;
 
 public class UploadField extends AbstractField {

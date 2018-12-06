@@ -5,8 +5,8 @@ import cn.cerc.jbean.core.IService;
 import cn.cerc.jbean.core.IStatus;
 import cn.cerc.jbean.core.ServiceException;
 import cn.cerc.jbean.other.UserNotFindException;
-import cn.cerc.jdb.core.DataSet;
-import cn.cerc.jdb.core.IHandle;
+import cn.cerc.core.DataSet;
+import cn.cerc.core.IHandle;
 
 public class AutoService implements IHandle, AutoCloseable {
     // private static final Logger log = Logger.getLogger(AutoService.class);

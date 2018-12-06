@@ -11,9 +11,9 @@ import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 
+import cn.cerc.core.IConfig;
+import cn.cerc.core.IHandle;
 import cn.cerc.jbean.core.Application;
-import cn.cerc.jdb.core.IConfig;
-import cn.cerc.jdb.core.IHandle;
 
 //APP支付
 public class WxpayAPI {

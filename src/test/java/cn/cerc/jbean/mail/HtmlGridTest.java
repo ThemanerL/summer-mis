@@ -4,7 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import cn.cerc.jdb.core.DataSet;
+import cn.cerc.core.DataSet;
 
 public class HtmlGridTest {
     @Test

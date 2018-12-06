@@ -1,7 +1,7 @@
 package cn.cerc.jbean.core;
 
-import cn.cerc.jdb.core.IHandle;
-import cn.cerc.jdb.mysql.SqlSession;
+import cn.cerc.core.IHandle;
+import cn.cerc.db.mysql.SqlSession;
 
 public class BookHandle implements IHandle {
     private IHandle handle;

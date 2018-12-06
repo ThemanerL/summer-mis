@@ -1,6 +1,6 @@
 package cn.cerc.jimport.excel;
 
-import cn.cerc.jdb.core.TDateTime;
+import cn.cerc.core.TDateTime;
 
 public class DateColumn extends Column {
 

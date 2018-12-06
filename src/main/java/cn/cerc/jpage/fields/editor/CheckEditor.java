@@ -1,6 +1,6 @@
 package cn.cerc.jpage.fields.editor;
 
-import cn.cerc.jdb.core.Record;
+import cn.cerc.core.Record;
 import cn.cerc.jpage.core.HtmlWriter;
 import cn.cerc.jpage.fields.AbstractField;
 

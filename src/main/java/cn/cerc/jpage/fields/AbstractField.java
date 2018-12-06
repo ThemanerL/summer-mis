@@ -1,8 +1,8 @@
 package cn.cerc.jpage.fields;
 
-import cn.cerc.jdb.core.Record;
-import cn.cerc.jdb.core.TDate;
-import cn.cerc.jdb.core.TDateTime;
+import cn.cerc.core.Record;
+import cn.cerc.core.TDate;
+import cn.cerc.core.TDateTime;
 import cn.cerc.jpage.core.DataSource;
 import cn.cerc.jpage.core.HtmlWriter;
 import cn.cerc.jpage.core.IField;
@@ -170,8 +170,7 @@ public abstract class AbstractField extends UIComponent implements IField {
 
     /**
      * 
-     * @param rs
-     *            当前记录集
+     * @param rs 当前记录集
      * @return 返回输出文本
      */
     protected String getDefaultText(Record rs) {

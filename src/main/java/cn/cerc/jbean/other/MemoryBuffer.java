@@ -1,6 +1,6 @@
 package cn.cerc.jbean.other;
 
-import cn.cerc.jdb.cache.Buffer;
+import cn.cerc.db.cache.Buffer;
 
 public class MemoryBuffer extends Buffer implements AutoCloseable {
 

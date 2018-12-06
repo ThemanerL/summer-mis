@@ -1,6 +1,6 @@
 package cn.cerc.jbean.mail;
 
-import cn.cerc.jdb.core.DataSet;
+import cn.cerc.core.DataSet;
 
 public class HtmlGrid extends HtmlControl {
     private int border = 1;

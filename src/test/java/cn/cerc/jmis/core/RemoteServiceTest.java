@@ -7,8 +7,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import cn.cerc.jbean.client.RemoteService;
-import cn.cerc.jdb.core.DataSet;
-import cn.cerc.jdb.core.Record;
+import cn.cerc.core.DataSet;
+import cn.cerc.core.Record;
 
 public class RemoteServiceTest {
     // private static final Logger log =

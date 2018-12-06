@@ -1,7 +1,7 @@
 package cn.cerc.jpage.fields;
 
-import cn.cerc.jdb.core.DataSet;
-import cn.cerc.jdb.core.Record;
+import cn.cerc.core.DataSet;
+import cn.cerc.core.Record;
 import cn.cerc.jpage.core.HtmlWriter;
 import cn.cerc.jpage.core.IColumn;
 import cn.cerc.jpage.fields.editor.CheckEditor;

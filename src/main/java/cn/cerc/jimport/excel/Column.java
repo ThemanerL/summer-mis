@@ -1,6 +1,6 @@
 package cn.cerc.jimport.excel;
 
-import cn.cerc.jdb.core.Record;
+import cn.cerc.core.Record;
 
 public abstract class Column {
     // 对应数据集字段名

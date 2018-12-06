@@ -1,7 +1,5 @@
 package cn.cerc.jimport.excel;
 
-import static cn.cerc.jdb.other.utils.formatFloat;
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLEncoder;
@@ -14,8 +12,9 @@ import org.apache.commons.fileupload.FileItem;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
-import cn.cerc.jdb.core.DataSet;
-import cn.cerc.jdb.core.Record;
+import cn.cerc.core.DataSet;
+import cn.cerc.core.Record;
+import cn.cerc.db.other.utils;
 import jxl.Cell;
 import jxl.CellType;
 import jxl.NumberCell;
@@ -160,7 +159,7 @@ public class ImportExcel extends ImportFile {
                     if (cell.getType() == CellType.NUMBER) {
                         NumberCell numberCell = (NumberCell) cell;
                         double d = numberCell.getValue();
-                        value = formatFloat("0.######", d);
+                        value = utils.formatFloat("0.######", d);
                     }
                     Column column = template.getColumns().get(col);
                     if (!column.validate(row, col, value)) {

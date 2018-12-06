@@ -1,7 +1,7 @@
 package cn.cerc.jbean.client;
 
-import cn.cerc.jdb.core.DataSet;
-import cn.cerc.jdb.core.Record;
+import cn.cerc.core.DataSet;
+import cn.cerc.core.Record;
 
 public interface IServiceProxy {
     public static final String _message_ = "_message_";

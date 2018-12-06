@@ -1,6 +1,6 @@
 package cn.cerc.jbean.core;
 
-import cn.cerc.jdb.mysql.SqlSession;
+import cn.cerc.db.mysql.SqlSession;
 
 public class AppHandle extends AbstractHandle implements AutoCloseable {
     public AppHandle() {

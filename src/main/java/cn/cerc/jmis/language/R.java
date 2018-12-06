@@ -5,12 +5,12 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import cn.cerc.core.IHandle;
+import cn.cerc.core.TDateTime;
+import cn.cerc.core.Utils;
+import cn.cerc.db.mysql.SqlQuery;
 import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.other.ISystemTable;
-import cn.cerc.jdb.core.IHandle;
-import cn.cerc.jdb.core.TDateTime;
-import cn.cerc.jdb.core.Utils;
-import cn.cerc.jdb.mysql.SqlQuery;
 
 public class R {
     private static final Logger log = LoggerFactory.getLogger(R.class);

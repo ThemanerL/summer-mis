@@ -2,7 +2,7 @@ package cn.cerc.jmis.tools;
 
 import static cn.cerc.jbean.other.UserOptions.UserOptionEnabled;
 
-import cn.cerc.jdb.core.IHandle;
+import cn.cerc.core.IHandle;
 import cn.cerc.jexport.excel.AccreditManager;
 
 public class ExportAccreditManager implements AccreditManager {

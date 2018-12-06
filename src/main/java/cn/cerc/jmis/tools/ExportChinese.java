@@ -15,10 +15,10 @@ import org.springframework.stereotype.Component;
 
 import com.google.gson.Gson;
 
+import cn.cerc.core.IHandle;
+import cn.cerc.db.mysql.SqlQuery;
 import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.other.ISystemTable;
-import cn.cerc.jdb.core.IHandle;
-import cn.cerc.jdb.mysql.SqlQuery;
 
 /**
  * 扫描待翻译的中文

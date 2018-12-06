@@ -10,8 +10,8 @@ import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 
-import cn.cerc.jdb.core.IConfig;
-import cn.cerc.jdb.core.IHandle;
+import cn.cerc.core.IConfig;
+import cn.cerc.core.IHandle;
 
 //微信支付（网页JS版）
 public class WxpayJs {
@@ -147,12 +147,12 @@ public class WxpayJs {
 
     public static void main(String[] args) {
         WxpayJs pay = new WxpayJs(null, new IConfig() {
-            
+
             @Override
             public String getProperty(String key) {
                 return this.getProperty(key, null);
             }
-            
+
             @Override
             public String getProperty(String key, String def) {
                 if (config_appId.equals(key))

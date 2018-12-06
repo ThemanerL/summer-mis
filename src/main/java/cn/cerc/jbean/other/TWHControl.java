@@ -1,7 +1,7 @@
 package cn.cerc.jbean.other;
 
-import cn.cerc.jdb.core.DataSet;
-import cn.cerc.jdb.core.Record;
+import cn.cerc.core.DataSet;
+import cn.cerc.core.Record;
 
 public enum TWHControl {
     whcNone, whcHead, whcBody;

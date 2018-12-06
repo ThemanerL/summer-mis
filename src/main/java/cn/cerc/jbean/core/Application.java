@@ -9,7 +9,7 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 import cn.cerc.db.core.IAppConfig;
 import cn.cerc.db.core.ServerConfig;
 import cn.cerc.jbean.form.IForm;
-import cn.cerc.jdb.core.IHandle;
+import cn.cerc.core.IHandle;
 
 public class Application {
     // private static final Logger log = LoggerFactory.getLogger(Application.class);

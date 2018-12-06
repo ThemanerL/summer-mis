@@ -1,6 +1,6 @@
 package cn.cerc.jpage.core;
 
-import cn.cerc.jdb.other.utils;
+import cn.cerc.db.other.utils;
 
 public class HtmlWriter {
     private StringBuilder builder = new StringBuilder();

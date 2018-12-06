@@ -3,7 +3,7 @@ package cn.cerc.jbean.tools;
 import java.util.Calendar;
 import java.util.Iterator;
 
-import cn.cerc.jdb.core.TDateTime;
+import cn.cerc.core.TDateTime;
 
 public class DurationSplit implements Iterable<DurationSection>, Iterator<DurationSection> {
     private TDateTime beginDate;

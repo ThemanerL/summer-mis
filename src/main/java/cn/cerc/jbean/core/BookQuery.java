@@ -1,10 +1,10 @@
 package cn.cerc.jbean.core;
 
-import cn.cerc.jdb.core.IDataOperator;
-import cn.cerc.jdb.core.IHandle;
-import cn.cerc.jdb.core.Record;
-import cn.cerc.jdb.mysql.SqlOperator;
-import cn.cerc.jdb.mysql.SqlQuery;
+import cn.cerc.core.IDataOperator;
+import cn.cerc.core.IHandle;
+import cn.cerc.core.Record;
+import cn.cerc.db.mysql.SqlOperator;
+import cn.cerc.db.mysql.SqlQuery;
 
 public class BookQuery extends SqlQuery implements IDataOperator {
     private static final long serialVersionUID = 7447239243975915295L;

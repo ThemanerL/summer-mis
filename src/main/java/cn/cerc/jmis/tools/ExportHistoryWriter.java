@@ -2,7 +2,7 @@ package cn.cerc.jmis.tools;
 
 import cn.cerc.jbean.other.HistoryLevel;
 import cn.cerc.jbean.other.HistoryRecord;
-import cn.cerc.jdb.core.IHandle;
+import cn.cerc.core.IHandle;
 import cn.cerc.jexport.excel.HistoryWriter;
 import cn.cerc.jexport.excel.Template;
 

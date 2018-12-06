@@ -2,7 +2,7 @@ package cn.cerc.jbean.core;
 
 import cn.cerc.jbean.form.IForm;
 import cn.cerc.jbean.rds.PassportRecord;
-import cn.cerc.jdb.core.IHandle;
+import cn.cerc.core.IHandle;
 
 public interface IPassport {
 

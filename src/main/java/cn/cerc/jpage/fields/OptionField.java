@@ -3,7 +3,7 @@ package cn.cerc.jpage.fields;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import cn.cerc.jdb.core.Record;
+import cn.cerc.core.Record;
 import cn.cerc.jpage.core.HtmlWriter;
 import cn.cerc.jui.parts.UIComponent;
 

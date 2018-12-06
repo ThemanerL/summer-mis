@@ -1,6 +1,6 @@
 package cn.cerc.jbean.book;
 
-import cn.cerc.jdb.core.TDateTime;
+import cn.cerc.core.TDateTime;
 
 public class VirtualData implements IBookData {
     private TDateTime date;

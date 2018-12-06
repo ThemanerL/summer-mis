@@ -13,8 +13,8 @@ import cn.cerc.jbean.book.IBookManage;
 import cn.cerc.jbean.book.UpdateBook;
 import cn.cerc.jbean.book.VirtualData;
 import cn.cerc.jbean.other.BookOptions;
-import cn.cerc.jdb.core.IHandle;
-import cn.cerc.jdb.core.TDateTime;
+import cn.cerc.core.IHandle;
+import cn.cerc.core.TDateTime;
 
 public class UpdateManager implements IBookManage {
     private static final Logger log = LoggerFactory.getLogger(UpdateManager.class);

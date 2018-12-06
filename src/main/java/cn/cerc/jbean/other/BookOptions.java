@@ -6,13 +6,14 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import cn.cerc.core.DataSet;
+import cn.cerc.core.IHandle;
+import cn.cerc.core.TDate;
+import cn.cerc.db.mysql.BuildQuery;
+import cn.cerc.db.mysql.SqlQuery;
+import cn.cerc.db.other.utils;
 import cn.cerc.jbean.client.LocalService;
 import cn.cerc.jbean.core.Application;
-import cn.cerc.jdb.core.DataSet;
-import cn.cerc.jdb.core.IHandle;
-import cn.cerc.jdb.core.TDate;
-import cn.cerc.jdb.mysql.BuildQuery;
-import cn.cerc.jdb.mysql.SqlQuery;
 
 public class BookOptions {
     private static final Logger log = LoggerFactory.getLogger(BookOptions.class);
@@ -377,7 +378,7 @@ public class BookOptions {
         cdsTmp.setField("Code_", paramKey);
         cdsTmp.setField("Name_", paramName);
         cdsTmp.setField("Value_", def);
-        cdsTmp.setField("UpdateKey_", cn.cerc.jdb.other.utils.newGuid());
+        cdsTmp.setField("UpdateKey_", utils.newGuid());
         cdsTmp.post();
 
     }

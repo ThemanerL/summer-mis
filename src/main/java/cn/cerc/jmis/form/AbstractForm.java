@@ -12,7 +12,7 @@ import cn.cerc.jbean.core.AbstractHandle;
 import cn.cerc.jbean.form.IClient;
 import cn.cerc.jbean.form.IForm;
 import cn.cerc.jbean.other.ISystemTable;
-import cn.cerc.jdb.core.IHandle;
+import cn.cerc.core.IHandle;
 import cn.cerc.jmis.core.ClientDevice;
 
 public abstract class AbstractForm extends AbstractHandle implements IForm {

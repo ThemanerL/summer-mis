@@ -2,7 +2,7 @@ package cn.cerc.jpage.grid;
 
 import javax.servlet.http.HttpServletRequest;
 
-import cn.cerc.jdb.core.DataSet;
+import cn.cerc.core.DataSet;
 import net.sf.json.JSONObject;
 
 public class MutiPage {

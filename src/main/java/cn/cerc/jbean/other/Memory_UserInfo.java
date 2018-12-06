@@ -1,9 +1,9 @@
 package cn.cerc.jbean.other;
 
+import cn.cerc.core.IHandle;
+import cn.cerc.core.Record;
+import cn.cerc.db.mysql.SqlQuery;
 import cn.cerc.jbean.core.Application;
-import cn.cerc.jdb.core.IHandle;
-import cn.cerc.jdb.core.Record;
-import cn.cerc.jdb.mysql.SqlQuery;
 
 public class Memory_UserInfo {
     public static int count = 0;

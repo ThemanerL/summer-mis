@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cn.cerc.jdb.core.IHandle;
+import cn.cerc.core.IHandle;
 
 /**
  * 获取操作的ip
