@@ -1,6 +1,6 @@
 package cn.cerc.mis.excel.input;
 
-public class StringColumn extends Column {
+public class ImportStringColumn extends ImportColumn {
 
     // 取得数据
     @Override

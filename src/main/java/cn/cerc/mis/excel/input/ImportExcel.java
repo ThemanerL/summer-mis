@@ -53,7 +53,7 @@ public class ImportExcel extends ImportFile {
         response.setHeader("Content-Disposition", "attachment;filename=" + fname + ".xls");
         response.setContentType("application/msexcel");// 定义输出类型
 
-        List<Column> columns = template.getColumns();
+        List<ImportColumn> columns = template.getColumns();
 
         // 创建工作薄
         WritableWorkbook workbook = Workbook.createWorkbook(os);
@@ -64,7 +64,7 @@ public class ImportExcel extends ImportFile {
         // 输出列头
         int row = 0;
         for (int col = 0; col < columns.size(); col++) {
-            Column column = columns.get(col);
+            ImportColumn column = columns.get(col);
             Label item = new Label(col, row, column.getName());
             sheet.addCell(item);
         }
@@ -75,9 +75,9 @@ public class ImportExcel extends ImportFile {
             while (dataOut.fetch()) {
                 row++;
                 for (int col = 0; col < columns.size(); col++) {
-                    Column column = columns.get(col);
+                    ImportColumn column = columns.get(col);
                     column.setRecord(dataOut.getCurrent());
-                    if (column instanceof NumberColumn) {
+                    if (column instanceof ImportNumberColumn) {
                         jxl.write.Number item = new jxl.write.Number(col, row, (double) column.getValue());
                         sheet.addCell(item);
                     } else {
@@ -161,7 +161,7 @@ public class ImportExcel extends ImportFile {
                         double d = numberCell.getValue();
                         value = utils.formatFloat("0.######", d);
                     }
-                    Column column = template.getColumns().get(col);
+                    ImportColumn column = template.getColumns().get(col);
                     if (!column.validate(row, col, value)) {
                         ColumnValidateException err = new ColumnValidateException("其数据不符合模版要求，当前值为：" + value);
                         err.setTitle(column.getName());

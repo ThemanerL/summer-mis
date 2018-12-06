@@ -3,7 +3,7 @@ package cn.cerc.mis.excel.input;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class OptionColumn extends Column {
+public class ImportOptionColumn extends ImportColumn {
     private Map<String, String> items = new LinkedHashMap<>();
 
     public Map<String, String> getItems() {

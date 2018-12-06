@@ -2,7 +2,7 @@ package cn.cerc.mis.excel.input;
 
 import cn.cerc.core.TDateTime;
 
-public class DateColumn extends Column {
+public class ImportDateColumn extends ImportColumn {
 
     @Override
     public Object getValue() {

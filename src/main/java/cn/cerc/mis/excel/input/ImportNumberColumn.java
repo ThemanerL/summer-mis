@@ -4,7 +4,7 @@ import java.text.DecimalFormat;
 
 import cn.cerc.db.other.utils;
 
-public class NumberColumn extends Column {
+public class ImportNumberColumn extends ImportColumn {
     @Override
     public Object getValue() {
         return utils.strToDoubleDef(new DecimalFormat("0.######").format(getRecord().getDouble(getCode())), 0);

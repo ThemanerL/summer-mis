@@ -2,7 +2,7 @@ package cn.cerc.mis.excel.input;
 
 import cn.cerc.core.Record;
 
-public abstract class Column {
+public abstract class ImportColumn {
     // 对应数据集字段名
     private String code;
     // 对应数据集字段标题

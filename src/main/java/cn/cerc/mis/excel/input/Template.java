@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Template {
     private String fileName;
-    private List<Column> columns;
+    private List<ImportColumn> columns;
 
     public String getFileName() {
         return fileName;
@@ -14,15 +14,15 @@ public class Template {
         this.fileName = fileName;
     }
 
-    public List<Column> getColumns() {
+    public List<ImportColumn> getColumns() {
         return columns;
     }
 
-    public void setColumns(List<Column> columns) {
+    public void setColumns(List<ImportColumn> columns) {
         this.columns = columns;
     }
 
-    public void addColumn(Column column) {
+    public void addColumn(ImportColumn column) {
         columns.add(column);
     }
 }
