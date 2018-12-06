@@ -1,8 +1,8 @@
 package cn.cerc.mis.page.qrcode;
 
-import cn.cerc.mis.form.IPage;
+import cn.cerc.mis.core.AbstractForm;
 import cn.cerc.mis.core.ClientDevice;
-import cn.cerc.mis.form.AbstractForm;
+import cn.cerc.mis.core.IPage;
 import cn.cerc.mis.page.service.SvrAutoLogin;
 
 public class FrmQRCode extends AbstractForm implements JayunEasyLogin {

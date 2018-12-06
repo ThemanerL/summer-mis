@@ -21,8 +21,6 @@ import cn.cerc.db.core.MysqlConnection;
 import cn.cerc.db.mysql.SqlSession;
 import cn.cerc.mis.core.Application;
 import cn.cerc.mis.core.IPassport;
-import cn.cerc.mis.form.IForm;
-import cn.cerc.mis.form.IPage;
 
 @Controller
 @Scope(WebApplicationContext.SCOPE_REQUEST)

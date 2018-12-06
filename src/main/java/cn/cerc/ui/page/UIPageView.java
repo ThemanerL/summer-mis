@@ -7,15 +7,15 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
+import cn.cerc.mis.core.AbstractForm;
 import cn.cerc.mis.core.Application;
-import cn.cerc.mis.form.IForm;
-import cn.cerc.mis.form.AbstractForm;
 import cn.cerc.mis.page.AbstractJspPage;
 import cn.cerc.mis.page.IMenuBar;
 import cn.cerc.ui.core.Component;
 import cn.cerc.ui.core.UrlRecord;
 import cn.cerc.ui.parts.RightMenus;
 import cn.cerc.mis.core.HandleDefault;
+import cn.cerc.mis.core.IForm;
 
 public class UIPageView extends AbstractJspPage {
 

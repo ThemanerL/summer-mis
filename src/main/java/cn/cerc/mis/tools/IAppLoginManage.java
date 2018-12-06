@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 
-import cn.cerc.mis.form.IForm;
+import cn.cerc.mis.core.IForm;
 
 public interface IAppLoginManage {
 

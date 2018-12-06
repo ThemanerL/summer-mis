@@ -8,7 +8,6 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import cn.cerc.db.core.IAppConfig;
 import cn.cerc.db.core.ServerConfig;
-import cn.cerc.mis.form.IForm;
 import cn.cerc.core.IHandle;
 
 public class Application {

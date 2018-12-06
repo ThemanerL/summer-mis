@@ -5,8 +5,8 @@ import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 
-import cn.cerc.mis.form.IForm;
-import cn.cerc.mis.form.IPage;
+import cn.cerc.mis.core.IForm;
+import cn.cerc.mis.core.IPage;
 import cn.cerc.ui.core.HtmlWriter;
 
 public class HtmlPage implements IPage {

@@ -4,8 +4,8 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 
-import cn.cerc.mis.form.IForm;
 import cn.cerc.ui.parts.UIMenuList;
+import cn.cerc.mis.core.IForm;
 import cn.cerc.mis.core.RequestData;
 
 /**

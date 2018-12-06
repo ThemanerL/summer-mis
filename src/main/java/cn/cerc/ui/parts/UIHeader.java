@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.cerc.mis.core.Application;
-import cn.cerc.mis.form.IForm;
+import cn.cerc.mis.core.IForm;
 import cn.cerc.mis.page.AbstractJspPage;
 import cn.cerc.ui.core.Component;
 import cn.cerc.ui.core.HtmlWriter;

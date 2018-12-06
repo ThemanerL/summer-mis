@@ -1,6 +1,6 @@
 package cn.cerc.ui.docs;
 
-import cn.cerc.mis.form.IPage;
+import cn.cerc.mis.core.IPage;
 import cn.cerc.ui.other.OperaPanel;
 import cn.cerc.ui.parts.UIComponent;
 

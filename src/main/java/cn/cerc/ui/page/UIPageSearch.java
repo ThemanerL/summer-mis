@@ -9,8 +9,8 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
+import cn.cerc.mis.core.AbstractForm;
 import cn.cerc.mis.core.Application;
-import cn.cerc.mis.form.IForm;
 import cn.cerc.mis.other.MemoryBuffer;
 import cn.cerc.mis.rds.PassportRecord;
 import cn.cerc.ui.core.Component;
@@ -25,11 +25,11 @@ import cn.cerc.ui.parts.UIComponent;
 import cn.cerc.ui.parts.UIFormHorizontal;
 import cn.cerc.ui.parts.UIFormVertical;
 import cn.cerc.core.DataSet;
-import cn.cerc.mis.form.AbstractForm;
 import cn.cerc.mis.page.AbstractJspPage;
 import cn.cerc.mis.page.ExportFile;
 import cn.cerc.mis.page.IMenuBar;
 import cn.cerc.mis.core.HandleDefault;
+import cn.cerc.mis.core.IForm;
 
 /**
  * 主体子页面

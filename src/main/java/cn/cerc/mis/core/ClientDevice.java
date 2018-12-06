@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 
 import cn.cerc.mis.core.Application;
-import cn.cerc.mis.form.IClient;
 import cn.cerc.mis.other.BufferType;
 import cn.cerc.mis.other.MemoryBuffer;
 

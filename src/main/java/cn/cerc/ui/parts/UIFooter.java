@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import cn.cerc.mis.form.IForm;
+import cn.cerc.mis.core.IForm;
 import cn.cerc.mis.page.AbstractJspPage;
 import cn.cerc.ui.core.Component;
 import cn.cerc.ui.core.HtmlWriter;

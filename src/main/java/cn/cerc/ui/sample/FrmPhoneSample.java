@@ -1,6 +1,7 @@
 package cn.cerc.ui.sample;
 
-import cn.cerc.mis.form.IPage;
+import cn.cerc.mis.core.AbstractForm;
+import cn.cerc.mis.core.IPage;
 import cn.cerc.ui.page.UIPagePhone;
 import cn.cerc.ui.phone.Block101;
 import cn.cerc.ui.phone.Block102;
@@ -46,7 +47,6 @@ import cn.cerc.ui.phone.Block901;
 import cn.cerc.ui.phone.Block902;
 import cn.cerc.ui.phone.Block991;
 import cn.cerc.ui.phone.Block992;
-import cn.cerc.mis.form.AbstractForm;
 
 public class FrmPhoneSample extends AbstractForm {
 

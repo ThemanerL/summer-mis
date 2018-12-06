@@ -1,6 +1,6 @@
 package cn.cerc.ui.docs;
 
-import cn.cerc.mis.form.IForm;
+import cn.cerc.mis.core.IForm;
 import cn.cerc.ui.parts.UISheetHelp;
 import cn.cerc.ui.parts.UIToolBar;
 

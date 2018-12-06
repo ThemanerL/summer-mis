@@ -8,8 +8,8 @@ import java.util.Map;
 
 import javax.servlet.ServletException;
 
-import cn.cerc.mis.form.IForm;
-import cn.cerc.mis.form.IPage;
+import cn.cerc.mis.core.IForm;
+import cn.cerc.mis.core.IPage;
 
 public class RedirectPage implements IPage {
     private String url;

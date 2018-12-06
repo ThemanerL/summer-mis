@@ -3,7 +3,6 @@ package cn.cerc.ui.grid;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.cerc.mis.form.IForm;
 import cn.cerc.ui.core.DataSource;
 import cn.cerc.ui.core.HtmlWriter;
 import cn.cerc.ui.core.IField;
@@ -14,6 +13,7 @@ import cn.cerc.ui.grid.lines.MasterGridLine;
 import cn.cerc.ui.parts.UIActionForm;
 import cn.cerc.ui.parts.UIComponent;
 import cn.cerc.core.DataSet;
+import cn.cerc.mis.core.IForm;
 
 public abstract class AbstractGrid extends UIComponent implements DataSource {
     // 数据源

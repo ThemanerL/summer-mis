@@ -9,8 +9,8 @@ import javax.servlet.ServletException;
 
 import com.google.gson.Gson;
 
-import cn.cerc.mis.form.IForm;
-import cn.cerc.mis.form.IPage;
+import cn.cerc.mis.core.IForm;
+import cn.cerc.mis.core.IPage;
 
 public class JsonPage implements IPage {
     private Object data;

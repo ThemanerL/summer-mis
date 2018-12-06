@@ -8,9 +8,8 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
+import cn.cerc.mis.core.AbstractForm;
 import cn.cerc.mis.core.Application;
-import cn.cerc.mis.form.IForm;
-import cn.cerc.mis.form.AbstractForm;
 import cn.cerc.mis.page.AbstractJspPage;
 import cn.cerc.mis.page.ExportFile;
 import cn.cerc.mis.page.IMenuBar;
@@ -22,6 +21,7 @@ import cn.cerc.ui.grid.MutiPage;
 import cn.cerc.ui.other.OperaPages;
 import cn.cerc.ui.parts.RightMenus;
 import cn.cerc.mis.core.HandleDefault;
+import cn.cerc.mis.core.IForm;
 
 public class UIPageDialog extends AbstractJspPage {
     private boolean showMenus = true; // 是否显示主菜单

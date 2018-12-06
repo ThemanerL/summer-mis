@@ -1,4 +1,4 @@
-package cn.cerc.mis.form;
+package cn.cerc.mis.core;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
