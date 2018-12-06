@@ -18,10 +18,10 @@ import cn.cerc.db.core.MysqlConnection;
 import cn.cerc.db.mysql.SqlSession;
 import cn.cerc.db.queue.AliyunQueueConnection;
 import cn.cerc.db.queue.QueueSession;
-import cn.cerc.jbean.client.LocalService;
-import cn.cerc.jbean.core.Application;
-import cn.cerc.jbean.other.BufferType;
-import cn.cerc.jbean.other.MemoryBuffer;
+import cn.cerc.mis.client.LocalService;
+import cn.cerc.mis.core.Application;
+import cn.cerc.mis.other.BufferType;
+import cn.cerc.mis.other.MemoryBuffer;
 
 @Component
 // @Scope(WebApplicationContext.SCOPE_REQUEST)

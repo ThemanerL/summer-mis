@@ -1,6 +1,6 @@
 package cn.cerc.mis.page.qrcode;
 
-import cn.cerc.jbean.form.IPage;
+import cn.cerc.mis.form.IPage;
 import cn.cerc.mis.core.ClientDevice;
 import cn.cerc.mis.form.AbstractForm;
 import cn.cerc.mis.page.service.SvrAutoLogin;

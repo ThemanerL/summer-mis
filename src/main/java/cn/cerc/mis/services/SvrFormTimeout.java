@@ -2,7 +2,7 @@ package cn.cerc.mis.services;
 
 import cn.cerc.core.Record;
 import cn.cerc.db.mysql.SqlQuery;
-import cn.cerc.jbean.core.CustomService;
+import cn.cerc.mis.core.CustomService;
 
 public class SvrFormTimeout extends CustomService {
 

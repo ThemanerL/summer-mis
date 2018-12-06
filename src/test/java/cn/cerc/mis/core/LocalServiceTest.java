@@ -4,8 +4,8 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import cn.cerc.jbean.client.LocalService;
-import cn.cerc.jbean.rds.StubHandle;
+import cn.cerc.mis.client.LocalService;
+import cn.cerc.mis.rds.StubHandle;
 
 public class LocalServiceTest {
     private StubHandle handle;

@@ -1,7 +1,7 @@
 package cn.cerc.mis.tools;
 
-import cn.cerc.jbean.other.HistoryLevel;
-import cn.cerc.jbean.other.HistoryRecord;
+import cn.cerc.mis.other.HistoryLevel;
+import cn.cerc.mis.other.HistoryRecord;
 import cn.cerc.core.IHandle;
 import cn.cerc.jexport.excel.HistoryWriter;
 import cn.cerc.jexport.excel.Template;

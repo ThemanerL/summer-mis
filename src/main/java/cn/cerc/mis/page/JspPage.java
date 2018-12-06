@@ -1,6 +1,6 @@
 package cn.cerc.mis.page;
 
-import cn.cerc.jbean.form.IForm;
+import cn.cerc.mis.form.IForm;
 
 public class JspPage extends AbstractJspPage {
 

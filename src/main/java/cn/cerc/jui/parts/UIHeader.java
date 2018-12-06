@@ -3,8 +3,8 @@ package cn.cerc.jui.parts;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.cerc.jbean.core.Application;
-import cn.cerc.jbean.form.IForm;
+import cn.cerc.mis.core.Application;
+import cn.cerc.mis.form.IForm;
 import cn.cerc.mis.page.AbstractJspPage;
 import cn.cerc.jpage.core.Component;
 import cn.cerc.jpage.core.HtmlWriter;

@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import cn.cerc.jbean.client.RemoteService;
+import cn.cerc.mis.client.RemoteService;
 import cn.cerc.core.DataSet;
 import cn.cerc.core.Record;
 

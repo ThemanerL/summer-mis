@@ -13,7 +13,7 @@ import com.google.gson.Gson;
 
 import cn.cerc.core.IConfig;
 import cn.cerc.core.IHandle;
-import cn.cerc.jbean.core.Application;
+import cn.cerc.mis.core.Application;
 
 //APP支付
 public class WxpayAPI {

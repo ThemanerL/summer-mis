@@ -6,7 +6,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cn.cerc.jbean.client.LocalService;
+import cn.cerc.mis.client.LocalService;
 import cn.cerc.core.IHandle;
 import cn.cerc.core.Record;
 

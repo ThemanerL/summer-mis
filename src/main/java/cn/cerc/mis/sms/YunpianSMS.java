@@ -18,7 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cn.cerc.db.core.ServerConfig;
-import cn.cerc.jbean.core.AppHandle;
+import cn.cerc.mis.core.AppHandle;
 import cn.cerc.mis.language.R;
 import net.sf.json.JSONObject;
 

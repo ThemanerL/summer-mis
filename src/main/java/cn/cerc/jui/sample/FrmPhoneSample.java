@@ -1,6 +1,6 @@
 package cn.cerc.jui.sample;
 
-import cn.cerc.jbean.form.IPage;
+import cn.cerc.mis.form.IPage;
 import cn.cerc.mis.form.AbstractForm;
 import cn.cerc.jui.page.UIPagePhone;
 import cn.cerc.jui.phone.Block101;

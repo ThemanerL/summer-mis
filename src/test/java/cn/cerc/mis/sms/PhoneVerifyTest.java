@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cn.cerc.jbean.rds.StubHandle;
+import cn.cerc.mis.rds.StubHandle;
 
 public class PhoneVerifyTest {
     private static final Logger log = LoggerFactory.getLogger(PhoneVerifyTest.class);

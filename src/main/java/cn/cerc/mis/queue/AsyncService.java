@@ -14,7 +14,7 @@ import cn.cerc.db.core.ServerVersion;
 import cn.cerc.db.queue.QueueDB;
 import cn.cerc.db.queue.QueueQuery;
 import cn.cerc.db.queue.QueueSession;
-import cn.cerc.jbean.client.IServiceProxy;
+import cn.cerc.mis.client.IServiceProxy;
 import cn.cerc.mis.message.MessageLevel;
 import cn.cerc.mis.message.MessageRecord;
 import net.sf.json.JSONObject;

@@ -1,6 +1,6 @@
 package cn.cerc.jpage.grid;
 
-import cn.cerc.jbean.form.IForm;
+import cn.cerc.mis.form.IForm;
 import cn.cerc.jui.parts.UIComponent;
 
 public class GridFactory {
