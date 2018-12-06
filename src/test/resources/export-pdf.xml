@@ -3,7 +3,7 @@
     xmlns:aop="http://www.springframework.org/schema/aop"
     xsi:schemaLocation="http://www.springframework.org/schema/beans  
            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
-    <bean id="TWebPartModel" class="cn.cerc.mis.pdf.output.PdfTemplate">
+    <bean id="TWebPartModel" class="cn.cerc.mis.print.PrintTemplate">
         <property name="fileName" value="料品型号表" />
         <property name="header" value="地藤系统：0755-33502780"></property>
         <property name="columns">

@@ -1,4 +1,4 @@
-package cn.cerc.mis.pdf.output;
+package cn.cerc.mis.print;
 
 import java.io.IOException;
 import java.util.List;
@@ -19,7 +19,7 @@ import cn.cerc.core.DataSet;
 import cn.cerc.core.Record;
 import cn.cerc.mis.excel.output.Column;
 
-public class PdfTemplate {
+public class PrintTemplate {
     private String fileName;
     private String header;
     private ReportHeaderFooter headerFooter;

@@ -1,4 +1,4 @@
-package cn.cerc.mis.pdf.output;
+package cn.cerc.mis.print;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

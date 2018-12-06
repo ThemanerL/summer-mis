@@ -1,4 +1,4 @@
-package cn.cerc.mis.pdf.output;
+package cn.cerc.mis.print;
 
 import java.io.IOException;
 
@@ -17,7 +17,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import cn.cerc.core.Record;
 import cn.cerc.mis.excel.output.Column;
 
-public class InvoiceTemplate extends PdfTemplate {
+public class InvoiceTemplate extends PrintTemplate {
     public InvoiceTemplate() {
         this.setPageWidth(58);
         this.setMarginTop(12);

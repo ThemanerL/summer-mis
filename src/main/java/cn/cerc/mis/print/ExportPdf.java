@@ -1,4 +1,4 @@
-package cn.cerc.mis.pdf.output;
+package cn.cerc.mis.print;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -20,7 +20,7 @@ public class ExportPdf {
     private static String xmlFile = "classpath:export-pdf.xml";
     private HttpServletResponse response;
     private String templateId;
-    private PdfTemplate template;
+    private PrintTemplate template;
 
     public ExportPdf(HttpServletResponse response) {
         this.response = response;
@@ -34,23 +34,23 @@ public class ExportPdf {
         this.templateId = templateId;
     }
 
-    public PdfTemplate getTemplate() {
+    public PrintTemplate getTemplate() {
         if (template == null) {
             if (templateId == null)
                 throw new RuntimeException("templateId is null");
             if (app == null)
                 app = new FileSystemXmlApplicationContext(xmlFile);
-            template = app.getBean(templateId, PdfTemplate.class);
+            template = app.getBean(templateId, PrintTemplate.class);
         }
         return template;
     }
 
-    public void setTemplate(PdfTemplate template) {
+    public void setTemplate(PrintTemplate template) {
         this.template = template;
     }
 
     public void export() throws IOException, DocumentException {
-        PdfTemplate template = this.getTemplate();
+        PrintTemplate template = this.getTemplate();
 
         // 清空输出流
         response.reset();

@@ -1,4 +1,4 @@
-package cn.cerc.mis.pdf.output;
+package cn.cerc.mis.print;
 
 import java.io.IOException;
 
@@ -14,7 +14,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import cn.cerc.core.DataSet;
 
-public class Barcode128Template extends PdfTemplate {
+public class Barcode128Template extends PrintTemplate {
     private float fontSize;
     private float barHeight;
 
