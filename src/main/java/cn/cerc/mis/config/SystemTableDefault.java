@@ -1,6 +1,6 @@
 package cn.cerc.mis.config;
 
-import cn.cerc.jbean.other.ISystemTable;
+import cn.cerc.mis.other.ISystemTable;
 
 public class SystemTableDefault implements ISystemTable {
 

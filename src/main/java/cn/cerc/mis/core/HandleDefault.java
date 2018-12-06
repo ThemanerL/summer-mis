@@ -10,18 +10,18 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import cn.cerc.db.core.AliyunQueueConnection;
+import cn.cerc.core.IConnection;
+import cn.cerc.core.IHandle;
+import cn.cerc.core.ISession;
+import cn.cerc.core.Record;
 import cn.cerc.db.core.MysqlConnection;
-import cn.cerc.jbean.client.LocalService;
-import cn.cerc.jbean.core.Application;
-import cn.cerc.jbean.other.BufferType;
-import cn.cerc.jbean.other.MemoryBuffer;
-import cn.cerc.jdb.core.IConnection;
-import cn.cerc.jdb.core.IHandle;
-import cn.cerc.jdb.core.ISession;
-import cn.cerc.jdb.core.Record;
-import cn.cerc.jdb.mysql.SqlSession;
-import cn.cerc.jdb.queue.QueueSession;
+import cn.cerc.db.mysql.SqlSession;
+import cn.cerc.db.queue.AliyunQueueConnection;
+import cn.cerc.db.queue.QueueSession;
+import cn.cerc.mis.client.LocalService;
+import cn.cerc.mis.core.Application;
+import cn.cerc.mis.other.BufferType;
+import cn.cerc.mis.other.MemoryBuffer;
 
 @Component
 // @Scope(WebApplicationContext.SCOPE_REQUEST)
@@ -49,7 +49,7 @@ public class HandleDefault implements IHandle, AutoCloseable {
 
     @Override
     public boolean init(String corpNo, String userCode, String clientIP) {
-        String token = GuidFixStr(cn.cerc.jdb.other.utils.newGuid());
+        String token = GuidFixStr(cn.cerc.db.other.utils.newGuid());
         this.setProperty(Application.token, token);
         this.setProperty(Application.bookNo, corpNo);
         this.setProperty(Application.userCode, userCode);
