@@ -5,20 +5,15 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import cn.cerc.core.IConnection;
 import cn.cerc.core.IHandle;
-import cn.cerc.core.ISession;
 import cn.cerc.core.Record;
 import cn.cerc.core.Utils;
-import cn.cerc.db.core.MysqlConnection;
-import cn.cerc.db.mysql.SqlSession;
-import cn.cerc.db.queue.AliyunQueueConnection;
-import cn.cerc.db.queue.QueueSession;
+import cn.cerc.db.mysql.MysqlConnection;
 import cn.cerc.mis.other.BufferType;
 import cn.cerc.mis.other.MemoryBuffer;
 
@@ -29,10 +24,6 @@ public class HandleDefault implements IHandle, AutoCloseable {
     private static final Logger log = LoggerFactory.getLogger(HandleDefault.class);
     private Map<String, IConnection> connections = new HashMap<>();
     private Map<String, Object> params = new HashMap<>();
-    @Autowired
-    private MysqlConnection mysqlConnection;
-    @Autowired
-    private AliyunQueueConnection queueConnection;
 
     public HandleDefault() {
         params.put(Application.sessionId, "");
@@ -154,20 +145,9 @@ public class HandleDefault implements IHandle, AutoCloseable {
             return this;
         }
 
-        if ("sqlConnection".equals(key))
-            return mysqlConnection;
-
-        if (QueueSession.sessionId.equals(key))
-            return queueConnection.getSession();
-
-        if (SqlSession.sessionId.equals(key))
-            return mysqlConnection.getSession();
-
         Object result = params.get(key);
         if (result == null && !params.containsKey(key) && connections.containsKey(key)) {
-            IConnection conn = connections.get(key);
-            result = conn.getSession();
-            params.put(key, result);
+            result = connections.get(key);
         }
         return result;
     }
@@ -199,8 +179,8 @@ public class HandleDefault implements IHandle, AutoCloseable {
         for (String key : this.params.keySet()) {
             Object sess = this.params.get(key);
             try {
-                if (sess instanceof ISession)
-                    ((ISession) sess).closeSession();
+                if (sess instanceof AutoCloseable)
+                    ((AutoCloseable) sess).close();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -212,8 +192,8 @@ public class HandleDefault implements IHandle, AutoCloseable {
         this.closeConnections();
     }
 
-    public SqlSession getConnection() {
-        return (SqlSession) getProperty(SqlSession.sessionId);
+    public MysqlConnection getConnection() {
+        return (MysqlConnection) getProperty(MysqlConnection.sessionId);
     }
 
     public Map<String, IConnection> getConnections() {

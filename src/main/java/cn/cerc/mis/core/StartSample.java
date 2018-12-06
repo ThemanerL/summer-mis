@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.WebApplicationContext;
 
 import cn.cerc.core.IHandle;
-import cn.cerc.db.core.MysqlConnection;
+import cn.cerc.db.mysql.MysqlConnection;
 import cn.cerc.db.mysql.SqlSession;
 import cn.cerc.mis.config.AppLogin;
 import cn.cerc.mis.core.Application;
