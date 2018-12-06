@@ -13,8 +13,8 @@ import com.google.gson.reflect.TypeToken;
 
 import cn.cerc.core.IHandle;
 import cn.cerc.db.cache.Redis;
+import cn.cerc.db.mysql.MysqlConnection;
 import cn.cerc.db.mysql.SqlQuery;
-import cn.cerc.db.mysql.SqlSession;
 import cn.cerc.mis.core.Application;
 import cn.cerc.mis.core.ISystemTable;
 
@@ -162,7 +162,7 @@ public class UserList implements IDataList {
         if (ds.eof())
             throw new UserNotFindException(userCode);
 
-        SqlSession conn = (SqlSession) handle.getProperty(SqlSession.sessionId);
+        MysqlConnection conn = (MysqlConnection) handle.getProperty(MysqlConnection.sessionId);
         String sql = String.format("update %s set CorpNo_='%s',ShareAccount_=1 where Code_='%s'",
                 systemTable.getUserInfo(), corpNo, userCode);
         conn.execute(sql);

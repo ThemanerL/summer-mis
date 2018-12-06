@@ -16,7 +16,7 @@ import cn.cerc.db.mysql.BuildQuery;
 import cn.cerc.db.mysql.SqlOperator;
 import cn.cerc.db.mysql.SqlQuery;
 import cn.cerc.db.mysql.Transaction;
-import cn.cerc.db.oss.OssSession;
+import cn.cerc.db.oss.OssConnection;
 import cn.cerc.mis.core.Application;
 import cn.cerc.mis.core.CustomService;
 import cn.cerc.mis.core.DataValidateException;
@@ -267,7 +267,7 @@ public class SvrUserLogin extends CustomService {
         String token1 = headIn.getString("token");
         // 加入ABCD是为了仅允许内部调用
         ServerConfig config = ServerConfig.getInstance();
-        String token2 = config.getProperty(OssSession.oss_accessKeySecret, "") + "ABCD";
+        String token2 = config.getProperty(OssConnection.oss_accessKeySecret, "") + "ABCD";
         // 如果不是内部调用，则返回false
         if (!token2.equals(token1)) {
             return false;

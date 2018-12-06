@@ -18,10 +18,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import cn.cerc.core.IHandle;
 import cn.cerc.db.mysql.MysqlConnection;
-import cn.cerc.db.mysql.SqlSession;
 import cn.cerc.mis.config.AppLogin;
-import cn.cerc.mis.core.Application;
-import cn.cerc.mis.core.IPassport;
 
 @Controller
 @Scope(WebApplicationContext.SCOPE_REQUEST)
@@ -63,7 +60,7 @@ public class StartSample implements ApplicationContextAware {
 
             handle.setProperty(Application.sessionId, request.getSession().getId());
             handle.setProperty(Application.deviceLanguage, clientDevice.getLanguage());
-            handle.setProperty(SqlSession.sessionId, sqlConnection.getSession());
+            handle.setProperty(MysqlConnection.sessionId, sqlConnection);
 
             request.setAttribute("myappHandle", handle);
             request.setAttribute("_showMenu_", !ClientDevice.device_ee.equals(clientDevice.getDevice()));
