@@ -23,7 +23,7 @@ public class MailRecord implements Serializable {
 
     public boolean send() {
         QueueSession sess = (QueueSession) handle.getProperty(QueueSession.sessionId);
-        CloudQueue queue = sess.openQueue(appQueue.queueSendMail);
+        CloudQueue queue = sess.openQueue(AppMailQueue.queueSendMail);
         return sess.append(queue, this.toString());
     }
 
