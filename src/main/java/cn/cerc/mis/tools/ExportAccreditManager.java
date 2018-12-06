@@ -3,7 +3,7 @@ package cn.cerc.mis.tools;
 import static cn.cerc.mis.other.UserOptions.UserOptionEnabled;
 
 import cn.cerc.core.IHandle;
-import cn.cerc.jexport.excel.AccreditManager;
+import cn.cerc.io.excel.output.AccreditManager;
 
 public class ExportAccreditManager implements AccreditManager {
     private String securityCode;

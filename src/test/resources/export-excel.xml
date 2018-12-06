@@ -4,11 +4,11 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans  
            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
-    <bean id="ExportMessage" class="cn.cerc.jexport.excel.Template">
+    <bean id="ExportMessage" class="cn.cerc.io.excel.output.Template">
         <property name="fileName" value="导出指令执行失败说明" />
         <property name="columns">
             <list>
-                <bean class="cn.cerc.jexport.excel.StringColumn">
+                <bean class="cn.cerc.io.excel.output.StringColumn">
                     <property name="code" value="message_" />
                     <property name="name" value="摘要" />
                 </bean>
@@ -16,39 +16,39 @@
         </property>
     </bean>
 
-    <bean id="TSchStockUpdate" class="cn.cerc.jexport.excel.Template">
+    <bean id="TSchStockUpdate" class="cn.cerc.io.excel.output.Template">
         <property name="fileName" value="呆滞天数分析" />
         <property name="columns">
             <list>
-                <bean class="cn.cerc.jexport.excel.StringColumn">
+                <bean class="cn.cerc.io.excel.output.StringColumn">
                     <property name="code" value="Brand_" />
                     <property name="name" value="商品品牌" />
                 </bean>
-                <bean class="cn.cerc.jexport.excel.StringColumn">
+                <bean class="cn.cerc.io.excel.output.StringColumn">
                     <property name="code" value="PartClass" />
                     <property name="name" value="商品类别" />
                 </bean>
-                <bean class="cn.cerc.jexport.excel.StringColumn">
+                <bean class="cn.cerc.io.excel.output.StringColumn">
                     <property name="code" value="Code_" />
                     <property name="name" value="商品料号" />
                 </bean>
-                <bean class="cn.cerc.jexport.excel.StringColumn">
+                <bean class="cn.cerc.io.excel.output.StringColumn">
                     <property name="code" value="DescSpec" />
                     <property name="name" value="品名规格" />
                 </bean>
-                <bean class="cn.cerc.jexport.excel.StringColumn">
+                <bean class="cn.cerc.io.excel.output.StringColumn">
                     <property name="code" value="Unit_" />
                     <property name="name" value="单位" />
                 </bean>
-                <bean class="cn.cerc.jexport.excel.NumberColumn">
+                <bean class="cn.cerc.io.excel.output.NumberColumn">
                     <property name="code" value="Stock_" />
                     <property name="name" value="账面库存" />
                 </bean>
-                <bean class="cn.cerc.jexport.excel.DateColumn">
+                <bean class="cn.cerc.io.excel.output.DateColumn">
                     <property name="code" value="LastUpdate_" />
                     <property name="name" value="变更日期" />
                 </bean>
-                <bean class="cn.cerc.jexport.excel.NumberColumn">
+                <bean class="cn.cerc.io.excel.output.NumberColumn">
                     <property name="code" value="KeepDays_" />
                     <property name="name" value="呆滞天数" />
                 </bean>

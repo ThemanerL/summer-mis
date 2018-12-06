@@ -3,8 +3,8 @@ package cn.cerc.mis.tools;
 import cn.cerc.mis.other.HistoryLevel;
 import cn.cerc.mis.other.HistoryRecord;
 import cn.cerc.core.IHandle;
-import cn.cerc.jexport.excel.HistoryWriter;
-import cn.cerc.jexport.excel.Template;
+import cn.cerc.io.excel.output.HistoryWriter;
+import cn.cerc.io.excel.output.Template;
 
 public class ExportHistoryWriter implements HistoryWriter {
 
