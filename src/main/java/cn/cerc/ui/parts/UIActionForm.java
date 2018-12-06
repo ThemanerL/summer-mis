@@ -13,7 +13,6 @@ public class UIActionForm extends UIComponent {
     private Map<String, String> items = new HashMap<>();
     private String enctype;
 
-    @Deprecated
     public UIActionForm() {
         super(null);
     }
@@ -64,8 +63,7 @@ public class UIActionForm extends UIComponent {
     /**
      * 输入头部
      * 
-     * @param html
-     *            输出器
+     * @param html 输出器
      */
     public void outHead(HtmlWriter html) {
         html.print("<form");
@@ -92,8 +90,7 @@ public class UIActionForm extends UIComponent {
     /**
      * 输出尾部
      * 
-     * @param html
-     *            输出器
+     * @param html 输出器
      */
     public void outFoot(HtmlWriter html) {
         html.println("</form>");
