@@ -1,4 +1,4 @@
-package cn.cerc.pay.alipay;
+package cn.cerc.mis.pay.alipay;
 
 public class AlipayConfig {
     public static final String ALIPAY_GATEWAY_NEW = "https://mapi.alipay.com/gateway.do?";

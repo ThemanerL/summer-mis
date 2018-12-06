@@ -1,4 +1,4 @@
-package cn.cerc.pay.wxpay;
+package cn.cerc.mis.pay.wxpay;
 
 import java.io.BufferedReader;
 import java.io.IOException;

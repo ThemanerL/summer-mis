@@ -1,4 +1,4 @@
 /**
  * 第三方支付
  */
-package cn.cerc.pay;
+package cn.cerc.mis.pay;

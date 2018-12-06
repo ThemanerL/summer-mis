@@ -4,7 +4,7 @@
  * author: shiqun.shi@alipay.com
  */
 
-package cn.cerc.pay.alipay;
+package cn.cerc.mis.pay.alipay;
 
 public final class Base64 {
 

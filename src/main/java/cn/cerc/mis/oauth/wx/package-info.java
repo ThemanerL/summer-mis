@@ -5,4 +5,4 @@
  * @author root
  *
  */
-package cn.cerc.oauth.wx;
+package cn.cerc.mis.oauth.wx;

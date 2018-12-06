@@ -1,4 +1,4 @@
-package cn.cerc.pay.alipay;
+package cn.cerc.mis.pay.alipay;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

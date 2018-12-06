@@ -1,4 +1,4 @@
-package cn.cerc.pay.wxpay;
+package cn.cerc.mis.pay.wxpay;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -92,7 +92,7 @@ public class WxpayAPI {
                 + "<notify_url>" + notify_url + "</notify_url>" + "<trade_type>" + trade_type + "</trade_type></xml>";
         String createOrderURL = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 
-        Map<String, String> prepaid = new cn.cerc.pay.wxpay.GetWxOrderno().getResultMap(createOrderURL, xml);
+        Map<String, String> prepaid = new GetWxOrderno().getResultMap(createOrderURL, xml);
         prepaid.put("timestamp", Long.toString(new Date().getTime()).substring(0, 10));
 
         StringBuffer sb = new StringBuffer();
