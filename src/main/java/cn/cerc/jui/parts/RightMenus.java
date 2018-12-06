@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.cerc.jbean.core.AbstractHandle;
-import cn.cerc.jmis.page.IMenuBar;
+import cn.cerc.mis.page.IMenuBar;
 
 public class RightMenus extends AbstractHandle {
     private List<IMenuBar> items = new ArrayList<>();

@@ -5,7 +5,7 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 
 import cn.cerc.jbean.form.IForm;
-import cn.cerc.jmis.core.RequestData;
+import cn.cerc.mis.core.RequestData;
 import cn.cerc.jui.parts.UIMenuList;
 
 /**

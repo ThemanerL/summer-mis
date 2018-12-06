@@ -1,6 +1,6 @@
 package cn.cerc.jui.page;
 
-import static cn.cerc.jmis.core.ClientDevice.device_ee;
+import static cn.cerc.mis.core.ClientDevice.device_ee;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,10 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.form.IForm;
 import cn.cerc.jbean.rds.PassportRecord;
-import cn.cerc.jmis.form.AbstractForm;
-import cn.cerc.jmis.page.AbstractJspPage;
-import cn.cerc.jmis.page.ExportFile;
-import cn.cerc.jmis.page.IMenuBar;
+import cn.cerc.mis.form.AbstractForm;
+import cn.cerc.mis.page.AbstractJspPage;
+import cn.cerc.mis.page.ExportFile;
+import cn.cerc.mis.page.IMenuBar;
 import cn.cerc.jpage.core.Component;
 import cn.cerc.jpage.core.UrlRecord;
 import cn.cerc.jui.parts.RightMenus;

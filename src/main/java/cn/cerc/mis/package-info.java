@@ -1,8 +1,8 @@
 /**
- * 默认配置
+ * 提供应用启动支持
  */
 /**
- * @author ZhangGong
+ * @author root
  *
  */
 package cn.cerc.mis;

@@ -10,8 +10,8 @@ import cn.cerc.db.queue.QueueQuery;
 import cn.cerc.db.queue.QueueSession;
 import cn.cerc.jbean.client.LocalService;
 import cn.cerc.jbean.core.BookHandle;
-import cn.cerc.jmis.message.MessageProcess;
-import cn.cerc.jmis.task.AbstractTask;
+import cn.cerc.mis.message.MessageProcess;
+import cn.cerc.mis.task.AbstractTask;
 import net.sf.json.JSONObject;
 
 public class ProcessQueueDefault extends AbstractTask {

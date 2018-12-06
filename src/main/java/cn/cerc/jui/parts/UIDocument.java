@@ -1,6 +1,6 @@
 package cn.cerc.jui.parts;
 
-import cn.cerc.jmis.page.AbstractJspPage;
+import cn.cerc.mis.page.AbstractJspPage;
 import cn.cerc.jpage.core.Component;
 import cn.cerc.jpage.core.HtmlWriter;
 

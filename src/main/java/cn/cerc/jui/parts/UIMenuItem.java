@@ -1,6 +1,6 @@
 package cn.cerc.jui.parts;
 
-import cn.cerc.jmis.core.MenuItem;
+import cn.cerc.mis.core.MenuItem;
 import cn.cerc.jpage.core.HtmlWriter;
 
 public class UIMenuItem extends UIComponent {
