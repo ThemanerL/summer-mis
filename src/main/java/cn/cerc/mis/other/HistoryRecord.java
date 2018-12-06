@@ -1,8 +1,5 @@
 package cn.cerc.mis.other;
 
-import static cn.cerc.db.other.utils.copy;
-import static cn.cerc.db.other.utils.newGuid;
-
 import cn.cerc.core.IHandle;
 import cn.cerc.core.Utils;
 import cn.cerc.db.mysql.BatchScript;
@@ -76,7 +73,8 @@ public class HistoryRecord {
         ISystemTable systemTable = Application.getBean("systemTable", ISystemTable.class);
         BatchScript bs = new BatchScript(handle);
         bs.add("insert into %s (CorpNo_,Level_,Log_,AppUser_,UpdateKey_) values ('%s',%d,'%s','%s','%s')",
-                systemTable.getUserLogs(), corpNo, mth, Utils.safeString(copy(log, 1, 80)), userCode, newGuid());
+                systemTable.getUserLogs(), corpNo, mth, Utils.safeString(Utils.copy(log, 1, 80)), userCode,
+                Utils.newGuid());
         bs.exec();
     }
 }

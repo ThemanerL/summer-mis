@@ -1,7 +1,7 @@
 package cn.cerc.ui.grid;
 
 import cn.cerc.core.DataSet;
-import cn.cerc.db.other.utils;
+import cn.cerc.core.Utils;
 import cn.cerc.mis.core.IForm;
 import cn.cerc.ui.core.HtmlWriter;
 import cn.cerc.ui.core.IField;
@@ -63,7 +63,7 @@ public class DataGrid extends AbstractGrid {
             if (field.getWidth() == 0)
                 html.print(" style=\"display:none\"");
             else {
-                double val = utils.roundTo(field.getWidth() / sumFieldWidth * 100, -2);
+                double val = Utils.roundTo(field.getWidth() / sumFieldWidth * 100, -2);
                 html.print(" width=\"%f%%\"", val);
             }
 

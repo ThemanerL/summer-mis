@@ -14,9 +14,9 @@ import cn.cerc.core.DataSet;
 import cn.cerc.core.Record;
 import cn.cerc.core.TDate;
 import cn.cerc.core.TDateTime;
+import cn.cerc.core.Utils;
 import cn.cerc.db.cache.Buffer;
 import cn.cerc.db.core.ServerConfig;
-import cn.cerc.db.other.utils;
 import cn.cerc.mis.language.R;
 import cn.cerc.ui.core.Component;
 import cn.cerc.ui.core.HtmlContent;
@@ -153,7 +153,7 @@ public abstract class AbstractJspPage extends UIComponent implements IPage {
         String result = getRequest().getParameter(reqKey);
         if (result == null) {
             String val = buff.getString(reqKey).replace("{}", "");
-            if (utils.isNumeric(val) && val.endsWith(".0"))
+            if (Utils.isNumeric(val) && val.endsWith(".0"))
                 result = val.substring(0, val.length() - 2);
             else
                 result = val;

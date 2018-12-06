@@ -14,7 +14,7 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import cn.cerc.core.DataSet;
 import cn.cerc.core.Record;
-import cn.cerc.db.other.utils;
+import cn.cerc.core.Utils;
 import jxl.Cell;
 import jxl.CellType;
 import jxl.NumberCell;
@@ -159,7 +159,7 @@ public class ImportExcel extends ImportExcelFile {
                     if (cell.getType() == CellType.NUMBER) {
                         NumberCell numberCell = (NumberCell) cell;
                         double d = numberCell.getValue();
-                        value = utils.formatFloat("0.######", d);
+                        value = Utils.formatFloat("0.######", d);
                     }
                     ImportColumn column = template.getColumns().get(col);
                     if (!column.validate(row, col, value)) {

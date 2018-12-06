@@ -4,7 +4,7 @@ import java.util.List;
 
 import cn.cerc.core.DataSet;
 import cn.cerc.core.Record;
-import cn.cerc.db.other.utils;
+import cn.cerc.core.Utils;
 import jxl.write.Label;
 import jxl.write.WritableSheet;
 import jxl.write.WriteException;
@@ -32,7 +32,7 @@ public class BatchFormTemplate extends FormTemplate {
                     row++;
                     Object val = footer.getItems().get(field);
                     sheet1.addCell(new Label(0, row, field));
-                    sheet1.addCell(new Label(1, row, Double.toString(utils.roundTo((Double) val, -2))));
+                    sheet1.addCell(new Label(1, row, Double.toString(Utils.roundTo((Double) val, -2))));
                 }
             });
 

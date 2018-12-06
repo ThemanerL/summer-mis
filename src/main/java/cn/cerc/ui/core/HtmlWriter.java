@@ -1,6 +1,6 @@
 package cn.cerc.ui.core;
 
-import cn.cerc.db.other.utils;
+import cn.cerc.core.Utils;
 
 public class HtmlWriter {
     private StringBuilder builder = new StringBuilder();
@@ -15,12 +15,12 @@ public class HtmlWriter {
 
     public void println(String value) {
         builder.append(value);
-        builder.append(utils.vbCrLf);
+        builder.append(Utils.vbCrLf);
     }
 
     public void println(String format, Object... args) {
         builder.append(String.format(format, args));
-        builder.append(utils.vbCrLf);
+        builder.append(Utils.vbCrLf);
     }
 
     @Override

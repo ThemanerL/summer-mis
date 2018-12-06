@@ -9,6 +9,7 @@ import cn.cerc.core.IHandle;
 import cn.cerc.core.MD5;
 import cn.cerc.core.Record;
 import cn.cerc.core.TDateTime;
+import cn.cerc.core.Utils;
 import cn.cerc.db.core.ServerConfig;
 import cn.cerc.db.jiguang.ClientType;
 import cn.cerc.db.mysql.BuildQuery;
@@ -16,17 +17,16 @@ import cn.cerc.db.mysql.SqlOperator;
 import cn.cerc.db.mysql.SqlQuery;
 import cn.cerc.db.mysql.Transaction;
 import cn.cerc.db.oss.OssSession;
-import cn.cerc.db.other.utils;
 import cn.cerc.mis.core.Application;
 import cn.cerc.mis.core.CustomService;
 import cn.cerc.mis.core.DataValidateException;
+import cn.cerc.mis.core.HandleDefault;
+import cn.cerc.mis.core.LocalService;
 import cn.cerc.mis.core.Webfunc;
+import cn.cerc.mis.language.R;
 import cn.cerc.mis.other.BookVersion;
 import cn.cerc.mis.other.BufferType;
 import cn.cerc.mis.other.MemoryBuffer;
-import cn.cerc.mis.language.R;
-import cn.cerc.mis.core.HandleDefault;
-import cn.cerc.mis.core.LocalService;
 
 /**
  * 用于用户登录
@@ -404,7 +404,7 @@ public class SvrUserLogin extends CustomService {
             cdsVer.open();
             DataValidateException.stopRun("系统出错，请您重新进入系统！", cdsVer.size() != 1);
 
-            String verifyCode = utils.intToStr(utils.random(900000) + 100000);
+            String verifyCode = Utils.intToStr(Utils.random(900000) + 100000);
             log.info("{} verifyCode is {}", mobile, verifyCode);
 
             cdsVer.edit();
@@ -465,7 +465,7 @@ public class SvrUserLogin extends CustomService {
         ds.append();
         ds.setField("CorpNo_", corpNo);
         ds.setField("UserCode_", userCode);
-        ds.setField("VerifyCode_", utils.intToStr(utils.random(900000) + 100000));
+        ds.setField("VerifyCode_", Utils.intToStr(Utils.random(900000) + 100000));
         ds.setField("DeadLine_", TDateTime.Now().incDay(1));
         ds.setField("MachineCode_", deviceId);
         if (deviceId.startsWith("i_")) {
@@ -487,7 +487,7 @@ public class SvrUserLogin extends CustomService {
         ds.setField("UpdateDate_", TDateTime.Now());
         ds.setField("AppUser_", userCode);
         ds.setField("AppDate_", TDateTime.Now());
-        ds.setField("UpdateKey_", utils.newGuid());
+        ds.setField("UpdateKey_", Utils.newGuid());
         ds.post();
     }
 
@@ -506,7 +506,7 @@ public class SvrUserLogin extends CustomService {
     }
 
     private String guidFixStr() {
-        String guid = utils.newGuid();
+        String guid = Utils.newGuid();
         String str = guid.substring(1, guid.length() - 1);
         return str.replaceAll("-", "");
     }
@@ -578,7 +578,7 @@ public class SvrUserLogin extends CustomService {
         rs.setField("LoginTime_", TDateTime.Now());
         rs.setField("ParamValue_", handle.getCorpNo());
         rs.setField("KeyCardID_", GuidNull);
-        rs.setField("Viability_", utils.intToStr(Max_Viability));
+        rs.setField("Viability_", Utils.intToStr(Max_Viability));
         rs.setField("LoginServer_", ServerConfig.getAppName());
         rs.setField("Screen_", screen);
         rs.setField("Language_", language);

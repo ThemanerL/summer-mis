@@ -1,6 +1,6 @@
 package cn.cerc.mis.excel.output;
 
-import cn.cerc.db.other.utils;
+import cn.cerc.core.Utils;
 
 public class NumberColumn extends Column {
 
@@ -14,6 +14,6 @@ public class NumberColumn extends Column {
 
     @Override
     public Object getValue() {
-        return utils.strToDoubleDef(utils.formatFloat("0.####", getRecord().getDouble(getCode())), 0);
+        return Utils.strToDoubleDef(Utils.formatFloat("0.####", getRecord().getDouble(getCode())), 0);
     }
 }

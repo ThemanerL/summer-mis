@@ -14,11 +14,11 @@ import cn.cerc.core.IConnection;
 import cn.cerc.core.IHandle;
 import cn.cerc.core.ISession;
 import cn.cerc.core.Record;
+import cn.cerc.core.Utils;
 import cn.cerc.db.core.MysqlConnection;
 import cn.cerc.db.mysql.SqlSession;
 import cn.cerc.db.queue.AliyunQueueConnection;
 import cn.cerc.db.queue.QueueSession;
-import cn.cerc.mis.core.Application;
 import cn.cerc.mis.other.BufferType;
 import cn.cerc.mis.other.MemoryBuffer;
 
@@ -48,7 +48,7 @@ public class HandleDefault implements IHandle, AutoCloseable {
 
     @Override
     public boolean init(String corpNo, String userCode, String clientIP) {
-        String token = GuidFixStr(cn.cerc.db.other.utils.newGuid());
+        String token = GuidFixStr(Utils.newGuid());
         this.setProperty(Application.token, token);
         this.setProperty(Application.bookNo, corpNo);
         this.setProperty(Application.userCode, userCode);

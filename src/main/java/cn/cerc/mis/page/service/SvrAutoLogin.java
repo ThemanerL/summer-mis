@@ -7,18 +7,18 @@ import org.slf4j.LoggerFactory;
 
 import cn.cerc.core.IHandle;
 import cn.cerc.core.TDateTime;
+import cn.cerc.core.Utils;
 import cn.cerc.db.mysql.SqlQuery;
 import cn.cerc.db.mysql.Transaction;
-import cn.cerc.db.other.utils;
 import cn.cerc.mis.core.Application;
-import cn.cerc.mis.other.BufferType;
-import cn.cerc.mis.other.MemoryBuffer;
 import cn.cerc.mis.core.ClientDevice;
-import cn.cerc.mis.core.RequestData;
-import cn.cerc.mis.services.SvrUserLogin;
 import cn.cerc.mis.core.HandleDefault;
 import cn.cerc.mis.core.IForm;
 import cn.cerc.mis.core.ISystemTable;
+import cn.cerc.mis.core.RequestData;
+import cn.cerc.mis.other.BufferType;
+import cn.cerc.mis.other.MemoryBuffer;
+import cn.cerc.mis.services.SvrUserLogin;
 
 public class SvrAutoLogin {
     private static final Logger log = LoggerFactory.getLogger(SvrAutoLogin.class);
@@ -55,7 +55,7 @@ public class SvrAutoLogin {
                     systemTable.getDeviceVerify(), userCode, deviceId);
             sess.getConnection().execute(sql);
 
-            String token = utils.guidFixStr();
+            String token = Utils.guidFixStr();
             sess.setProperty(Application.token, token);
             sess.setProperty("deviceId", deviceId);
             sess.setProperty("sid", token);

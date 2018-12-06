@@ -5,7 +5,7 @@ import java.util.Map;
 
 import cn.cerc.core.IHandle;
 import cn.cerc.core.TDateTime;
-import cn.cerc.db.other.utils;
+import cn.cerc.core.Utils;
 import cn.cerc.mis.core.LocalService;
 
 public class UserOptions {
@@ -136,14 +136,14 @@ public class UserOptions {
         String HideHistoryDateTime = GetUserOption(session, "HideHistoryDateTime");
 
         if (HideHistoryDateTime.equals("")) {
-            FDay.value = utils.strToIntDef(GetUserOption(session, "HideHistoryDay"), 7);
+            FDay.value = Utils.strToIntDef(GetUserOption(session, "HideHistoryDay"), 7);
             return true;
         }
 
         if (TDateTime.Now().compareTo(TDateTime.fromDate(HideHistoryDateTime)) < 0)
-            FDay.value = utils.strToIntDef(GetUserOption(session, "HideHistoryTmpDay"), 0);
+            FDay.value = Utils.strToIntDef(GetUserOption(session, "HideHistoryTmpDay"), 0);
         else
-            FDay.value = utils.strToIntDef(GetUserOption(session, "HideHistoryDay"), 7);
+            FDay.value = Utils.strToIntDef(GetUserOption(session, "HideHistoryDay"), 7);
         return true;
     }
 

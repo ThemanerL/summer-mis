@@ -9,9 +9,9 @@ import org.slf4j.LoggerFactory;
 import cn.cerc.core.DataSet;
 import cn.cerc.core.IHandle;
 import cn.cerc.core.TDate;
+import cn.cerc.core.Utils;
 import cn.cerc.db.mysql.BuildQuery;
 import cn.cerc.db.mysql.SqlQuery;
-import cn.cerc.db.other.utils;
 import cn.cerc.mis.core.Application;
 import cn.cerc.mis.core.ISystemTable;
 import cn.cerc.mis.core.LocalService;
@@ -379,7 +379,7 @@ public class BookOptions {
         cdsTmp.setField("Code_", paramKey);
         cdsTmp.setField("Name_", paramName);
         cdsTmp.setField("Value_", def);
-        cdsTmp.setField("UpdateKey_", utils.newGuid());
+        cdsTmp.setField("UpdateKey_", Utils.newGuid());
         cdsTmp.post();
 
     }

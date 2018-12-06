@@ -16,8 +16,8 @@ import org.slf4j.LoggerFactory;
 
 import cn.cerc.core.DataSet;
 import cn.cerc.core.Record;
+import cn.cerc.core.Utils;
 import cn.cerc.db.core.IAppConfig;
-import cn.cerc.db.other.utils;
 import cn.cerc.mis.core.AppHandle;
 import cn.cerc.mis.core.Application;
 import cn.cerc.mis.core.IRestful;
@@ -114,7 +114,7 @@ public class StartServices extends HttpServlet {
         int offset = 0;
         String bookNo = null;
         if (paths.length > 2) {
-            if (utils.isNumeric(paths[1])) {
+            if (Utils.isNumeric(paths[1])) {
                 offset++;
                 bookNo = paths[1];
                 headIn.setField("bookNo", bookNo);

@@ -2,12 +2,12 @@ package cn.cerc.mis.excel.input;
 
 import java.text.DecimalFormat;
 
-import cn.cerc.db.other.utils;
+import cn.cerc.core.Utils;
 
 public class ImportNumberColumn extends ImportColumn {
     @Override
     public Object getValue() {
-        return utils.strToDoubleDef(new DecimalFormat("0.######").format(getRecord().getDouble(getCode())), 0);
+        return Utils.strToDoubleDef(new DecimalFormat("0.######").format(getRecord().getDouble(getCode())), 0);
     }
 
     @Override
@@ -18,6 +18,6 @@ public class ImportNumberColumn extends ImportColumn {
         } else {
             result = "0";
         }
-        return utils.isNumeric(utils.formatFloat("0.######", Double.parseDouble(result)));
+        return Utils.isNumeric(Utils.formatFloat("0.######", Double.parseDouble(result)));
     }
 }

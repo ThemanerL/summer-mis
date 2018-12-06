@@ -4,15 +4,15 @@ import java.math.BigInteger;
 
 import cn.cerc.core.Record;
 import cn.cerc.core.TDateTime;
+import cn.cerc.core.Utils;
 import cn.cerc.db.cache.Redis;
 import cn.cerc.db.mysql.SqlQuery;
-import cn.cerc.db.other.utils;
 import cn.cerc.mis.core.CustomService;
-import cn.cerc.mis.other.BufferType;
 import cn.cerc.mis.message.JPushRecord;
 import cn.cerc.mis.message.MessageLevel;
 import cn.cerc.mis.message.MessageProcess;
 import cn.cerc.mis.message.MessageRecord;
+import cn.cerc.mis.other.BufferType;
 import cn.cerc.mis.queue.AsyncService;
 
 //用户消息操作
@@ -145,7 +145,7 @@ public class SvrUserMessages extends CustomService {
     private void pushToJiGuang(SqlQuery cdsMsg) {
         String subject = cdsMsg.getString("Subject_");
         if ("".equals(subject)) {
-            subject = utils.copy(cdsMsg.getString("Content_"), 1, 80);
+            subject = Utils.copy(cdsMsg.getString("Content_"), 1, 80);
         }
         if (cdsMsg.getInt("Level_") == MessageLevel.Service.ordinal()) {
             subject += "【" + AsyncService.getProcessTitle(cdsMsg.getInt("Process_")) + "】";
