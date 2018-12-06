@@ -11,13 +11,13 @@ import org.junit.Test;
 
 import cn.cerc.core.Record;
 import cn.cerc.db.mysql.SqlQuery;
-import cn.cerc.jbean.core.Application;
-import cn.cerc.jbean.core.DataValidateException;
-import cn.cerc.jbean.core.ServiceException;
-import cn.cerc.jbean.other.BufferType;
-import cn.cerc.jbean.other.ISystemTable;
-import cn.cerc.jbean.other.MemoryBuffer;
-import cn.cerc.jbean.rds.StubHandle;
+import cn.cerc.mis.core.Application;
+import cn.cerc.mis.core.DataValidateException;
+import cn.cerc.mis.core.ServiceException;
+import cn.cerc.mis.other.BufferType;
+import cn.cerc.mis.other.ISystemTable;
+import cn.cerc.mis.other.MemoryBuffer;
+import cn.cerc.mis.rds.StubHandle;
 
 public class SvrUserLoginTest {
     // private static final Logger log = Logger.getLogger(TAppLoginTest.class);

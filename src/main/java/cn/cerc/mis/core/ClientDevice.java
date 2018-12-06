@@ -6,10 +6,10 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 
-import cn.cerc.jbean.core.Application;
-import cn.cerc.jbean.form.IClient;
-import cn.cerc.jbean.other.BufferType;
-import cn.cerc.jbean.other.MemoryBuffer;
+import cn.cerc.mis.core.Application;
+import cn.cerc.mis.form.IClient;
+import cn.cerc.mis.other.BufferType;
+import cn.cerc.mis.other.MemoryBuffer;
 
 @Component
 @Scope(WebApplicationContext.SCOPE_SESSION)

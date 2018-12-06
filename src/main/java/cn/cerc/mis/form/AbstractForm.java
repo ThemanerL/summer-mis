@@ -8,10 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import cn.cerc.jbean.core.AbstractHandle;
-import cn.cerc.jbean.form.IClient;
-import cn.cerc.jbean.form.IForm;
-import cn.cerc.jbean.other.ISystemTable;
+import cn.cerc.mis.core.AbstractHandle;
+import cn.cerc.mis.form.IClient;
+import cn.cerc.mis.form.IForm;
+import cn.cerc.mis.other.ISystemTable;
 import cn.cerc.core.IHandle;
 import cn.cerc.mis.core.ClientDevice;
 

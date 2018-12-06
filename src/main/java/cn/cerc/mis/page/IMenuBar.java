@@ -2,7 +2,7 @@ package cn.cerc.mis.page;
 
 import java.util.List;
 
-import cn.cerc.jbean.form.IForm;
+import cn.cerc.mis.form.IForm;
 import cn.cerc.jpage.core.UrlRecord;
 
 public interface IMenuBar {

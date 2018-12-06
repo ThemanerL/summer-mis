@@ -5,7 +5,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import cn.cerc.jbean.rds.StubHandle;
+import cn.cerc.mis.rds.StubHandle;
 
 public class AsyncServiceTest {
 

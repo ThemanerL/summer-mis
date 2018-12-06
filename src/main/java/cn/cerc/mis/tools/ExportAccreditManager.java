@@ -1,6 +1,6 @@
 package cn.cerc.mis.tools;
 
-import static cn.cerc.jbean.other.UserOptions.UserOptionEnabled;
+import static cn.cerc.mis.other.UserOptions.UserOptionEnabled;
 
 import cn.cerc.core.IHandle;
 import cn.cerc.jexport.excel.AccreditManager;
@@ -25,6 +25,7 @@ public class ExportAccreditManager implements AccreditManager {
         this.securityCode = securityCode;
     }
 
+    @Override
     public String getDescribe() {
         return describe;
     }

@@ -3,7 +3,7 @@ package cn.cerc.jpage.grid;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.cerc.jbean.form.IForm;
+import cn.cerc.mis.form.IForm;
 import cn.cerc.core.DataSet;
 import cn.cerc.jpage.core.DataSource;
 import cn.cerc.jpage.core.HtmlWriter;

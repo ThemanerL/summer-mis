@@ -6,10 +6,10 @@ import org.slf4j.LoggerFactory;
 import cn.cerc.core.IHandle;
 import cn.cerc.core.Utils;
 import cn.cerc.db.mysql.SqlQuery;
-import cn.cerc.jbean.core.Application;
-import cn.cerc.jbean.other.BufferType;
-import cn.cerc.jbean.other.ISystemTable;
-import cn.cerc.jbean.other.MemoryBuffer;
+import cn.cerc.mis.core.Application;
+import cn.cerc.mis.other.BufferType;
+import cn.cerc.mis.other.ISystemTable;
+import cn.cerc.mis.other.MemoryBuffer;
 import cn.cerc.mis.language.R;
 
 public class PhoneVerify {

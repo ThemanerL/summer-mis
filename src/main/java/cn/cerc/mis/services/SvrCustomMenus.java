@@ -5,7 +5,7 @@ import cn.cerc.core.Record;
 import cn.cerc.core.TDateTime;
 import cn.cerc.db.mysql.BuildQuery;
 import cn.cerc.db.mysql.SqlQuery;
-import cn.cerc.jbean.core.CustomService;
+import cn.cerc.mis.core.CustomService;
 
 public class SvrCustomMenus extends CustomService {
 

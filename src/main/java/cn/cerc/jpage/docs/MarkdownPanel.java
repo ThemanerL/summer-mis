@@ -1,6 +1,6 @@
 package cn.cerc.jpage.docs;
 
-import cn.cerc.jbean.form.IPage;
+import cn.cerc.mis.form.IPage;
 import cn.cerc.jpage.other.OperaPanel;
 import cn.cerc.jui.parts.UIComponent;
 

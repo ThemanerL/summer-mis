@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import cn.cerc.jbean.other.MemoryBuffer;
+import cn.cerc.mis.other.MemoryBuffer;
 import cn.cerc.core.DataSet;
 import cn.cerc.core.Record;
 import cn.cerc.jpage.core.Component;

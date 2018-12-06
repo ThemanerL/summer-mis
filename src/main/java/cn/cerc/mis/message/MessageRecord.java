@@ -1,6 +1,6 @@
 package cn.cerc.mis.message;
 
-import cn.cerc.jbean.client.LocalService;
+import cn.cerc.mis.client.LocalService;
 import cn.cerc.core.IHandle;
 import cn.cerc.core.Record;
 

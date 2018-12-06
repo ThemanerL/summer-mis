@@ -2,7 +2,7 @@ package cn.cerc.jpage.grid;
 
 import cn.cerc.core.DataSet;
 import cn.cerc.db.other.utils;
-import cn.cerc.jbean.form.IForm;
+import cn.cerc.mis.form.IForm;
 import cn.cerc.jpage.core.HtmlWriter;
 import cn.cerc.jpage.core.IField;
 import cn.cerc.jpage.grid.lines.AbstractGridLine;

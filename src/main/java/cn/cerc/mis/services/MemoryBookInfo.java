@@ -2,9 +2,9 @@ package cn.cerc.mis.services;
 
 import com.google.gson.Gson;
 
-import cn.cerc.jbean.client.LocalService;
-import cn.cerc.jbean.other.BookVersion;
-import cn.cerc.jbean.other.BufferType;
+import cn.cerc.mis.client.LocalService;
+import cn.cerc.mis.other.BookVersion;
+import cn.cerc.mis.other.BufferType;
 import cn.cerc.db.cache.Redis;
 import cn.cerc.core.IHandle;
 import cn.cerc.core.Record;

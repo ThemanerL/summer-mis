@@ -15,7 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cn.cerc.db.core.ServerConfig;
-import cn.cerc.jbean.core.Application;
+import cn.cerc.mis.core.Application;
 import cn.cerc.core.IHandle;
 
 public class ResourceJstl extends SimpleTagSupport {

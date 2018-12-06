@@ -2,7 +2,7 @@ package cn.cerc.jpage.other;
 
 import javax.servlet.http.HttpServletRequest;
 
-import cn.cerc.jbean.form.IForm;
+import cn.cerc.mis.form.IForm;
 import cn.cerc.jpage.core.HtmlWriter;
 import cn.cerc.jpage.grid.MutiPage;
 import cn.cerc.jui.parts.UIComponent;

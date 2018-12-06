@@ -4,10 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import cn.cerc.jbean.core.AbstractHandle;
-import cn.cerc.jbean.core.AppHandle;
-import cn.cerc.jbean.core.Application;
-import cn.cerc.jbean.other.ISystemTable;
+import cn.cerc.mis.core.AbstractHandle;
+import cn.cerc.mis.core.AppHandle;
+import cn.cerc.mis.core.Application;
+import cn.cerc.mis.other.ISystemTable;
 
 public abstract class AbstractTask extends AbstractHandle implements Runnable {
     private static final Logger log = LoggerFactory.getLogger(AbstractTask.class);
