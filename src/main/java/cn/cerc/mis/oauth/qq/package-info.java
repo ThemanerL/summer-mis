@@ -5,4 +5,4 @@
  * @author root
  *
  */
-package cn.cerc.oauth.qq;
+package cn.cerc.mis.oauth.qq;

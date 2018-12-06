@@ -1,4 +1,4 @@
-package cn.cerc.oauth.wx;
+package cn.cerc.mis.oauth.wx;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
