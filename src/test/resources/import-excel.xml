@@ -3,7 +3,7 @@
     xmlns:aop="http://www.springframework.org/schema/aop"
     xsi:schemaLocation="http://www.springframework.org/schema/beans  
            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
-    <bean id="TWebPartModel" class="cn.cerc.mis.excel.input.Template" scope="prototype">
+    <bean id="TWebPartModel" class="cn.cerc.mis.excel.input.ImportExcelTemplate" scope="prototype">
         <property name="fileName" value="料品型号表" />
         <property name="columns">
             <list>
@@ -27,7 +27,7 @@
         </property>
     </bean>
 
-    <bean id="TFrmProcDepute" class="cn.cerc.mis.excel.input.Template" scope="prototype">
+    <bean id="TFrmProcDepute" class="cn.cerc.mis.excel.input.ImportExcelTemplate" scope="prototype">
         <property name="fileName" value="加工报价单" />
         <property name="columns">
             <list>
@@ -59,7 +59,7 @@
         </property>
     </bean>
 
-    <bean id="ExportMessage" class="cn.cerc.mis.excel.input.Template" scope="prototype">
+    <bean id="ExportMessage" class="cn.cerc.mis.excel.input.ImportExcelTemplate" scope="prototype">
         <property name="fileName" value="导出模版执行失败说明" />
         <property name="columns">
             <list>

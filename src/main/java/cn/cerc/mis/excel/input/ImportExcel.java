@@ -25,12 +25,12 @@ import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
 
-public class ImportExcel extends ImportFile {
+public class ImportExcel extends ImportExcelFile {
     private static ApplicationContext app;
     private static String xmlFile = "classpath:import-excel.xml";
     private HttpServletResponse response;
     private String templateId;
-    private Template template;
+    private ImportExcelTemplate template;
     private ImportError errorHandle;
     private ImportRecord readHandle;
 
@@ -102,18 +102,18 @@ public class ImportExcel extends ImportFile {
         this.response = response;
     }
 
-    public Template getTemplate() {
+    public ImportExcelTemplate getTemplate() {
         if (template == null) {
             if (templateId == null)
                 throw new RuntimeException("templateId is null");
             if (app == null)
                 app = new FileSystemXmlApplicationContext(xmlFile);
-            template = app.getBean(templateId, Template.class);
+            template = app.getBean(templateId, ImportExcelTemplate.class);
         }
         return template;
     }
 
-    public void setTemplate(Template template) {
+    public void setTemplate(ImportExcelTemplate template) {
 
         this.template = template;
     }
@@ -134,7 +134,7 @@ public class ImportExcel extends ImportFile {
         // 获取文件的指定工作表 默认的第一个
         Sheet sheet = rwb.getSheet(0);
 
-        Template template = this.getTemplate();
+        ImportExcelTemplate template = this.getTemplate();
         if (template.getColumns().size() != sheet.getColumns())
             throw new RuntimeException(String.format("导入的文件：<b>%s</b>, 其总列数为 %d，而模版总列数为  %d 二者不一致，无法导入！",
                     file.getName(), sheet.getColumns(), template.getColumns().size()));

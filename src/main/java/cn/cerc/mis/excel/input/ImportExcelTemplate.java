@@ -2,7 +2,7 @@ package cn.cerc.mis.excel.input;
 
 import java.util.List;
 
-public class Template {
+public class ImportExcelTemplate {
     private String fileName;
     private List<ImportColumn> columns;
 

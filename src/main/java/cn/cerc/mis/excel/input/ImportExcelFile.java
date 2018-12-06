@@ -23,7 +23,7 @@ import cn.cerc.core.Record;
 // }
 // }
 
-public class ImportFile {
+public class ImportExcelFile {
     // private static final Logger log = Logger.getLogger(ImportExcel.class);
     private HttpServletRequest request;
     private List<FileItem> uploadFiles;
@@ -76,7 +76,7 @@ public class ImportFile {
         return request;
     }
 
-    public ImportFile setRequest(HttpServletRequest request) {
+    public ImportExcelFile setRequest(HttpServletRequest request) {
         this.request = request;
         return this;
     }
