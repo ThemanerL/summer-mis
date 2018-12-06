@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cn.cerc.jbean.core.AppConfig;
+import cn.cerc.db.core.IAppConfig;
 import cn.cerc.jbean.core.AppHandle;
 import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.core.IRestful;
@@ -54,7 +54,7 @@ public class StartServices extends HttpServlet {
     private void doProcess(String method, HttpServletRequest req, HttpServletResponse resp)
             throws UnsupportedEncodingException, IOException {
         String uri = req.getRequestURI();
-        AppConfig conf = Application.getAppConfig();
+        IAppConfig conf = Application.getAppConfig();
         if (!uri.startsWith("/" + conf.getPathServices()))
             return;
 
@@ -186,14 +186,12 @@ public class StartServices extends HttpServlet {
         if (services != null)
             return;
         services = new HashMap<>();
-        for (String serviceCode : Application.getServices().getBeanDefinitionNames()) {
-            IService service = Application.getService(null, serviceCode);
-            if (service instanceof IRestful) {
-                String path = ((IRestful) service).getRestPath();
-                if (null != path && !"".equals(path)) {
-                    services.put(path, serviceCode);
-                    log.info("restful service " + serviceCode + ": " + path);
-                }
+        for (String serviceCode : Application.getContext().getBeanNamesForType(IRestful.class)) {
+            IRestful service = Application.getBean(serviceCode, IRestful.class);
+            String path = service.getRestPath();
+            if (null != path && !"".equals(path)) {
+                services.put(path, serviceCode);
+                log.info("restful service " + serviceCode + ": " + path);
             }
         }
     }

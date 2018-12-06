@@ -1,26 +1,22 @@
 package cn.cerc.jmis.services;
 
-import static cn.cerc.jbean.other.SystemTable.getBookInfo;
-import static cn.cerc.jbean.other.SystemTable.getUserInfo;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
+import cn.cerc.db.core.ServerConfig;
 import cn.cerc.jbean.client.LocalService;
 import cn.cerc.jbean.core.Application;
-import cn.cerc.jbean.core.CustomHandle;
 import cn.cerc.jbean.core.CustomService;
 import cn.cerc.jbean.core.DataValidateException;
 import cn.cerc.jbean.core.Webfunc;
 import cn.cerc.jbean.other.BookVersion;
 import cn.cerc.jbean.other.BufferType;
 import cn.cerc.jbean.other.MemoryBuffer;
-import cn.cerc.jbean.other.SystemTable;
 import cn.cerc.jdb.core.DataSet;
 import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.core.MD5;
 import cn.cerc.jdb.core.Record;
-import cn.cerc.jdb.core.ServerConfig;
 import cn.cerc.jdb.core.TDateTime;
 import cn.cerc.jdb.jiguang.ClientType;
 import cn.cerc.jdb.mysql.BuildQuery;
@@ -30,10 +26,12 @@ import cn.cerc.jdb.mysql.Transaction;
 import cn.cerc.jdb.oss.OssSession;
 import cn.cerc.jdb.other.utils;
 import cn.cerc.jmis.language.R;
+import cn.cerc.mis.core.HandleDefault;
 
 /**
  * 用于用户登录
  */
+@Component
 public class SvrUserLogin extends CustomService {
     private static final Logger log = LoggerFactory.getLogger(SvrUserLogin.class);
     private static String GuidNull = "";
@@ -55,7 +53,7 @@ public class SvrUserLogin extends CustomService {
             device_name = "unknow";
         }
 
-        CustomHandle sess = (CustomHandle) this.getProperty(null);
+        HandleDefault sess = (HandleDefault) this.getProperty(null);
         if (headIn.exists("ClientIP_")) {
             sess.setProperty(Application.clientIP, headIn.getString("ClientIP_"));
         } else {
@@ -71,8 +69,7 @@ public class SvrUserLogin extends CustomService {
         SqlQuery dsUser = new SqlQuery(this);
         dsUser.add("select UID_,CorpNo_,ID_,Code_,Name_,Mobile_,DeptCode_,Enabled_,Password_,BelongAccount_,");
         dsUser.add("VerifyTimes_,Encrypt_,SecurityLevel_,SecurityMachine_,PCMachine1_,PCMachine2_,");
-        dsUser.add("PCMachine3_,RoleCode_,DiyRole_ from %s where Code_='%s'", SystemTable.get(SystemTable.getUserInfo),
-                userCode);
+        dsUser.add("PCMachine3_,RoleCode_,DiyRole_ from %s where Code_='%s'", systemTable.getUserInfo(), userCode);
         dsUser.open();
         if (dsUser.eof()) {
             throw new SecurityCheckException(String.format("该帐号(%s)并不存在，禁止登录！", userCode));
@@ -84,8 +81,8 @@ public class SvrUserLogin extends CustomService {
         // 判断该手机号绑定的账号，是否有supCorpNo的下游，专用App登录
         if (!"".equals(supCorpNo)) {
             SqlQuery ds = new SqlQuery(this);
-            ds.add("select oi.CorpNo_,oi.ShortName_,a.Code_,a.Name_ from %s a ", getUserInfo);
-            ds.add("inner join %s oi on a.CorpNo_=oi.CorpNo_", getBookInfo);
+            ds.add("select oi.CorpNo_,oi.ShortName_,a.Code_,a.Name_ from %s a ", systemTable.getUserInfo());
+            ds.add("inner join %s oi on a.CorpNo_=oi.CorpNo_", systemTable.getBookInfo());
             ds.add("inner join scmnetaccredit na on na.SupCode_='%s' and na.CusCode_=oi.CorpNo_", supCorpNo);
             ds.add("where a.Enabled_=1 and oi.Status_<3 ");
             if (!"".equals(dsUser.getString("Mobile_"))) {
@@ -177,12 +174,12 @@ public class SvrUserLogin extends CustomService {
         try (Transaction tx = new Transaction(this)) {
             String sql = String.format(
                     "update %s set LastTime_=now() where UserCode_='%s' and MachineCode_='%s' and Used_=1",
-                    SystemTable.get(SystemTable.getDeviceVerify), userCode, deviceId);
+                    systemTable.getDeviceVerify(), userCode, deviceId);
             getConnection().execute(sql);
 
             // 若该账套是待安装，则改为已启用
             SqlQuery dsCorp = new SqlQuery(this);
-            dsCorp.add("select * from %s ", SystemTable.get(SystemTable.getBookInfo));
+            dsCorp.add("select * from %s ", systemTable.getBookInfo());
             dsCorp.add("where CorpNo_='%s' and Status_=1 ", corpNo);
             dsCorp.open();
             if (!dsCorp.eof()) {
@@ -245,7 +242,7 @@ public class SvrUserLogin extends CustomService {
 
         String token = (String) getProperty(Application.token);
         getConnection().execute(String.format("Update %s Set Viability_=-1,LogoutTime_=now() where LoginID_='%s'",
-                SystemTable.get(SystemTable.getCurrentUser), token));
+                systemTable.getCurrentUser(), token));
         return true;
     }
 
@@ -278,8 +275,8 @@ public class SvrUserLogin extends CustomService {
 
         String clientId = headIn.getString("openid");
         SqlQuery ds = new SqlQuery(this);
-        ds.add("SELECT A.Code_,A.Password_ FROM %s A", SystemTable.get(SystemTable.getDeviceVerify));
-        ds.add("inner JOIN %s B", SystemTable.get(SystemTable.getUserInfo));
+        ds.add("SELECT A.Code_,A.Password_ FROM %s A", systemTable.getDeviceVerify());
+        ds.add("inner JOIN %s B", systemTable.getUserInfo());
         ds.add("ON A.UserCode_=B.Code_");
         ds.add("WHERE A.MachineCode_='%s' AND A.AutoLogin_=1", clientId);
         ds.open();
@@ -309,9 +306,8 @@ public class SvrUserLogin extends CustomService {
         }
 
         SqlQuery ds = new SqlQuery(this);
-        ds.add("select a.Code_ from %s oi ", SystemTable.get(SystemTable.getBookInfo));
-        ds.add("inner join %s a on oi.CorpNo_=a.CorpNo_ and oi.Status_ in(1,2)",
-                SystemTable.get(SystemTable.getUserInfo));
+        ds.add("select a.Code_ from %s oi ", systemTable.getBookInfo());
+        ds.add("inner join %s a on oi.CorpNo_=a.CorpNo_ and oi.Status_ in(1,2)", systemTable.getUserInfo());
         ds.add("where a.Mobile_='%s' and ((a.BelongAccount_ is null) or (a.BelongAccount_=''))", userCode);
         ds.open();
         if (ds.size() == 0) {
@@ -337,7 +333,7 @@ public class SvrUserLogin extends CustomService {
 
         // 校验帐号的可用状态
         SqlQuery cdsUser = new SqlQuery(this);
-        cdsUser.add("select * from %s ", SystemTable.get(SystemTable.getUserInfo));
+        cdsUser.add("select * from %s ", systemTable.getUserInfo());
         cdsUser.add("where Code_='%s' ", getUserCode());
         cdsUser.open();
         DataValidateException.stopRun(String.format(R.asString(this, "没有找到用户帐号 %s"), getUserCode()), cdsUser.eof());
@@ -345,7 +341,7 @@ public class SvrUserLogin extends CustomService {
 
         // 校验设备码的可用状态
         SqlQuery cdsVer = new SqlQuery(this);
-        cdsVer.add("select * from %s", SystemTable.get(SystemTable.getDeviceVerify));
+        cdsVer.add("select * from %s", systemTable.getDeviceVerify());
         cdsVer.add("where UserCode_='%s' and MachineCode_='%s'", getUserCode(), deviceId);
         cdsVer.open();
         DataValidateException.stopRun(String.format(R.asString(this, "系统出错(id=%s)，请您重新进入系统"), deviceId), cdsVer.eof());
@@ -396,14 +392,14 @@ public class SvrUserLogin extends CustomService {
             }
 
             SqlQuery cdsUser = new SqlQuery(this);
-            cdsUser.add("select Mobile_ from %s ", SystemTable.get(SystemTable.getUserInfo));
+            cdsUser.add("select Mobile_ from %s ", systemTable.getUserInfo());
             cdsUser.add("where Code_='%s' ", getUserCode());
             cdsUser.open();
             DataValidateException.stopRun("系统检测到该帐号还未登记过手机号，无法发送认证码到该手机上，请您联系管理员，让其开一个认证码给您登录系统！", cdsUser.eof());
             String mobile = cdsUser.getString("Mobile_");
 
             SqlQuery cdsVer = new SqlQuery(this);
-            cdsVer.add("select * from %s", SystemTable.get(SystemTable.getDeviceVerify));
+            cdsVer.add("select * from %s", systemTable.getDeviceVerify());
             cdsVer.add("where UserCode_='%s' and MachineCode_='%s'", getUserCode(), deviceId);
             cdsVer.open();
             DataValidateException.stopRun("系统出错，请您重新进入系统！", cdsVer.size() != 1);
@@ -442,7 +438,7 @@ public class SvrUserLogin extends CustomService {
         DataValidateException.stopRun("用户帐套不允许为空", "".equals(corpNo));
 
         SqlQuery cdsTmp = new SqlQuery(this);
-        cdsTmp.add("select * from %s", SystemTable.get(SystemTable.getDeviceVerify));
+        cdsTmp.add("select * from %s", systemTable.getDeviceVerify());
         cdsTmp.add("where CorpNo_='%s'and UserCode_='%s'", corpNo, userCode);
         /*
          * FIXME MachineType_代表设备类型，6-iOS、7-Android，用于极光推送 JPushRecord
@@ -459,7 +455,7 @@ public class SvrUserLogin extends CustomService {
 
     public void enrollMachineInfo(String corpNo, String userCode, String deviceId, String deviceName) {
         SqlQuery ds = new SqlQuery(this);
-        ds.add("select * from %s", SystemTable.get(SystemTable.getDeviceVerify));
+        ds.add("select * from %s", systemTable.getDeviceVerify());
         ds.add("where UserCode_='%s' and MachineCode_='%s'", userCode, deviceId);
         ds.open();
         if (!ds.eof()) {
@@ -497,7 +493,7 @@ public class SvrUserLogin extends CustomService {
 
     private boolean isStopUsed(String userCode, String deviceId) {
         SqlQuery ds = new SqlQuery(this);
-        ds.add("select * from %s ", SystemTable.get(SystemTable.getDeviceVerify));
+        ds.add("select * from %s ", systemTable.getDeviceVerify());
         ds.add("where UserCode_='%s' and MachineCode_='%s' ", userCode, deviceId);
         ds.open();
         ds.edit();
@@ -520,7 +516,7 @@ public class SvrUserLogin extends CustomService {
         bs.byField("MachineCode_", deviceId);
         bs.byField("Used_", true);
         bs.byField("UserCode_", userCode);
-        bs.add("select * from %s", SystemTable.get(SystemTable.getDeviceVerify));
+        bs.add("select * from %s", systemTable.getDeviceVerify());
         DataSet ds = bs.open();
         if (!ds.eof()) {
             return ds.getBoolean("AutoLogin_");
@@ -531,7 +527,7 @@ public class SvrUserLogin extends CustomService {
 
     private void updateVerifyCode(SqlQuery dataVer, String verifyCode, SqlQuery cdsUser) {
         SqlQuery cdsVer = new SqlQuery(this);
-        cdsVer.add("select * from %s", SystemTable.get(SystemTable.getDeviceVerify));
+        cdsVer.add("select * from %s", systemTable.getDeviceVerify());
         cdsVer.add("where VerifyCode_='%s'", verifyCode);
         cdsVer.open();
 
@@ -565,10 +561,10 @@ public class SvrUserLogin extends CustomService {
 
     public void updateCurrentUser(String computer, String screen, String language) {
         getConnection().execute(String.format("Update %s Set Viability_=0 Where Viability_>0 and LogoutTime_<'%s'",
-                SystemTable.get(SystemTable.getCurrentUser), TDateTime.Now().incHour(-1)));
+                systemTable.getCurrentUser(), TDateTime.Now().incHour(-1)));
         String SQLCmd = String.format(
                 "update %s set Viability_=-1,LogoutTime_='%s' where Account_='%s' and Viability_>-1",
-                SystemTable.get(SystemTable.getCurrentUser), TDateTime.Now(), getUserCode());
+                systemTable.getCurrentUser(), TDateTime.Now(), getUserCode());
         getConnection().execute(SQLCmd);
 
         // 增加新的记录
@@ -587,7 +583,7 @@ public class SvrUserLogin extends CustomService {
         rs.setField("Screen_", screen);
         rs.setField("Language_", language);
         SqlOperator opear = new SqlOperator(this);
-        opear.setTableName(SystemTable.get(SystemTable.getCurrentUser));
+        opear.setTableName(systemTable.getCurrentUser());
         opear.insert(rs);
     }
 

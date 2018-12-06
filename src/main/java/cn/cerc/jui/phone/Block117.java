@@ -7,19 +7,13 @@ import cn.cerc.jpage.core.HtmlWriter;
 import cn.cerc.jui.parts.UIComponent;
 import cn.cerc.jui.vcl.ext.UISpan;
 
-/**
- * 
- * @author 善贵
- *
- */
 public class Block117 extends UIComponent {
     private List<UISpan> addBlock = new ArrayList<>();
 
     /**
      * 以span显示内容块
      * 
-     * @param owner
-     *            内容显示区
+     * @param owner 内容显示区
      * 
      */
     public Block117(UIComponent owner) {
@@ -46,7 +40,14 @@ public class Block117 extends UIComponent {
         return span;
     }
 
-    public UISpan addBlock(String text, String onclick) {
+    public UISpan addBlock(String format, Object... args) {
+        UISpan span = new UISpan(this);
+        span.setText(String.format(format, args));
+        addBlock.add(span);
+        return span;
+    }
+
+    public UISpan addUrl(String text, String onclick) {
         UISpan span = new UISpan(this);
         span.setText(text);
         span.setOnclick(onclick);

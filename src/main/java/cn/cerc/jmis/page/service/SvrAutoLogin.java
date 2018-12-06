@@ -6,11 +6,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cn.cerc.jbean.core.Application;
-import cn.cerc.jbean.core.CustomHandle;
 import cn.cerc.jbean.form.IForm;
 import cn.cerc.jbean.other.BufferType;
+import cn.cerc.jbean.other.ISystemTable;
 import cn.cerc.jbean.other.MemoryBuffer;
-import cn.cerc.jbean.other.SystemTable;
 import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.core.TDateTime;
 import cn.cerc.jdb.mysql.SqlQuery;
@@ -19,9 +18,9 @@ import cn.cerc.jdb.other.utils;
 import cn.cerc.jmis.core.ClientDevice;
 import cn.cerc.jmis.core.RequestData;
 import cn.cerc.jmis.services.SvrUserLogin;
+import cn.cerc.mis.core.HandleDefault;
 
 public class SvrAutoLogin {
-
     private static final Logger log = LoggerFactory.getLogger(SvrAutoLogin.class);
 
     private IHandle handle;
@@ -40,8 +39,9 @@ public class SvrAutoLogin {
         }
         String deviceId = form.getClient().getId();
 
+        ISystemTable systemTable = Application.getBean("systemTable", ISystemTable.class);
         SqlQuery dsUser = new SqlQuery(handle);
-        dsUser.add("select * from %s where Code_='%s'", SystemTable.get(SystemTable.getUserInfo), userCode);
+        dsUser.add("select * from %s where Code_='%s'", systemTable.getUserInfo(), userCode);
         dsUser.open();
         if (dsUser.eof()) {
             this.setMessage(String.format("该帐号(%s)并不存在，禁止登录！", userCode));
@@ -49,10 +49,10 @@ public class SvrAutoLogin {
         }
 
         try (Transaction tx = new Transaction(handle)) {
-            CustomHandle sess = (CustomHandle) handle.getProperty(null);
+            HandleDefault sess = (HandleDefault) handle.getProperty(null);
             String sql = String.format(
                     "update %s set LastTime_=now(),Used_=1 where UserCode_='%s' and MachineCode_='%s'",
-                    SystemTable.get(SystemTable.getDeviceVerify), userCode, deviceId);
+                    systemTable.getDeviceVerify(), userCode, deviceId);
             sess.getConnection().execute(sql);
 
             String token = utils.guidFixStr();
@@ -72,8 +72,7 @@ public class SvrAutoLogin {
             }
 
             // 更新当前用户总数
-            SvrUserLogin svrUserLogin = new SvrUserLogin();
-            svrUserLogin.init(sess);
+            SvrUserLogin svrUserLogin = Application.get(sess, SvrUserLogin.class);
             svrUserLogin.updateCurrentUser("unknow", "", form.getClient().getLanguage());
 
             try (MemoryBuffer buff = new MemoryBuffer(BufferType.getSessionInfo, userId, deviceId)) {
@@ -85,13 +84,12 @@ public class SvrAutoLogin {
             }
 
             // 检查设备码
-            SvrUserLogin svrLogin = new SvrUserLogin();
-            svrLogin.init(handle);
+            SvrUserLogin svrLogin = Application.get(handle, SvrUserLogin.class);
             svrLogin.enrollMachineInfo(dsUser.getString("CorpNo_"), userCode, deviceId, "浏览器");
 
             // 设置登录信息
-            ClientDevice info = new ClientDevice(form);
-            info.setRequest(form.getRequest());
+            ClientDevice info = new ClientDevice();
+            info.setRequest(request);
             info.setSid(token);
             sess.init(token);
 

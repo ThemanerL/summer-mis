@@ -3,9 +3,10 @@ package cn.cerc.jmis.sms;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.other.BufferType;
 import cn.cerc.jbean.other.MemoryBuffer;
-import cn.cerc.jbean.other.SystemTable;
+import cn.cerc.jbean.other.ISystemTable;
 import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.core.Utils;
 import cn.cerc.jdb.mysql.SqlQuery;
@@ -26,7 +27,6 @@ public class PhoneVerify {
     private String verifyCode;
     private String message = "";
     private int expires = 900; // 验证码有效时间，单位：秒
-    protected String userTable = SystemTable.getUserInfo;
 
     public PhoneVerify(IHandle handle) {
         this.handle = handle;
@@ -39,9 +39,11 @@ public class PhoneVerify {
 
     public PhoneVerify init(String mobile) {
         this.mobile = mobile;
+
+        ISystemTable systemTable = Application.getBean("systemTable", ISystemTable.class);
         // 取安全手机号，若取不到则默认等于帐号
         SqlQuery ds = new SqlQuery(handle);
-        ds.add("select UID_,countryCode_,securityMobile_ from %s", userTable);
+        ds.add("select UID_,countryCode_,securityMobile_ from %s", systemTable.getUserInfo());
         ds.add("where mobile_='%s'", Utils.safeString(mobile));
         ds.open();
         if (!ds.eof()) {
@@ -59,9 +61,10 @@ public class PhoneVerify {
     }
 
     public PhoneVerify init() {
+        ISystemTable systemTable = Application.getBean("systemTable", ISystemTable.class);
         // 取安全手机号，若取不到则默认等于帐号
         SqlQuery ds = new SqlQuery(handle);
-        ds.add("select UID_,countryCode_,mobile_,securityMobile_ from %s", userTable);
+        ds.add("select UID_,countryCode_,mobile_,securityMobile_ from %s", systemTable.getUserInfo());
         ds.add("where id_='%s'", handle.getUserCode());
         ds.open();
         if (ds.eof()) {

@@ -1,4 +1,4 @@
-package cn.cerc.jmis.page;
+package cn.cerc.jmis.core;
 
 import java.io.IOException;
 import java.util.Map;
@@ -9,44 +9,47 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.WebApplicationContext;
 
 import com.google.gson.Gson;
 
+import cn.cerc.db.core.IAppConfig;
+import cn.cerc.db.core.ServerConfig;
 import cn.cerc.jbean.client.LocalService;
-import cn.cerc.jbean.core.AppConfig;
 import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.form.IForm;
-import cn.cerc.jbean.tools.IAppLogin;
+import cn.cerc.jbean.tools.IAppLoginManage;
 import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.core.Record;
-import cn.cerc.jdb.core.ServerConfig;
 import cn.cerc.jdb.core.Utils;
-import cn.cerc.jmis.core.ClientDevice;
-import cn.cerc.jmis.core.RequestData;
 import cn.cerc.jmis.form.AbstractForm;
+import cn.cerc.jmis.page.AbstractJspPage;
 import cn.cerc.jmis.page.qrcode.SocketTool;
 import cn.cerc.security.sapi.JayunAPI;
 import cn.cerc.security.sapi.JayunSecurity;
 
-public class AppLoginPage extends AbstractJspPage implements IAppLogin {
-
-    private static final Logger log = LoggerFactory.getLogger(AppLoginPage.class);
+@Component
+@Scope(WebApplicationContext.SCOPE_REQUEST)
+public class AppLogin extends AbstractJspPage implements IAppLoginManage {
+    private static final Logger log = LoggerFactory.getLogger(AppLogin.class);
 
     // 配置在服务器的用户名下面 summer-application.properties
     public static final String Notify_Url = "app.notify_url";
 
-    public AppLoginPage() {
+    public AppLogin() {
         super(null);
     }
 
-    public AppLoginPage(IForm form) {
+    public AppLogin(IForm form) {
         super(form);
     }
 
     @Override
     public void init(IForm form) {
         this.setForm(form);
-        AppConfig conf = Application.getAppConfig();
+        IAppConfig conf = Application.getAppConfig();
         this.setJspFile(conf.getJspLoginFile());
         this.add("homePage", conf.getFormWelcome());
         this.add("needVerify", "false");
@@ -102,7 +105,7 @@ public class AppLoginPage extends AbstractJspPage implements IAppLogin {
     }
 
     @Override
-    public boolean checkSecurity(String token) throws IOException, ServletException {
+    public String checkToken(String token) throws IOException, ServletException {
         IForm form = this.getForm();
         String password = null;
         String userCode = null;
@@ -118,20 +121,19 @@ public class AppLoginPage extends AbstractJspPage implements IAppLogin {
 
             IHandle sess = (IHandle) form.getHandle().getProperty(null);
             if (sess.init(token)) {
-                return true;
+                return null;
             }
             if (form.logon()) {
-                return true;
+                return null;
             }
         } catch (Exception e) {
             this.add("loginMsg", e.getMessage());
         }
-        this.execute();
-        return false;
+        return this.execute();
     }
 
     @Override
-    public boolean checkLogin(String userCode, String password) throws ServletException, IOException {
+    public String checkLogin(String userCode, String password) throws ServletException, IOException {
         IForm form = this.getForm();
         HttpServletRequest req = this.getRequest();
 
@@ -150,7 +152,6 @@ public class AppLoginPage extends AbstractJspPage implements IAppLogin {
             log.debug(String.format("将手机号 %s 转化成帐号 %s", oldCode, userCode));
         }
 
-        boolean result = false;
         log.debug(String.format("进行用户帐号(%s)与密码认证", userCode));
         // 进行用户名、密码认证
         LocalService app;
@@ -167,7 +168,7 @@ public class AppLoginPage extends AbstractJspPage implements IAppLogin {
             if (sid != null && !sid.equals("")) {
                 log.debug(String.format("认证成功，取得sid(%s)", sid));
                 ((ClientDevice) this.getForm().getClient()).setSid(sid);
-                result = true;
+                return null;
             }
 
             // // 登记聚安应用帐号
@@ -189,31 +190,28 @@ public class AppLoginPage extends AbstractJspPage implements IAppLogin {
                 log.debug(String.format("用户帐号(%s)与密码认证失败", userCode));
                 req.getSession().setAttribute("loginMsg", app.getMessage());
                 if (!"".equals(supCorpNo) && form.getClient().getDevice().equals(ClientDevice.device_iphone)) {
-                    getResponse().sendRedirect("TFrmWelcome.check");
-                    return false;
+                    return "redirect:TFrmWelcome.check";
                 } else {
-                    this.execute();
+                    return this.execute();
                 }
             } else if (password == null || "".equals(password)) {
                 if (!"".equals(supCorpNo) && form.getClient().getDevice().equals(ClientDevice.device_iphone)) {
                     req.getSession().setAttribute("mobile", mobile);
-                    getResponse().sendRedirect("TFrmWelcome.check");
+                    return "redirect:TFrmWelcome.check";
                 } else {
-                    getResponse().sendRedirect("TFrmEasyReg?phone=" + mobile);
+                    return "redirect:TFrmEasyReg?phone=" + mobile;
                 }
-                return false;
             } else {
                 log.debug(String.format("用户帐号(%s)与密码认证失败", userCode));
                 req.getSession().setAttribute("loginMsg", app.getMessage());
                 if (!"".equals(supCorpNo) && form.getClient().getDevice().equals(ClientDevice.device_iphone)) {
-                    getResponse().sendRedirect("TFrmWelcome.check");
-                    return false;
+                    return "redirect:TFrmWelcome.check";
                 } else {
-                    this.execute();
+                    return this.execute();
                 }
             }
         }
-        return result;
+		return null;
     }
 
     private String getAccountFromTel(IHandle handle, String tel) throws ServletException, IOException {

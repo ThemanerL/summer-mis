@@ -10,7 +10,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 import cn.cerc.jbean.core.Application;
-import cn.cerc.jbean.core.CustomHandle;
 import cn.cerc.jbean.form.IForm;
 import cn.cerc.jmis.form.AbstractForm;
 import cn.cerc.jmis.page.AbstractJspPage;
@@ -20,6 +19,7 @@ import cn.cerc.jpage.core.Component;
 import cn.cerc.jpage.core.UrlRecord;
 import cn.cerc.jui.parts.RightMenus;
 import cn.cerc.jui.parts.UIFormVertical;
+import cn.cerc.mis.core.HandleDefault;
 
 /**
  * 主体子页面(公用)
@@ -48,11 +48,11 @@ public class UIPageModify extends AbstractJspPage {
     }
 
     @Override
-    public void execute() throws ServletException, IOException {
+    public String execute() throws ServletException, IOException {
         HttpServletRequest request = getRequest();
 
         IForm form = this.getForm();
-        CustomHandle sess = (CustomHandle) form.getHandle().getProperty(null);
+        HandleDefault sess = (HandleDefault) form.getHandle().getProperty(null);
         if (sess.logon()) {
             List<UrlRecord> rightMenus = getHeader().getRightMenus();
             RightMenus menus = Application.getBean("RightMenus", RightMenus.class);
@@ -104,6 +104,7 @@ public class UIPageModify extends AbstractJspPage {
         out.println("</head>");
         outBody(out);
         out.println("</html>");
+        return null;
     }
 
     public UIFormVertical createForm() {

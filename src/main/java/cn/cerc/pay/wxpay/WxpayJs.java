@@ -5,7 +5,8 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import org.jboss.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 
@@ -14,8 +15,7 @@ import cn.cerc.jdb.core.IHandle;
 
 //微信支付（网页JS版）
 public class WxpayJs {
-
-    private static Logger log = Logger.getLogger(WxpayJs.class);
+    private static Logger log = LoggerFactory.getLogger(WxpayJs.class);
     // 申请支付金额
     private String amount;
     // 申请支付订单号

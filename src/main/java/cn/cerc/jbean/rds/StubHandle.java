@@ -1,17 +1,15 @@
 package cn.cerc.jbean.rds;
 
+import cn.cerc.db.core.AliyunQueueConnection;
+import cn.cerc.db.core.MysqlConnection;
+import cn.cerc.db.core.ServerConfig;
 import cn.cerc.jbean.core.Application;
-import cn.cerc.jbean.other.SystemTable;
-import cn.cerc.jdb.cache.CacheConnection;
-import cn.cerc.jdb.cache.CacheSession;
+import cn.cerc.jbean.other.ISystemTable;
 import cn.cerc.jdb.core.IHandle;
-import cn.cerc.jdb.core.ServerConfig;
 import cn.cerc.jdb.jiguang.JiguangConnection;
 import cn.cerc.jdb.jiguang.JiguangSession;
-import cn.cerc.jdb.mysql.SqlConnection;
 import cn.cerc.jdb.mysql.SqlQuery;
 import cn.cerc.jdb.mysql.SqlSession;
-import cn.cerc.jdb.queue.QueueConnection;
 import cn.cerc.jdb.queue.QueueSession;
 
 public class StubHandle implements IHandle, AutoCloseable {
@@ -30,16 +28,16 @@ public class StubHandle implements IHandle, AutoCloseable {
     public StubHandle(String corpNo) {
         handle = Application.getHandle();
 
-        String userCode;
-        SqlQuery ds = new SqlQuery(this);
+        ISystemTable systemTable = Application.getBean("systemTable", ISystemTable.class);
 
+        SqlQuery ds = new SqlQuery(this);
         ds.setMaximum(1);
-        ds.add("select Code_ from " + SystemTable.get(SystemTable.getUserInfo));
+        ds.add("select Code_ from " + systemTable.getUserInfo());
         ds.add("where CorpNo_='%s'", corpNo);
         ds.open();
         if (ds.eof())
             throw new RuntimeException("找不到默认帐号：CorpNo=" + corpNo);
-        userCode = ds.getString("Code_");
+        String userCode = ds.getString("Code_");
 
         handle.init(corpNo, userCode, clientIP);
     }
@@ -74,19 +72,13 @@ public class StubHandle implements IHandle, AutoCloseable {
             return null;
         Object obj = handle.getProperty(key);
         if (obj == null && SqlSession.sessionId.equals(key)) {
-            SqlConnection conn = new SqlConnection();
-            conn.setConfig(ServerConfig.getInstance());
-            obj = conn.getSession();
-            handle.setProperty(key, obj);
-        }
-        if (obj == null && CacheSession.sessionId.equals(key)) {
-            CacheConnection conn = new CacheConnection();
+            MysqlConnection conn = new MysqlConnection();
             conn.setConfig(ServerConfig.getInstance());
             obj = conn.getSession();
             handle.setProperty(key, obj);
         }
         if (obj == null && QueueSession.sessionId.equals(key)) {
-            QueueConnection conn = new QueueConnection();
+            AliyunQueueConnection conn = new AliyunQueueConnection();
             conn.setConfig(ServerConfig.getInstance());
             obj = conn.getSession();
             handle.setProperty(key, obj);

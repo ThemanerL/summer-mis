@@ -6,47 +6,60 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
-import cn.cerc.jbean.other.SystemTable;
+import com.google.gson.Gson;
+
+import cn.cerc.jbean.core.Application;
+import cn.cerc.jbean.other.ISystemTable;
 import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.mysql.SqlQuery;
 
+/**
+ * 扫描待翻译的中文
+ */
+@Component
 public class ExportChinese {
     private static final Logger log = LoggerFactory.getLogger(ExportChinese.class);
-    private List<String> items = new ArrayList<>();
+    private Set<String> items = new TreeSet<>();
 
-    // 添加到数据库
+    /**
+     * 扫描指定路径的java文件
+     * 
+     * @param srcPath 路径
+     */
     public void scanFile(String srcPath) {
+
         // 调用查找文件方法
-        List<File> ll = getFiles(new File(srcPath), "java");
+        List<File> files = loadFiles(new File(srcPath), "java");
+
         // 循环出文件
-        for (File ff : ll) {
+        for (File file : files) {
             // 再查找java文件中的字符串
-            FileReader fr = null;
-            BufferedReader br = null;
-            String temp = "";
+            BufferedReader buffReader = null;
+            String line = "";
             try {
                 // 输入流
-                fr = new FileReader(ff);
-                br = new BufferedReader(fr);
-                log.info(ff.getName());
+                buffReader = new BufferedReader(new FileReader(file));
+                log.info(file.getName());
                 // 按行读取
-                while ((temp = br.readLine()) != null) {
-                    String subStr = getChinese(temp);
-                    if (subStr != null) {
-                        log.info(subStr);
-                        items.add(subStr);
+                while ((line = buffReader.readLine()) != null) {
+                    String word = getChinese(line);
+                    if (word != null) {
+                        log.info(word);
+                        items.add(word);
                     }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
                 try {
-                    fr.close();
-                    br.close();
+                    buffReader.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -54,9 +67,15 @@ public class ExportChinese {
         }
     }
 
+    /**
+     * 写入字典
+     * 
+     * @param handle 上下文环境
+     */
     public void writeDict(IHandle handle) {
+        ISystemTable systemTable = Application.getBean("systemTable", ISystemTable.class);
         SqlQuery ds = new SqlQuery(handle);
-        ds.add("select * from %s", SystemTable.getLangDict);
+        ds.add("select * from %s", systemTable.getLangDict());
         ds.open();
         for (String text : this.getItems()) {
             if (!ds.locate("cn_", text)) {
@@ -67,12 +86,12 @@ public class ExportChinese {
         }
     }
 
-    public List<String> getItems() {
+    public Set<String> getItems() {
         return this.items;
     }
 
     // 查找文件
-    private List<File> getFiles(File fileDir, String fileType) {
+    private List<File> loadFiles(File fileDir, String fileType) {
         List<File> lfile = new ArrayList<File>();
         File[] fs = fileDir.listFiles();
         for (File f : fs) {
@@ -80,7 +99,7 @@ public class ExportChinese {
                 if (fileType.equals(f.getName().substring(f.getName().lastIndexOf(".") + 1, f.getName().length())))
                     lfile.add(f);
             } else {
-                List<File> ftemps = getFiles(f, fileType);
+                List<File> ftemps = loadFiles(f, fileType);
                 lfile.addAll(ftemps);
             }
         }
@@ -88,9 +107,9 @@ public class ExportChinese {
     }
 
     private static String getChinese(String temp) {
-        int ix = temp.indexOf("R.asString");
-        if (ix > -1) {
-            String s1 = temp.substring(ix, temp.length());
+        int index = temp.indexOf("R.asString");
+        if (index > -1) {
+            String s1 = temp.substring(index, temp.length());
             if (s1.indexOf("\"") > -1) {
                 String s2 = s1.substring(s1.indexOf("\"") + 1, s1.length());
                 if (s2.indexOf("\")") > -1) {
@@ -106,9 +125,10 @@ public class ExportChinese {
     public static void main(String[] args) {
         ExportChinese ec = new ExportChinese();
         // 扫描指定目录下所有的java文件
-        ec.scanFile("F:\\summer/mojinpai/src/main/java");
+        ec.scanFile("C:\\Users\\l1091\\Documents\\i-work\\fc-project\\fc-app\\src\\main\\java");
         // 将扫描的结果存入到数据库
         // ec.writeDict(new AppHandle());
+        System.out.println(new Gson().toJson(ec.getItems()));
     }
 
 }

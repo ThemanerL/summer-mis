@@ -10,13 +10,13 @@ import java.util.Map;
 
 import javax.servlet.ServletException;
 
+import cn.cerc.db.core.ServerConfig;
 import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.form.IForm;
 import cn.cerc.jbean.form.IPage;
 import cn.cerc.jdb.cache.Buffer;
 import cn.cerc.jdb.core.DataSet;
 import cn.cerc.jdb.core.Record;
-import cn.cerc.jdb.core.ServerConfig;
 import cn.cerc.jdb.core.TDate;
 import cn.cerc.jdb.core.TDateTime;
 import cn.cerc.jdb.other.utils;
@@ -80,9 +80,8 @@ public abstract class AbstractJspPage extends UIComponent implements IPage {
     }
 
     @Override
-    public void execute() throws ServletException, IOException {
-        String url = String.format("/WEB-INF/%s/%s", Application.getAppConfig().getPathForms(), this.getViewFile());
-        getRequest().getServletContext().getRequestDispatcher(url).forward(getRequest(), getResponse());
+    public String execute() throws ServletException, IOException {
+        return this.getViewFile();
     }
 
     public final String getJspFile() {

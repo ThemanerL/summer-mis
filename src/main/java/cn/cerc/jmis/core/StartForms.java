@@ -17,8 +17,9 @@ import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 
+import cn.cerc.db.core.IAppConfig;
+import cn.cerc.db.core.ServerConfig;
 import cn.cerc.jbean.client.LocalService;
-import cn.cerc.jbean.core.AppConfig;
 import cn.cerc.jbean.core.AppHandle;
 import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.core.PageException;
@@ -26,10 +27,8 @@ import cn.cerc.jbean.form.IForm;
 import cn.cerc.jbean.form.IPage;
 import cn.cerc.jbean.other.BufferType;
 import cn.cerc.jbean.other.MemoryBuffer;
-import cn.cerc.jbean.tools.IAppLogin;
-import cn.cerc.jdb.core.ServerConfig;
+import cn.cerc.jbean.tools.IAppLoginManage;
 import cn.cerc.jmis.form.Webpage;
-import cn.cerc.jmis.page.ErrorPage;
 import cn.cerc.jmis.page.JspPage;
 import cn.cerc.jmis.page.RedirectPage;
 
@@ -45,7 +44,7 @@ public class StartForms implements Filter {
 
         String uri = req.getRequestURI();
 
-        // 遇到静太文件直接输出
+        // 遇到静态文件直接输出
         if (isStatic(uri)) {
             chain.doFilter(req, resp);
             return;
@@ -54,8 +53,7 @@ public class StartForms implements Filter {
 
         String childCode = getRequestCode(req);
         if (childCode == null) {
-            req.setAttribute("message", "无效的请求：" + childCode);
-            req.getRequestDispatcher(Application.getAppConfig().getJspErrorFile()).forward(req, resp);
+            outputErrorPage(req, resp, new RuntimeException("无效的请求：" + childCode));
             return;
         }
 
@@ -79,14 +77,12 @@ public class StartForms implements Filter {
         try {
             form = createForm(req, resp, formId);
             if (form == null) {
-                req.setAttribute("message", "error servlet:" + req.getServletPath());
-                AppConfig conf = createConfig();
-                req.getRequestDispatcher(conf.getJspErrorFile()).forward(req, resp);
+                outputErrorPage(req, resp, new RuntimeException("error servlet:" + req.getServletPath()));
                 return;
             }
 
             // 设备讯息
-            ClientDevice info = new ClientDevice(form);
+            ClientDevice info = new ClientDevice();
             info.setRequest(req);
             req.setAttribute("_showMenu_", !ClientDevice.device_ee.equals(info.getDevice()));
             form.setClient(info);
@@ -101,34 +97,32 @@ public class StartForms implements Filter {
 
                     log.debug("进行安全检查，若未登录则显示登录对话框");
 
-                    IAppLogin page = createLogin(form);
-                    if (page.checkSecurity(info.getSid())) {
+                    if (!form.logon()) {
+                        IAppLoginManage page = Application.getBean("appLoginManage",
+                                IAppLoginManage.class);
+                        page.init(form);
+                        String cmd = page.checkToken(info.getSid());
+                        if (cmd != null) {
+                            // 若需要登录，则跳转到登录页
+                            if (cmd.startsWith("redirect:")) {
+                                resp.sendRedirect(cmd.substring(9));
+                            } else {
+                                String url = String.format("/WEB-INF/%s/%s", Application.getAppConfig().getPathForms(),
+                                        cmd);
+                                request.getServletContext().getRequestDispatcher(url).forward(request, response);
+                            }
+                        } else // 已授权通过
+                            callForm(form, funcCode);
+                    } else {
                         callForm(form, funcCode);
                     }
                 } catch (Exception e) {
-                    Throwable err = e.getCause();
-                    if (err == null) {
-                        err = e;
-                    }
-                    // 重定向到错误页面
-                    req.setAttribute("msg", err.getMessage());
-                    ErrorPage opera = new ErrorPage(form, err);
-                    opera.execute();
+                    outputErrorPage(req, resp, e);
                 }
             }
         } catch (Exception e) {
-            log.error(childCode + ":" + e.getMessage());
-            req.setAttribute("message", e.getMessage());
-            AppConfig conf = Application.getAppConfig();
-            // 重定向到错误页面
-            req.getRequestDispatcher(conf.getJspErrorFile()).forward(req, resp);
-            return;
+            outputErrorPage(req, resp, e);
         }
-    }
-
-    // 创建登录与权限控制器
-    protected IAppLogin createLogin(IForm form) {
-        return Application.getAppLogin(form);
     }
 
     // 创建环境管理控制器
@@ -137,7 +131,7 @@ public class StartForms implements Filter {
     }
 
     // 取得页面默认设置，如出错时指向哪个页面
-    protected AppConfig createConfig() {
+    protected IAppConfig createConfig() {
         return Application.getAppConfig();
     }
 
@@ -301,7 +295,16 @@ public class StartForms implements Filter {
             if (pageOutput != null) {
                 if (pageOutput instanceof IPage) {
                     IPage output = (IPage) pageOutput;
-                    output.execute();
+                    String cmd = output.execute();
+                    if (cmd != null) {
+                        if (cmd.startsWith("redirect:"))
+                            response.sendRedirect(cmd.substring(9));
+                        else {
+                            String url = String.format("/WEB-INF/%s/%s", Application.getAppConfig().getPathForms(),
+                                    cmd);
+                            request.getServletContext().getRequestDispatcher(url).forward(request, response);
+                        }
+                    }
                 } else {
                     log.warn(String.format("%s pageOutput is not IPage: %s", funcCode, pageOutput));
                     JspPage output = new JspPage(form);
@@ -310,11 +313,7 @@ public class StartForms implements Filter {
                 }
             }
         } catch (Exception e) {
-            Throwable err = e.getCause();
-            if (err == null)
-                err = e;
-            ErrorPage opera = new ErrorPage(form, err);
-            opera.execute();
+            outputErrorPage(request, response, e);
         } finally {
             if (method != null) {
                 long timeout = 1000;
@@ -347,7 +346,7 @@ public class StartForms implements Filter {
                     url = args[2];
                 else {
                     String sid = (String) req.getAttribute(RequestData.appSession_Key);
-                    AppConfig conf = Application.getAppConfig();
+                    IAppConfig conf = Application.getAppConfig();
                     if (sid != null && !"".equals(sid))
                         url = conf.getFormDefault();
                     else
@@ -398,5 +397,25 @@ public class StartForms implements Filter {
     @Override
     public void destroy() {
 
+    }
+
+    private static void outputErrorPage(HttpServletRequest request, HttpServletResponse response, Throwable e)
+            throws ServletException, IOException {
+        Throwable err = e.getCause();
+        if (err == null) {
+            err = e;
+        }
+        IAppErrorPage errorPage = Application.getBean("appErrorPage", IAppErrorPage.class);
+        if (errorPage != null) {
+            String result = errorPage.getErrorPage(request, response, err);
+            if (result != null) {
+                String url = String.format("/WEB-INF/%s/%s", Application.getAppConfig().getPathForms(), result);
+                request.getServletContext().getRequestDispatcher(url).forward(request, response);
+            }
+        } else {
+            log.warn("not define bean: errorPage");
+            log.error(err.getMessage());
+            err.printStackTrace();
+        }
     }
 }

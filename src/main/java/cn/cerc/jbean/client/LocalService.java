@@ -9,19 +9,18 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import cn.cerc.db.core.ServerConfig;
 import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.core.IService;
 import cn.cerc.jbean.core.IStatus;
 import cn.cerc.jbean.core.ServiceStatus;
 import cn.cerc.jbean.other.BufferType;
 import cn.cerc.jbean.other.MemoryBuffer;
-import cn.cerc.jbean.tools.MD5;
-import cn.cerc.jdb.cache.Buffer;
-import cn.cerc.jdb.cache.IMemcache;
+import cn.cerc.jdb.cache.Redis;
 import cn.cerc.jdb.core.DataSet;
 import cn.cerc.jdb.core.IHandle;
+import cn.cerc.jdb.core.MD5;
 import cn.cerc.jdb.core.Record;
-import cn.cerc.jdb.core.ServerConfig;
 import cn.cerc.jdb.core.ServerVersion;
 
 public class LocalService implements IServiceProxy {
@@ -115,12 +114,11 @@ public class LocalService implements IServiceProxy {
                 return result;
             }
 
-            IMemcache buff = Buffer.getMemcache();
             // 制作临时缓存Key
             String key = MD5.get(handle.getUserCode() + this.serviceCode + dataIn.getJSON());
 
             if (bufferRead) {
-                String buffValue = (String) buff.get(key);
+                String buffValue = Redis.get(key);
                 if (buffValue != null) {
                     log.debug("read from buffer: " + this.serviceCode);
                     dataOut.setJSON(buffValue);
@@ -139,7 +137,7 @@ public class LocalService implements IServiceProxy {
                 log.debug("write to buffer: " + this.serviceCode);
                 dataOut.getHead().setField("_message_", message);
                 dataOut.getHead().setField("_result_", result);
-                buff.set(key, dataOut.getJSON());
+                Redis.set(key, dataOut.getJSON());
             }
             return result;
         } catch (Exception e) {

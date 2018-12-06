@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cn.cerc.jbean.core.Application;
-import cn.cerc.jbean.other.SystemTable;
+import cn.cerc.jbean.other.ISystemTable;
 import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.core.TDateTime;
 import cn.cerc.jdb.core.Utils;
@@ -54,8 +54,9 @@ public class R {
     }
 
     private static void validateKey(IHandle handle, String text, String language) {
+        ISystemTable systemTable = Application.getBean("systemTable", ISystemTable.class);
         SqlQuery dsLang = new SqlQuery(handle);
-        dsLang.add("select value_ from %s", SystemTable.getLanguage);
+        dsLang.add("select value_ from %s", systemTable.getLanguage());
         dsLang.add("where key_='%s'", Utils.safeString(text));
         dsLang.add("and lang_='%s'", language);
         dsLang.open();
@@ -76,8 +77,9 @@ public class R {
     }
 
     private static String getValue(IHandle handle, String text, String language) {
+        ISystemTable systemTable = Application.getBean("systemTable", ISystemTable.class);
         SqlQuery dsLang = new SqlQuery(handle);
-        dsLang.add("select key_,max(value_) as value_ from %s", SystemTable.getLanguage);
+        dsLang.add("select key_,max(value_) as value_ from %s", systemTable.getLanguage());
         dsLang.add("where key_='%s'", Utils.safeString(text));
         if ("en".equals(language)) {
             dsLang.add("and (lang_='%s')", language);
@@ -95,9 +97,10 @@ public class R {
         if ("cn".equals(language))
             return text;
 
+        ISystemTable systemTable = Application.getBean("systemTable", ISystemTable.class);
         // 处理英文界面
         SqlQuery ds = new SqlQuery(handle);
-        ds.add("select value_ from %s", SystemTable.getLanguage);
+        ds.add("select value_ from %s", systemTable.getLanguage());
         ds.add("where key_='%s'", Utils.safeString(text));
         if (!"en".equals(language)) {
             ds.add("and (lang_='en' or lang_='%s')", language);

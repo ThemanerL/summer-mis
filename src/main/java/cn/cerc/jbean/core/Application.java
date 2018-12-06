@@ -6,21 +6,20 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
+import cn.cerc.db.core.IAppConfig;
+import cn.cerc.db.core.ServerConfig;
 import cn.cerc.jbean.form.IForm;
-import cn.cerc.jbean.tools.IAppLogin;
 import cn.cerc.jdb.core.IHandle;
 
 public class Application {
+    // private static final Logger log = LoggerFactory.getLogger(Application.class);
     private static String xmlFile = "classpath:application.xml";
-    private static ApplicationContext app;
-    private static AppConfig appConfig;
+    private static ApplicationContext context;
 
-    private static ApplicationContext serviceItems;
-    private static String serviceFile = "classpath:app-services.xml";
-    private static ApplicationContext formItems;
-    private static String formFile = "classpath:app-forms.xml";
-    private static ApplicationContext reportItems;
-    private static String reportFile = "classpath:app-report.xml";
+    // private static ApplicationContext serviceItems;
+    // private static String serviceFile = "classpath:app-services.xml";
+    // private static ApplicationContext reportItems;
+    // private static String reportFile = "classpath:app-report.xml";
 
     // Tomcat JSESSION.ID
     public static final String sessionId = "sessionId";
@@ -45,55 +44,84 @@ public class Application {
     // 默认界面语言版本
     public static final String LangageDefault = "cn"; // 可选：cn/en
 
-    @Deprecated // 请改使用getAppConfig()
-    public static AppConfig getConfig() {
+    public static ApplicationContext getContext() {
         init();
-        return appConfig;
+        return context;
     }
 
-    public static AppConfig getAppConfig() {
+    public static IAppConfig getAppConfig() {
         init();
-        return appConfig;
+
+        if (context.containsBean("AppConfig")) // 请不要再使用这个beanId
+            return context.getBean("AppConfig", IAppConfig.class);
+
+        if (context.containsBean("appConfig"))
+            return context.getBean("appConfig", IAppConfig.class);
+        else
+            throw new RuntimeException(String.format("%s 中没有找到 bean: appConfig", xmlFile));
     }
 
     public static IHandle getHandle() {
         init();
-        if (!app.containsBean("AppHandle"))
-            throw new RuntimeException(String.format("%s 中没有找到 bean: AppHandle", xmlFile));
 
-        return app.getBean("AppHandle", IHandle.class);
+        if (context.containsBean("AppHandle")) // 请不要再使用这个beanId
+            return context.getBean("AppHandle", IHandle.class);
+
+        if (context.containsBean("handle"))
+            return context.getBean("handle", IHandle.class);
+
+        if (context.containsBean("handleDefault"))
+            return context.getBean("handleDefault", IHandle.class);
+        else
+            throw new RuntimeException(String.format("%s 中没有找到 bean: handle 及  handleDefault", xmlFile));
+
     }
 
     public static IPassport getPassport(IHandle handle) {
         init();
-        AbstractHandle bean = getBean("Passport", AbstractHandle.class);
-        if (handle != null)
+        IPassport bean = getBean("passport", IPassport.class);
+        if (bean != null && handle != null)
             bean.setHandle(handle);
-        return (IPassport) bean;
+        return bean;
     }
 
     public static boolean containsBean(String beanCode) {
         init();
-        return app.containsBean(beanCode);
+        return context.containsBean(beanCode);
     }
 
     public static <T> T getBean(String beanCode, Class<T> requiredType) {
         init();
-        return app.getBean(beanCode, requiredType);
+        return context.getBean(beanCode, requiredType);
     }
 
     public static IService getService(IHandle handle, String serviceCode) {
         init();
-        if (serviceItems == null)
-            serviceItems = new FileSystemXmlApplicationContext(serviceFile);
+        IService bean = context.getBean(serviceCode, IService.class);
+        if (bean != null && handle != null)
+            bean.init(handle);
+        return bean;
+    }
 
-        if (serviceItems.containsBean(serviceCode)) {
-            IService bean = serviceItems.getBean(serviceCode, IService.class);
-            if (handle != null)
-                bean.init(handle);
-            return bean;
+    public static <T> T get(IHandle handle, Class<T> requiredType) {
+        init();
+
+        String[] items = requiredType.getName().split("\\.");
+        String itemId = items[items.length - 1];
+
+        String beanId;
+        if (itemId.substring(0, 2).toUpperCase().equals(itemId.substring(0, 2))) {
+            beanId = itemId;
+        } else {
+            beanId = itemId.substring(0, 1).toLowerCase() + itemId.substring(1);
         }
-        return null;
+
+        T bean = context.getBean(beanId, requiredType);
+        if (bean != null && handle != null) {
+            if (bean instanceof IService)
+                ((IService) bean).init(handle);
+        }
+        return bean;
     }
 
     public static IForm getForm(HttpServletRequest req, HttpServletResponse resp, String formId) {
@@ -102,73 +130,34 @@ public class Application {
 
         init();
 
-        formItems = getFormItems();
-        if (!formItems.containsBean(formId)) {
-            throw new RuntimeException(String.format("form %s not find!", formId));
-        }
+        // ApplicationContext applicationContext = WebApplicationContextUtils
+        // .getRequiredWebApplicationContext(req.getServletContext());
 
-        IForm form = formItems.getBean(formId, IForm.class);
-        form.setRequest(req);
-        form.setResponse(resp);
+        if (!context.containsBean(formId))
+            throw new RuntimeException(String.format("form %s not find!", formId));
+
+        IForm form = context.getBean(formId, IForm.class);
+        if (form != null) {
+            form.setRequest(req);
+            form.setResponse(resp);
+        }
 
         return form;
     }
 
-    public static ApplicationContext getFormItems() {
-        if (formItems == null)
-            formItems = new FileSystemXmlApplicationContext(formFile);
-        return formItems;
-    }
-
-    public static ApplicationContext getReportItems() {
-        if (reportItems == null)
-            reportItems = new FileSystemXmlApplicationContext(reportFile);
-        return reportItems;
-    }
-
-    public static ApplicationContext getServices() {
-        init();
-        if (serviceItems == null)
-            serviceItems = new FileSystemXmlApplicationContext(serviceFile);
-        return serviceItems;
-    }
-
-    private static void init() {
-        if (app == null) {
-            app = new FileSystemXmlApplicationContext(xmlFile);
-            appConfig = app.getBean("AppConfig", AppConfig.class);
-            if (appConfig == null)
-                throw new RuntimeException(String.format("%s 中没有找到 bean: AppConfig", xmlFile));
-        }
-    }
-
-    public static IAppLogin getAppLogin(IForm form) {
-        init();
-        if (!app.containsBean("AppLogin")) {
-            throw new RuntimeException(String.format("%s 中没有找到 bean: AppLogin", xmlFile));
-        }
-        IAppLogin result = app.getBean("AppLogin", IAppLogin.class);
-        result.init(form);
-        return result;
+    private static synchronized void init() {
+        if (context == null)
+            context = new FileSystemXmlApplicationContext(xmlFile);
     }
 
     public static String getLangage() {
         init();
-        String lang = cn.cerc.jdb.core.ServerConfig.getInstance().getProperty(deviceLanguage);
+        String lang = ServerConfig.getInstance().getProperty(deviceLanguage);
         if (lang == null || "".equals(lang) || LangageDefault.equals(lang))
             return LangageDefault;
         else if ("en".equals(lang))
             return lang;
         else
             throw new RuntimeException("not support language: " + lang);
-    }
-
-    public static void main(String[] args) {
-        // listMethod(TAppLogin.class);
-        serviceItems = new FileSystemXmlApplicationContext(serviceFile);
-        for (String key : serviceItems.getBeanDefinitionNames()) {
-            if (serviceItems.getBean(key) == null)
-                System.out.println(key);
-        }
     }
 }

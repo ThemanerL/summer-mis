@@ -34,7 +34,7 @@ public class SocketTool {
         StringBuffer url = request.getRequestURL();
         String domain = url.delete(url.length() - request.getRequestURI().length(), url.length()).toString();
 
-        log.warn("domail {}", domain);
+        log.warn("domain: {}", domain);
 
         String socketUrl = domain;
         if (domain.indexOf("http://") != -1) {

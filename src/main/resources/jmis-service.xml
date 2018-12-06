@@ -118,4 +118,11 @@
         <property name="funcCode" value="save" />
     </bean>
 
+    <!-- jsp 语言 -->
+    <bean id="SvrLanguage.downloadAll" class="cn.cerc.jmis.services.SvrLanguage">
+        <property name="funcCode" value="downloadAll"></property>
+    </bean>
+    <bean id="SvrLanguage.download" class="cn.cerc.jmis.services.SvrLanguage">
+        <property name="funcCode" value="download"></property>
+    </bean>
 </beans>

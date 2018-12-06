@@ -44,7 +44,7 @@ public class JsonPage implements IPage {
     }
 
     @Override
-    public void execute() throws ServletException, IOException {
+    public String execute() throws ServletException, IOException {
         PrintWriter writer = getResponse().getWriter();
         if (this.data == null) {
             if (items == null)
@@ -53,6 +53,7 @@ public class JsonPage implements IPage {
         } else {
             writer.print(new Gson().toJson(this.data));
         }
+        return null;
     }
 
     @Deprecated

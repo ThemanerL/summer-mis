@@ -9,7 +9,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 import cn.cerc.jbean.core.Application;
-import cn.cerc.jbean.core.CustomHandle;
 import cn.cerc.jbean.form.IForm;
 import cn.cerc.jmis.form.AbstractForm;
 import cn.cerc.jmis.page.AbstractJspPage;
@@ -22,6 +21,7 @@ import cn.cerc.jpage.grid.AbstractGrid;
 import cn.cerc.jpage.grid.MutiPage;
 import cn.cerc.jpage.other.OperaPages;
 import cn.cerc.jui.parts.RightMenus;
+import cn.cerc.mis.core.HandleDefault;
 
 public class UIPageDialog extends AbstractJspPage {
     private boolean showMenus = true; // 是否显示主菜单
@@ -39,11 +39,10 @@ public class UIPageDialog extends AbstractJspPage {
     }
 
     @Override
-    public void execute() throws ServletException, IOException {
-
+    public String execute() throws ServletException, IOException {
         IForm form = this.getForm();
         HttpServletRequest request = form.getRequest();
-        CustomHandle sess = (CustomHandle) form.getHandle().getProperty(null);
+        HandleDefault sess = (HandleDefault) form.getHandle().getProperty(null);
         request.setAttribute("passport", sess.logon());
         request.setAttribute("logon", sess.logon());
         if (sess.logon()) {
@@ -79,8 +78,7 @@ public class UIPageDialog extends AbstractJspPage {
         }
 
         // 输出jsp模版
-        String url = String.format("/WEB-INF/%s/%s", Application.getAppConfig().getPathForms(), this.getViewFile());
-        getRequest().getServletContext().getRequestDispatcher(url).forward(getRequest(), getResponse());
+        return this.getViewFile();
     }
 
     public void installAdvertisement() {

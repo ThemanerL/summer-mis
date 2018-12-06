@@ -1,7 +1,6 @@
 package cn.cerc.jmis.services;
 
 import cn.cerc.jbean.core.CustomService;
-import cn.cerc.jbean.other.SystemTable;
 import cn.cerc.jdb.core.Record;
 import cn.cerc.jdb.mysql.SqlQuery;
 
@@ -11,7 +10,7 @@ public class SvrBookInfo extends CustomService {
         String corpNo = getDataIn().getHead().getString("corpNo");
         SqlQuery ds = new SqlQuery(handle);
         ds.add("select CorpNo_,Type_,ShortName_,Name_,Address_,Tel_,Status_,Industry_,");
-        ds.add("ManagerPhone_,StartHost_,Contact_,Authentication_ from %s", SystemTable.get(SystemTable.getBookInfo));
+        ds.add("ManagerPhone_,StartHost_,Contact_,Authentication_ from %s", systemTable.getBookInfo());
         ds.add("where CorpNo_=N'%s'", corpNo);
         ds.open();
         if (ds.eof()) {

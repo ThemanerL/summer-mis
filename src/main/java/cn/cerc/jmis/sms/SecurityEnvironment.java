@@ -4,9 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cn.cerc.jbean.core.AbstractHandle;
+import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.core.DataValidateException;
 import cn.cerc.jbean.form.IForm;
-import cn.cerc.jbean.other.SystemTable;
+import cn.cerc.jbean.other.ISystemTable;
 import cn.cerc.jdb.core.TDateTime;
 import cn.cerc.jdb.mysql.SqlQuery;
 import cn.cerc.jmis.form.AbstractForm;
@@ -14,11 +15,10 @@ import cn.cerc.jmis.language.R;
 import cn.cerc.jmis.page.AbstractJspPage;
 
 public class SecurityEnvironment {
-
     private static final Logger log = LoggerFactory.getLogger(SecurityEnvironment.class);
 
     // 用于Form中，向UI(jsp)传递当前是否安全，若不安全则显示输入验证码画面
-    public static boolean check(AbstractJspPage jspPage) {
+    public boolean check(AbstractJspPage jspPage) {
         AbstractForm form = (AbstractForm) jspPage.getForm();
         boolean result = isSecurity(form);
         if (form.getRequest().getParameter("checkSecurity") != null) {
@@ -39,7 +39,7 @@ public class SecurityEnvironment {
     }
 
     // 后台环境安全检测
-    public static boolean backCheck(AbstractJspPage jspPage) {
+    public boolean backCheck(AbstractJspPage jspPage) {
         AbstractForm form = (AbstractForm) jspPage.getForm();
         boolean result = isSecurity(form);
         if (form.getRequest().getParameter("checkSecurity") != null) {
@@ -59,7 +59,7 @@ public class SecurityEnvironment {
         return result;
     }
 
-    private static boolean isSecurity(AbstractForm form) {
+    private boolean isSecurity(AbstractForm form) {
         String remoteIP = RemoteIP.get(form);
         String clientId = form.getClient().getId();
         String userId = form.getHandle().getUserCode();
@@ -71,8 +71,9 @@ public class SecurityEnvironment {
 
         }
 
+        ISystemTable systemTable = Application.getBean("systemTable", ISystemTable.class);
         SqlQuery ds2 = new SqlQuery(form.getHandle());
-        ds2.add("select * from %s", SystemTable.get(SystemTable.getSecurityMobile));
+        ds2.add("select * from %s", systemTable.getSecurityMobile());
         ds2.add("where mobile_='%s'", mobile);
         ds2.open();
         if (ds2.eof()) {
@@ -92,7 +93,7 @@ public class SecurityEnvironment {
     }
 
     // 用于Service中，检查若当前环境不安全时，需要检查 验证码是否正确
-    public static void check(AbstractHandle service) throws DataValidateException {
+    public void check(AbstractHandle service) throws DataValidateException {
         if (!(service.getHandle() instanceof AbstractForm)) {
             log.error("程序调用错误，需要修正！");
             DataValidateException.stopRun(R.asString(service, "程序调用错误，需要修正！"), true);
@@ -105,12 +106,13 @@ public class SecurityEnvironment {
     }
 
     // 校验短信验证码
-    private static void safetyCheck(AbstractForm form) throws DataValidateException {
+    private void safetyCheck(AbstractForm form) throws DataValidateException {
         String securityCode = form.getRequest().getParameter("securityCode");
         if (securityCode == null) {
             DataValidateException.stopRun(R.asString(form, "关键操作，请输入安全手机的验证码"), true);
         }
-        PhoneVerify mv = new PhoneVerify(form).init();
+        PhoneVerify mv = new PhoneVerify(form);
+        mv.init();
         String mobile = mv.getMobile();
         switch (mv.checkVerify(securityCode)) {
         case PASS:
@@ -130,13 +132,14 @@ public class SecurityEnvironment {
         }
     }
 
-    public static void updateSecurityRecord(String mobile, AbstractForm form, boolean hasError) {
+    public void updateSecurityRecord(String mobile, AbstractForm form, boolean hasError) {
         if ("".equals(mobile)) {
             return;
         }
+        ISystemTable systemTable = Application.getBean("systemTable", ISystemTable.class);
         if (!mobile.startsWith("+")) {
             SqlQuery ds = new SqlQuery(form.getHandle());
-            ds.add("select countryCode_ from %s", SystemTable.get(SystemTable.getUserInfo));
+            ds.add("select countryCode_ from %s", systemTable.getUserInfo());
             ds.add("where mobile_='%s'", mobile);
             ds.open();
             if (ds.eof()) {
@@ -146,7 +149,7 @@ public class SecurityEnvironment {
         }
 
         SqlQuery ds = new SqlQuery(form.getHandle());
-        ds.add("select * from %s", SystemTable.get(SystemTable.getSecurityMobile));
+        ds.add("select * from %s", systemTable.getSecurityMobile());
         ds.add("where mobile_='%s'", mobile);
         ds.open();
         if (ds.eof()) {
@@ -179,9 +182,10 @@ public class SecurityEnvironment {
         }
     }
 
-    public static String getUserSecuirtyMobile(IForm form) {
+    public String getUserSecuirtyMobile(IForm form) {
+        ISystemTable systemTable = Application.getBean("systemTable", ISystemTable.class);
         SqlQuery ds1 = new SqlQuery(form.getHandle());
-        ds1.add("SELECT mobile_,securityMobile_,countryCode_ FROM %s", SystemTable.get(SystemTable.getUserInfo));
+        ds1.add("SELECT mobile_,securityMobile_,countryCode_ FROM %s", systemTable.getUserInfo());
         ds1.add("WHERE id_='%s'", form.getHandle().getUserCode());
         ds1.open();
         if (ds1.eof()) {

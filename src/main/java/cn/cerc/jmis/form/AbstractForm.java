@@ -6,10 +6,13 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import cn.cerc.jbean.core.AbstractHandle;
-import cn.cerc.jbean.core.CustomHandle;
 import cn.cerc.jbean.form.IClient;
 import cn.cerc.jbean.form.IForm;
+import cn.cerc.jbean.other.ISystemTable;
+import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jmis.core.ClientDevice;
 
 public abstract class AbstractForm extends AbstractHandle implements IForm {
@@ -20,6 +23,8 @@ public abstract class AbstractForm extends AbstractHandle implements IForm {
     private String caption;
     private String parent;
     private String permission;
+    @Autowired
+    public ISystemTable systemTable;
 
     public Map<String, String> getParams() {
         return params;
@@ -41,7 +46,7 @@ public abstract class AbstractForm extends AbstractHandle implements IForm {
         if (getHandle() == null) {
             return false;
         }
-        CustomHandle sess = (CustomHandle) getHandle().getProperty(null);
+        IHandle sess = (IHandle) getHandle().getProperty(null);
         return sess.logon();
     }
 
@@ -84,7 +89,8 @@ public abstract class AbstractForm extends AbstractHandle implements IForm {
     @Override
     public IClient getClient() {
         if (client == null) {
-            client = new ClientDevice(this);
+            client = new ClientDevice();
+            client.setRequest(request);
         }
         return client;
     }

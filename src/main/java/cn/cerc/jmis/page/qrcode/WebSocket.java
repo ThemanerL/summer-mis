@@ -16,6 +16,13 @@ import javax.websocket.server.ServerEndpoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 将目前的类定义成一个websocket服务器端,
+ * 注解的值将被用于监听用户连接的终端访问URL地址,客户端可以通过这个URL来连接到WebSocket服务器端
+ * 
+ * @author root
+ *
+ */
 @ServerEndpoint(value = "/websocket", configurator = GetHttpSessionConfigurator.class)
 public class WebSocket {
 
@@ -31,6 +38,15 @@ public class WebSocket {
 
     private HttpSession httpSession;
 
+    /**
+     * 
+     * 连接建立成功调用的方法
+     * 
+     * @param session
+     *            可选的参数。session为与某个客户端的连接会话，需要通过它来给客户端发送数据
+     * @param config
+     *            端点配置
+     */
     @OnOpen
     public void onOpen(Session session, EndpointConfig config) {
         httpSession = (HttpSession) config.getUserProperties().get(HttpSession.class.getName());
@@ -40,12 +56,23 @@ public class WebSocket {
         log.info("sessionId: {}", httpSession.getId());
     }
 
+    /**
+     * 连接关闭调用的方法
+     */
     @OnClose
     public void onClose() {
         items.remove(httpSession.getId()); // 从map中删除
         log.info("有一连接关闭！当前在线人数为 {}", items.size());
     }
 
+    /**
+     * 收到客户端消息后调用的方法
+     * 
+     * @param message
+     *            客户端发送过来的消息
+     * @param session
+     *            可选的参数
+     */
     @OnMessage
     public void onMessage(String message, Session session) {
         log.info("来自客户端的消息:sessionId {}, message {}", session.getId(), message);
@@ -57,6 +84,14 @@ public class WebSocket {
         }
     }
 
+    /**
+     * 发生错误时调用
+     * 
+     * @param session
+     *            当前连接
+     * @param error
+     *            错误
+     */
     @OnError
     public void onError(Session session, Throwable error) {
         items.remove(httpSession.getId());

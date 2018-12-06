@@ -9,11 +9,12 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.core.DataValidateException;
 import cn.cerc.jbean.core.ServiceException;
 import cn.cerc.jbean.other.BufferType;
 import cn.cerc.jbean.other.MemoryBuffer;
-import cn.cerc.jbean.other.SystemTable;
+import cn.cerc.jbean.other.ISystemTable;
 import cn.cerc.jbean.rds.StubHandle;
 import cn.cerc.jdb.core.Record;
 import cn.cerc.jdb.mysql.SqlQuery;
@@ -71,6 +72,7 @@ public class SvrUserLoginTest {
     @Test
     @Ignore(value = "此处用于测试在5分钟内不允许重复申请验证码，耗时很长")
     public void test_sendVerifyCode() throws InterruptedException, DataValidateException {
+        ISystemTable systemTable = Application.getBean("systemTable", ISystemTable.class);
         String corpNo = "911001";
         String userCode = "91100123";
         String deviceId = "TEST";
@@ -83,7 +85,7 @@ public class SvrUserLoginTest {
             // 检查验证码是否存在
             SqlQuery ds = new SqlQuery(handle);
 
-            ds.add("select * from %s", SystemTable.get(SystemTable.getDeviceVerify));
+            ds.add("select * from %s", systemTable.getDeviceVerify());
             ds.add("where CorpNo_='%s'", corpNo);
             ds.add("and UserCode_='%s'", userCode);
             ds.add("and MachineCode_='%s'", deviceId);

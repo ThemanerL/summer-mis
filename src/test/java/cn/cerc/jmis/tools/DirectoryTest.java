@@ -5,7 +5,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import cn.cerc.jbean.core.AppHandle;
-import cn.cerc.jbean.other.SystemTable;
+import cn.cerc.jbean.core.Application;
+import cn.cerc.jbean.other.ISystemTable;
 import cn.cerc.jdb.core.TDateTime;
 import cn.cerc.jdb.core.Utils;
 import cn.cerc.jdb.mysql.SqlQuery;
@@ -49,8 +50,9 @@ public class DirectoryTest {
             System.err.println(text);
             return 0;
         }
+        ISystemTable systemTable = Application.getBean("systemTable", ISystemTable.class);
         SqlQuery dsLang = new SqlQuery(handle);
-        dsLang.add("select * from %s", SystemTable.getLanguage);
+        dsLang.add("select * from %s", systemTable.getLanguage());
         dsLang.add("where key_='%s' and lang_='en'", text);
         dsLang.open();
         if (dsLang.eof()) {

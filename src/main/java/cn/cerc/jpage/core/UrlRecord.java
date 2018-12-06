@@ -23,7 +23,7 @@ public class UrlRecord {
         this.name = name;
     }
 
-    @Deprecated
+    @Deprecated // 请改为 putParam
     public UrlRecord addParam(String key, String value) {
         return putParam(key, value);
     }

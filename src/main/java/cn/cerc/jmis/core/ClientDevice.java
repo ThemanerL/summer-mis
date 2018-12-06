@@ -2,15 +2,19 @@ package cn.cerc.jmis.core;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.WebApplicationContext;
+
 import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.form.IClient;
-import cn.cerc.jbean.form.IForm;
 import cn.cerc.jbean.other.BufferType;
 import cn.cerc.jbean.other.MemoryBuffer;
 
+@Component
+@Scope(WebApplicationContext.SCOPE_SESSION)
 public class ClientDevice implements IClient {
-    // private static final Logger log = Logger.getLogger(DeviceInfo.class);
-    private IForm form;
+    // private static final Logger log = Logger.LoggerFactory(DeviceInfo.class);
     private String sid; // application session id;
     private String deviceId; // device id
     private String deviceType; // phone/pad/ee/pc
@@ -31,9 +35,8 @@ public class ClientDevice implements IClient {
     // 电脑专用浏览器
     public static final String device_ee = "ee";
 
-    public ClientDevice(IForm form) {
+    public ClientDevice() {
         super();
-        this.setForm(form);
     }
 
     private String getValue(MemoryBuffer buff, String key, String def) {
@@ -145,16 +148,6 @@ public class ClientDevice implements IClient {
     }
 
     @Override
-    public IForm getForm() {
-        return form;
-    }
-
-    @Override
-    public void setForm(IForm form) {
-        this.form = form;
-        this.setRequest(form.getRequest());
-    }
-
     public void setRequest(HttpServletRequest request) {
         this.request = request;
         // 保存设备类型

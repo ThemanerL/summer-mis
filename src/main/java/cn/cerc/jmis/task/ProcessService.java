@@ -7,21 +7,17 @@ import javax.servlet.ServletContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
 
+import cn.cerc.db.core.ServerConfig;
+import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.other.BufferType;
 import cn.cerc.jbean.rds.StubHandle;
-import cn.cerc.jdb.cache.Buffer;
-import cn.cerc.jdb.cache.IMemcache;
+import cn.cerc.jdb.cache.Redis;
 import cn.cerc.jdb.core.IHandle;
-import cn.cerc.jdb.core.ServerConfig;
 import cn.cerc.jdb.core.TDateTime;
 
 public class ProcessService extends TimerTask {
     private static final Logger log = LoggerFactory.getLogger(ProcessService.class);
-    private static ApplicationContext taskApp;
-    private static String taskFile = "classpath:app-tasks.xml";
     private static boolean isRunning = false;
     // 晚上12点执行，也即0点开始执行
     private static final int C_SCHEDULE_HOUR = 0;
@@ -71,12 +67,11 @@ public class ProcessService extends TimerTask {
         if (str.equals(lock))
             return;
 
-        if (taskApp == null)
-            taskApp = new FileSystemXmlApplicationContext(taskFile);
-
         lock = str;
-        for (String beanId : taskApp.getBeanDefinitionNames()) {
+        for (String beanId : Application.getContext().getBeanNamesForType(AbstractTask.class)) {
             AbstractTask task = getTask(handle, beanId);
+            if (task == null)
+                continue;
             try {
                 String curTime = TDateTime.Now().getTime().substring(0, 5);
                 if (!"".equals(task.getTime()) && !task.getTime().equals(curTime))
@@ -85,12 +80,11 @@ public class ProcessService extends TimerTask {
                 int timeOut = task.getInterval();
                 String buffKey = String.format("%d.%s.%s", BufferType.getObject.ordinal(), this.getClass().getName(),
                         task.getClass().getName());
-                IMemcache buff = Buffer.getMemcache();
-                if (buff.get(buffKey) != null)
+                if (Redis.get(buffKey) != null)
                     continue;
 
                 // 标识为已执行
-                buff.set(buffKey, "ok", timeOut);
+                Redis.set(buffKey, "ok", timeOut);
 
                 if (task.getInterval() > 1)
                     log.info("execute " + task.getClass().getName());
@@ -104,14 +98,9 @@ public class ProcessService extends TimerTask {
     }
 
     public static AbstractTask getTask(IHandle handle, String beanId) {
-        if (taskApp == null)
-            taskApp = new FileSystemXmlApplicationContext(taskFile);
-        if (!taskApp.containsBean(beanId))
-            return null;
-
-        AbstractTask result = taskApp.getBean(beanId, AbstractTask.class);
-        if (result != null)
-            result.setHandle(handle);
-        return result;
+        AbstractTask task = Application.getBean(beanId, AbstractTask.class);
+        if (task != null)
+            task.setHandle(handle);
+        return task;
     }
 }
