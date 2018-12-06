@@ -14,7 +14,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import cn.cerc.core.DataSet;
 
-public class Barcode128Template extends Template {
+public class Barcode128Template extends PdfTemplate {
     private float fontSize;
     private float barHeight;
 

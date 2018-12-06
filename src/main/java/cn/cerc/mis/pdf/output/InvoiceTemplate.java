@@ -17,7 +17,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import cn.cerc.core.Record;
 import cn.cerc.mis.excel.output.Column;
 
-public class InvoiceTemplate extends Template {
+public class InvoiceTemplate extends PdfTemplate {
     public InvoiceTemplate() {
         this.setPageWidth(58);
         this.setMarginTop(12);

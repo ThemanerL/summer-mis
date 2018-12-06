@@ -20,7 +20,7 @@ public class ExportPdf {
     private static String xmlFile = "classpath:export-pdf.xml";
     private HttpServletResponse response;
     private String templateId;
-    private Template template;
+    private PdfTemplate template;
 
     public ExportPdf(HttpServletResponse response) {
         this.response = response;
@@ -34,23 +34,23 @@ public class ExportPdf {
         this.templateId = templateId;
     }
 
-    public Template getTemplate() {
+    public PdfTemplate getTemplate() {
         if (template == null) {
             if (templateId == null)
                 throw new RuntimeException("templateId is null");
             if (app == null)
                 app = new FileSystemXmlApplicationContext(xmlFile);
-            template = app.getBean(templateId, Template.class);
+            template = app.getBean(templateId, PdfTemplate.class);
         }
         return template;
     }
 
-    public void setTemplate(Template template) {
+    public void setTemplate(PdfTemplate template) {
         this.template = template;
     }
 
     public void export() throws IOException, DocumentException {
-        Template template = this.getTemplate();
+        PdfTemplate template = this.getTemplate();
 
         // 清空输出流
         response.reset();

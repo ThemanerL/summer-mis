@@ -15,7 +15,7 @@ import jxl.write.biff.RowsExceededException;
  * @author weish
  *
  */
-public class BOMTemplate extends Template {
+public class BOMTemplate extends ExcelTemplate {
     private List<Column> heads;
     private List<Column> materials;
     private List<Column> makes;

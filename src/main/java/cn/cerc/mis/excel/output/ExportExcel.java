@@ -20,7 +20,7 @@ public class ExportExcel {
     private static String xmlFile = "classpath:export-excel.xml";
     private HttpServletResponse response;
     private String templateId;
-    private Template template;
+    private ExcelTemplate template;
     private Object handle;
 
     public ExportExcel(HttpServletResponse response) {
@@ -91,18 +91,18 @@ public class ExportExcel {
         this.response = response;
     }
 
-    public Template getTemplate() {
+    public ExcelTemplate getTemplate() {
         if (template == null) {
             if (templateId == null)
                 throw new RuntimeException("templateId is null");
             if (app == null)
                 app = new FileSystemXmlApplicationContext(xmlFile);
-            template = app.getBean(templateId, Template.class);
+            template = app.getBean(templateId, ExcelTemplate.class);
         }
         return template;
     }
 
-    public void setTemplate(Template template) {
+    public void setTemplate(ExcelTemplate template) {
 
         this.template = template;
     }

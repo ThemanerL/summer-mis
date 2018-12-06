@@ -4,7 +4,7 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans  
            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
-    <bean id="ExportMessage" class="cn.cerc.mis.excel.output.Template">
+    <bean id="ExportMessage" class="cn.cerc.mis.excel.output.ExcelTemplate">
         <property name="fileName" value="导出指令执行失败说明" />
         <property name="columns">
             <list>
@@ -16,7 +16,7 @@
         </property>
     </bean>
 
-    <bean id="TSchStockUpdate" class="cn.cerc.mis.excel.output.Template">
+    <bean id="TSchStockUpdate" class="cn.cerc.mis.excel.output.ExcelTemplate">
         <property name="fileName" value="呆滞天数分析" />
         <property name="columns">
             <list>

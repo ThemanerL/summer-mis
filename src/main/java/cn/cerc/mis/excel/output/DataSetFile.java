@@ -13,7 +13,7 @@ import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
 
 public class DataSetFile {
-    private Template template;
+    private ExcelTemplate template;
     private DataSet dataSet;
     private String fileName;
 
@@ -28,7 +28,7 @@ public class DataSetFile {
     public void save(String fileName) throws IOException, RowsExceededException, WriteException {
         setFileName(fileName);
         OutputStream os = new FileOutputStream(fileName);
-        Template template = this.getTemplate();
+        ExcelTemplate template = this.getTemplate();
         template.setFileName(fileName);
         template.setDataSet(dataSet);
         if (template.getColumns().size() == 0) {
@@ -50,15 +50,15 @@ public class DataSetFile {
         os.close();
     }
 
-    public Template getTemplate() {
+    public ExcelTemplate getTemplate() {
         if (template == null) {
-            template = new Template();
+            template = new ExcelTemplate();
             template.setColumns(new ArrayList<>());
         }
         return template;
     }
 
-    public void setTemplate(Template template) {
+    public void setTemplate(ExcelTemplate template) {
         this.template = template;
     }
 

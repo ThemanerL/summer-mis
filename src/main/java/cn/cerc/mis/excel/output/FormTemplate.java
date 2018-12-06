@@ -8,7 +8,7 @@ import jxl.write.WritableSheet;
 import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
 
-public class FormTemplate extends Template {
+public class FormTemplate extends ExcelTemplate {
     private List<Column> heads;
     private OutputExcel footer;
 
