@@ -1,14 +1,12 @@
 package cn.cerc.mis.rds;
 
 import cn.cerc.core.IHandle;
-import cn.cerc.db.core.MysqlConnection;
 import cn.cerc.db.core.ServerConfig;
 import cn.cerc.db.jiguang.JiguangConnection;
-import cn.cerc.db.jiguang.JiguangSession;
+import cn.cerc.db.mysql.MysqlConnection;
+import cn.cerc.db.mysql.SqlConnection;
 import cn.cerc.db.mysql.SqlQuery;
-import cn.cerc.db.mysql.SqlSession;
 import cn.cerc.db.queue.AliyunQueueConnection;
-import cn.cerc.db.queue.QueueSession;
 import cn.cerc.mis.core.Application;
 import cn.cerc.mis.core.ISystemTable;
 
@@ -47,8 +45,8 @@ public class StubHandle implements IHandle, AutoCloseable {
         handle.init(corpNo, userCode, clientIP);
     }
 
-    public SqlSession getConnection() {
-        return (SqlSession) handle.getProperty(SqlSession.sessionId);
+    public SqlConnection getConnection() {
+        return (MysqlConnection) handle.getProperty(MysqlConnection.sessionId);
     }
 
     @Override
@@ -71,35 +69,22 @@ public class StubHandle implements IHandle, AutoCloseable {
         if ("request".equals(key))
             return null;
         Object obj = handle.getProperty(key);
-        if (obj == null && SqlSession.sessionId.equals(key)) {
+        if (obj == null && MysqlConnection.sessionId.equals(key)) {
             MysqlConnection conn = new MysqlConnection();
             conn.setConfig(ServerConfig.getInstance());
-            obj = conn.getSession();
-            handle.setProperty(key, obj);
+            handle.setProperty(key, conn);
         }
-        if (obj == null && QueueSession.sessionId.equals(key)) {
+        if (obj == null && AliyunQueueConnection.sessionId.equals(key)) {
             AliyunQueueConnection conn = new AliyunQueueConnection();
             conn.setConfig(ServerConfig.getInstance());
-            obj = conn.getSession();
-            handle.setProperty(key, obj);
+            handle.setProperty(key, conn);
         }
-        if (obj == null && JiguangSession.sessionId.equals(key)) {
+        if (obj == null && JiguangConnection.sessionId.equals(key)) {
             JiguangConnection conn = new JiguangConnection();
             conn.setConfig(ServerConfig.getInstance());
-            obj = conn.getSession();
-            handle.setProperty(key, obj);
+            handle.setProperty(key, conn);
         }
         return obj;
-    }
-
-    @Override
-    public void close() {
-        this.getConnection().closeSession();
-    }
-
-    @Override
-    public void closeConnections() {
-
     }
 
     @Override
@@ -120,6 +105,22 @@ public class StubHandle implements IHandle, AutoCloseable {
     @Override
     public boolean logon() {
         return false;
+    }
+
+    @Override
+    public void close() throws Exception {
+        MysqlConnection obj = (MysqlConnection) this.getProperty(MysqlConnection.sessionId);
+        if (obj != null)
+            obj.close();
+    }
+
+    @Override
+    public void closeConnections() {
+        try {
+            close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

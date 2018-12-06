@@ -6,7 +6,7 @@ import com.aliyun.mns.client.CloudQueue;
 import com.google.gson.Gson;
 
 import cn.cerc.core.IHandle;
-import cn.cerc.db.queue.QueueSession;
+import cn.cerc.db.queue.AliyunQueueConnection;
 
 public class MailRecord implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -22,7 +22,7 @@ public class MailRecord implements Serializable {
     }
 
     public boolean send() {
-        QueueSession sess = (QueueSession) handle.getProperty(QueueSession.sessionId);
+        AliyunQueueConnection sess = (AliyunQueueConnection) handle.getProperty(AliyunQueueConnection.sessionId);
         CloudQueue queue = sess.openQueue(AppMailQueue.queueSendMail);
         return sess.append(queue, this.toString());
     }

@@ -1,13 +1,13 @@
 package cn.cerc.mis.core;
 
 import cn.cerc.core.IHandle;
-import cn.cerc.db.mysql.SqlSession;
+import cn.cerc.db.mysql.MysqlConnection;
 
 public class AbstractHandle implements IHandle {
     protected IHandle handle;
 
-    public SqlSession getConnection() {
-        return (SqlSession) handle.getProperty(SqlSession.sessionId);
+    public MysqlConnection getConnection() {
+        return (MysqlConnection) handle.getProperty(MysqlConnection.sessionId);
     }
 
     @Override

@@ -3,7 +3,7 @@ package cn.cerc.mis.task;
 import org.springframework.stereotype.Component;
 
 import cn.cerc.core.TDateTime;
-import cn.cerc.db.mysql.SqlSession;
+import cn.cerc.db.mysql.MysqlConnection;
 
 /**
  * 清理在线用户记录表
@@ -14,7 +14,7 @@ public class TaskTrackCurrentUser extends AbstractTask {
     @Override
     public void execute() {
         // 清理在线用户记录表
-        SqlSession conn = (SqlSession) handle.getProperty(SqlSession.sessionId);
+        MysqlConnection conn = (MysqlConnection) handle.getProperty(MysqlConnection.sessionId);
 
         // 删除超过100天的登录记录
         StringBuffer sql1 = new StringBuffer();

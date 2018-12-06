@@ -1,7 +1,7 @@
 package cn.cerc.mis.core;
 
 import cn.cerc.core.IHandle;
-import cn.cerc.db.mysql.SqlSession;
+import cn.cerc.db.mysql.MysqlConnection;
 
 public class BookHandle implements IHandle {
     private IHandle handle;
@@ -14,8 +14,8 @@ public class BookHandle implements IHandle {
         this.corpNo = corpNo;
     }
 
-    public SqlSession getConnection() {
-        return (SqlSession) handle.getProperty(SqlSession.sessionId);
+    public MysqlConnection getConnection() {
+        return (MysqlConnection) handle.getProperty(MysqlConnection.sessionId);
     }
 
     @Override

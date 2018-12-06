@@ -108,6 +108,8 @@ public class SvrUserLoginTest {
             }
             Thread.sleep(1000 * 60 * SvrUserLogin.TimeOut);
             assertThat(app.sendVerifyCode(), is(true));
+        } catch (Exception e1) {
+            e1.printStackTrace();
         }
     }
 }

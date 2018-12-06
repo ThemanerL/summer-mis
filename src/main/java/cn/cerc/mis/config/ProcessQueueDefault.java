@@ -5,9 +5,9 @@ import org.slf4j.LoggerFactory;
 
 import cn.cerc.db.core.ServerConfig;
 import cn.cerc.db.mysql.BatchScript;
+import cn.cerc.db.queue.AliyunQueueConnection;
 import cn.cerc.db.queue.QueueMode;
 import cn.cerc.db.queue.QueueQuery;
-import cn.cerc.db.queue.QueueSession;
 import cn.cerc.mis.core.BookHandle;
 import cn.cerc.mis.core.LocalService;
 import cn.cerc.mis.message.MessageProcess;
@@ -21,7 +21,7 @@ public class ProcessQueueDefault extends AbstractTask {
     public void execute() throws Exception {
         QueueQuery query = new QueueQuery(this);
         query.setQueueMode(QueueMode.recevie);
-        query.add("select * from %s ", QueueSession.defaultQueue);
+        query.add("select * from %s ", AliyunQueueConnection.defaultQueue);
         query.open();
         if (!query.getActive()) {
             return;

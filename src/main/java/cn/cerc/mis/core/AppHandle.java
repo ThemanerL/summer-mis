@@ -1,6 +1,6 @@
 package cn.cerc.mis.core;
 
-import cn.cerc.db.mysql.SqlSession;
+import cn.cerc.db.mysql.MysqlConnection;
 
 public class AppHandle extends AbstractHandle implements AutoCloseable {
     public AppHandle() {
@@ -13,13 +13,17 @@ public class AppHandle extends AbstractHandle implements AutoCloseable {
     }
 
     @Override
-    public SqlSession getConnection() {
-        return (SqlSession) handle.getProperty(SqlSession.sessionId);
+    public MysqlConnection getConnection() {
+        return (MysqlConnection) handle.getProperty(MysqlConnection.sessionId);
     }
 
     @Override
     public void closeConnections() {
-        this.getConnection().closeSession();
+        try {
+            this.getConnection().close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

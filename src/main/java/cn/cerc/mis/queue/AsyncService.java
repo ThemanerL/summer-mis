@@ -11,9 +11,9 @@ import cn.cerc.core.IHandle;
 import cn.cerc.core.Record;
 import cn.cerc.db.core.ServerConfig;
 import cn.cerc.db.core.ServerVersion;
+import cn.cerc.db.queue.AliyunQueueConnection;
 import cn.cerc.db.queue.QueueDB;
 import cn.cerc.db.queue.QueueQuery;
-import cn.cerc.db.queue.QueueSession;
 import cn.cerc.mis.client.IServiceProxy;
 import cn.cerc.mis.message.MessageLevel;
 import cn.cerc.mis.message.MessageRecord;
@@ -102,7 +102,7 @@ public class AsyncService implements IServiceProxy {
             if (ServerConfig.getVersion() == ServerVersion.test) {
                 ds.add("select * from %s", QueueDB.TEST);
             } else {
-                ds.add("select * from %s", QueueSession.defaultQueue);
+                ds.add("select * from %s", AliyunQueueConnection.defaultQueue);
             }
             ds.open();
             ds.appendDataSet(this.getDataIn(), true);
