@@ -1,4 +1,4 @@
-package cn.cerc.mis.core;
+package cn.cerc.mis.config;
 
 import java.io.IOException;
 import java.util.Map;
@@ -21,7 +21,11 @@ import cn.cerc.core.Utils;
 import cn.cerc.db.core.IAppConfig;
 import cn.cerc.db.core.ServerConfig;
 import cn.cerc.mis.client.LocalService;
+import cn.cerc.mis.core.AbstractForm;
 import cn.cerc.mis.core.Application;
+import cn.cerc.mis.core.ClientDevice;
+import cn.cerc.mis.core.IForm;
+import cn.cerc.mis.core.RequestData;
 import cn.cerc.mis.tools.IAppLoginManage;
 import cn.cerc.mis.page.AbstractJspPage;
 import cn.cerc.mis.page.qrcode.SocketTool;

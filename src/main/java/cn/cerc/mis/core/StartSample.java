@@ -19,6 +19,7 @@ import org.springframework.web.context.WebApplicationContext;
 import cn.cerc.core.IHandle;
 import cn.cerc.db.core.MysqlConnection;
 import cn.cerc.db.mysql.SqlSession;
+import cn.cerc.mis.config.AppLogin;
 import cn.cerc.mis.core.Application;
 import cn.cerc.mis.core.IPassport;
 
