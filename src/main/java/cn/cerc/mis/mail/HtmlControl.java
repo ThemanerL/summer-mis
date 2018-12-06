@@ -2,7 +2,7 @@ package cn.cerc.mis.mail;
 
 import java.util.ArrayList;
 
-public class HtmlControl extends Component {
+public class HtmlControl extends HtmlComponent {
     private HtmlControl parent;
     private ArrayList<HtmlControl> controls = new ArrayList<HtmlControl>();
 
