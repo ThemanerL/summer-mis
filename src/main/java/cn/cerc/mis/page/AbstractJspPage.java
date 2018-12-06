@@ -21,15 +21,15 @@ import cn.cerc.mis.core.Application;
 import cn.cerc.mis.form.IForm;
 import cn.cerc.mis.form.IPage;
 import cn.cerc.mis.language.R;
-import cn.cerc.jpage.core.Component;
-import cn.cerc.jpage.core.HtmlContent;
-import cn.cerc.jpage.core.HtmlWriter;
-import cn.cerc.jui.parts.UIComponent;
-import cn.cerc.jui.parts.UIContent;
-import cn.cerc.jui.parts.UIDocument;
-import cn.cerc.jui.parts.UIFooter;
-import cn.cerc.jui.parts.UIHeader;
-import cn.cerc.jui.parts.UIToolBar;
+import cn.cerc.ui.core.Component;
+import cn.cerc.ui.core.HtmlContent;
+import cn.cerc.ui.core.HtmlWriter;
+import cn.cerc.ui.parts.UIComponent;
+import cn.cerc.ui.parts.UIContent;
+import cn.cerc.ui.parts.UIDocument;
+import cn.cerc.ui.parts.UIFooter;
+import cn.cerc.ui.parts.UIHeader;
+import cn.cerc.ui.parts.UIToolBar;
 
 public abstract class AbstractJspPage extends UIComponent implements IPage {
     private String jspFile;
