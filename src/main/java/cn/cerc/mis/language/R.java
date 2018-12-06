@@ -10,7 +10,7 @@ import cn.cerc.core.TDateTime;
 import cn.cerc.core.Utils;
 import cn.cerc.db.mysql.SqlQuery;
 import cn.cerc.mis.core.Application;
-import cn.cerc.mis.other.ISystemTable;
+import cn.cerc.mis.core.ISystemTable;
 
 public class R {
     private static final Logger log = LoggerFactory.getLogger(R.class);

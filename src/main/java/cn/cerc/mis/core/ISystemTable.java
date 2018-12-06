@@ -1,4 +1,4 @@
-package cn.cerc.mis.other;
+package cn.cerc.mis.core;
 
 public interface ISystemTable {
     // 帐套资料表

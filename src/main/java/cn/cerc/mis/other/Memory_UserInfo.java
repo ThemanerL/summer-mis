@@ -4,6 +4,7 @@ import cn.cerc.core.IHandle;
 import cn.cerc.core.Record;
 import cn.cerc.db.mysql.SqlQuery;
 import cn.cerc.mis.core.Application;
+import cn.cerc.mis.core.ISystemTable;
 
 public class Memory_UserInfo {
     public static int count = 0;

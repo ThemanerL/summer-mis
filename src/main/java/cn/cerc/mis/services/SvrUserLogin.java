@@ -17,7 +17,6 @@ import cn.cerc.db.mysql.SqlQuery;
 import cn.cerc.db.mysql.Transaction;
 import cn.cerc.db.oss.OssSession;
 import cn.cerc.db.other.utils;
-import cn.cerc.mis.client.LocalService;
 import cn.cerc.mis.core.Application;
 import cn.cerc.mis.core.CustomService;
 import cn.cerc.mis.core.DataValidateException;
@@ -27,6 +26,7 @@ import cn.cerc.mis.other.BufferType;
 import cn.cerc.mis.other.MemoryBuffer;
 import cn.cerc.mis.language.R;
 import cn.cerc.mis.core.HandleDefault;
+import cn.cerc.mis.core.LocalService;
 
 /**
  * 用于用户登录

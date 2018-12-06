@@ -9,7 +9,7 @@ import cn.cerc.core.Utils;
 import cn.cerc.db.mysql.SqlQuery;
 import cn.cerc.mis.core.AppHandle;
 import cn.cerc.mis.core.Application;
-import cn.cerc.mis.other.ISystemTable;
+import cn.cerc.mis.core.ISystemTable;
 
 public class DirectoryTest {
     private AppHandle handle = new AppHandle();

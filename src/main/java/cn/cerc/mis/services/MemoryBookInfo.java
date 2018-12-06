@@ -2,7 +2,7 @@ package cn.cerc.mis.services;
 
 import com.google.gson.Gson;
 
-import cn.cerc.mis.client.LocalService;
+import cn.cerc.mis.core.LocalService;
 import cn.cerc.mis.other.BookVersion;
 import cn.cerc.mis.other.BufferType;
 import cn.cerc.db.cache.Redis;

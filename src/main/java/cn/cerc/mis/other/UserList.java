@@ -16,6 +16,7 @@ import cn.cerc.db.cache.Redis;
 import cn.cerc.db.mysql.SqlQuery;
 import cn.cerc.db.mysql.SqlSession;
 import cn.cerc.mis.core.Application;
+import cn.cerc.mis.core.ISystemTable;
 
 public class UserList implements IDataList {
     private static final Logger log = LoggerFactory.getLogger(UserList.class);

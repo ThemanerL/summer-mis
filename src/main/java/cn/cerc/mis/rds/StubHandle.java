@@ -10,7 +10,7 @@ import cn.cerc.db.mysql.SqlSession;
 import cn.cerc.db.queue.AliyunQueueConnection;
 import cn.cerc.db.queue.QueueSession;
 import cn.cerc.mis.core.Application;
-import cn.cerc.mis.other.ISystemTable;
+import cn.cerc.mis.core.ISystemTable;
 
 public class StubHandle implements IHandle, AutoCloseable {
     public static final String DefaultBook = "999001";

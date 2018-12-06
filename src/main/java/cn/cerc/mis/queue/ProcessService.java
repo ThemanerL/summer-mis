@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cn.cerc.mis.client.AutoService;
-import cn.cerc.mis.client.LocalService;
+import cn.cerc.mis.core.LocalService;
 import cn.cerc.mis.rds.StubHandle;
 import cn.cerc.core.DataSet;
 import cn.cerc.core.Record;

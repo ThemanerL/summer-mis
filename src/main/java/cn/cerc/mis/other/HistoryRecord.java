@@ -7,6 +7,7 @@ import cn.cerc.core.IHandle;
 import cn.cerc.core.Utils;
 import cn.cerc.db.mysql.BatchScript;
 import cn.cerc.mis.core.Application;
+import cn.cerc.mis.core.ISystemTable;
 
 public class HistoryRecord {
     private IHandle handle;

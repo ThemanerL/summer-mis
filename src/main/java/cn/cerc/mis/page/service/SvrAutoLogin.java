@@ -12,13 +12,13 @@ import cn.cerc.db.mysql.Transaction;
 import cn.cerc.db.other.utils;
 import cn.cerc.mis.core.Application;
 import cn.cerc.mis.other.BufferType;
-import cn.cerc.mis.other.ISystemTable;
 import cn.cerc.mis.other.MemoryBuffer;
 import cn.cerc.mis.core.ClientDevice;
 import cn.cerc.mis.core.RequestData;
 import cn.cerc.mis.services.SvrUserLogin;
 import cn.cerc.mis.core.HandleDefault;
 import cn.cerc.mis.core.IForm;
+import cn.cerc.mis.core.ISystemTable;
 
 public class SvrAutoLogin {
     private static final Logger log = LoggerFactory.getLogger(SvrAutoLogin.class);

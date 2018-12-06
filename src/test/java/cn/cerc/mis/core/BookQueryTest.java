@@ -3,7 +3,6 @@ package cn.cerc.mis.core;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import cn.cerc.mis.other.ISystemTable;
 import cn.cerc.mis.rds.StubHandle;
 import cn.cerc.core.TDateTime;
 

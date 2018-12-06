@@ -2,7 +2,6 @@ package cn.cerc.mis.core;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import cn.cerc.mis.other.ISystemTable;
 import cn.cerc.core.IHandle;
 
 public abstract class AbstractService extends AbstractHandle implements IService, IRestful {

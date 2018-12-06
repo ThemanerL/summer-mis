@@ -1,4 +1,4 @@
-package cn.cerc.mis.page;
+package cn.cerc.mis.core;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,9 +17,6 @@ import cn.cerc.core.TDateTime;
 import cn.cerc.db.cache.Buffer;
 import cn.cerc.db.core.ServerConfig;
 import cn.cerc.db.other.utils;
-import cn.cerc.mis.core.Application;
-import cn.cerc.mis.core.IForm;
-import cn.cerc.mis.core.IPage;
 import cn.cerc.mis.language.R;
 import cn.cerc.ui.core.Component;
 import cn.cerc.ui.core.HtmlContent;

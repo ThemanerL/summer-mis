@@ -19,13 +19,11 @@ import com.google.gson.Gson;
 
 import cn.cerc.db.core.IAppConfig;
 import cn.cerc.db.core.ServerConfig;
-import cn.cerc.mis.client.LocalService;
 import cn.cerc.mis.core.AppHandle;
 import cn.cerc.mis.core.Application;
 import cn.cerc.mis.core.PageException;
 import cn.cerc.mis.other.BufferType;
 import cn.cerc.mis.other.MemoryBuffer;
-import cn.cerc.mis.tools.IAppLoginManage;
 import cn.cerc.mis.page.JspPage;
 import cn.cerc.mis.page.RedirectPage;
 

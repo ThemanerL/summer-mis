@@ -12,8 +12,9 @@ import cn.cerc.core.TDate;
 import cn.cerc.db.mysql.BuildQuery;
 import cn.cerc.db.mysql.SqlQuery;
 import cn.cerc.db.other.utils;
-import cn.cerc.mis.client.LocalService;
 import cn.cerc.mis.core.Application;
+import cn.cerc.mis.core.ISystemTable;
+import cn.cerc.mis.core.LocalService;
 
 public class BookOptions {
     private static final Logger log = LoggerFactory.getLogger(BookOptions.class);

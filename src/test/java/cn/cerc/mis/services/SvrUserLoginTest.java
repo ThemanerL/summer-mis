@@ -13,9 +13,9 @@ import cn.cerc.core.Record;
 import cn.cerc.db.mysql.SqlQuery;
 import cn.cerc.mis.core.Application;
 import cn.cerc.mis.core.DataValidateException;
+import cn.cerc.mis.core.ISystemTable;
 import cn.cerc.mis.core.ServiceException;
 import cn.cerc.mis.other.BufferType;
-import cn.cerc.mis.other.ISystemTable;
 import cn.cerc.mis.other.MemoryBuffer;
 import cn.cerc.mis.rds.StubHandle;
 

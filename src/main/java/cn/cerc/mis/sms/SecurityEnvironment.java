@@ -7,12 +7,12 @@ import cn.cerc.core.TDateTime;
 import cn.cerc.db.mysql.SqlQuery;
 import cn.cerc.mis.core.AbstractForm;
 import cn.cerc.mis.core.AbstractHandle;
+import cn.cerc.mis.core.AbstractJspPage;
 import cn.cerc.mis.core.Application;
 import cn.cerc.mis.core.DataValidateException;
 import cn.cerc.mis.core.IForm;
-import cn.cerc.mis.other.ISystemTable;
+import cn.cerc.mis.core.ISystemTable;
 import cn.cerc.mis.language.R;
-import cn.cerc.mis.page.AbstractJspPage;
 
 public class SecurityEnvironment {
     private static final Logger log = LoggerFactory.getLogger(SecurityEnvironment.class);

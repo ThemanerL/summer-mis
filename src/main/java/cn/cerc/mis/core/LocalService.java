@@ -1,4 +1,4 @@
-package cn.cerc.mis.client;
+package cn.cerc.mis.core;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -16,10 +16,8 @@ import cn.cerc.core.Record;
 import cn.cerc.db.cache.Redis;
 import cn.cerc.db.core.ServerConfig;
 import cn.cerc.db.core.ServerVersion;
-import cn.cerc.mis.core.Application;
-import cn.cerc.mis.core.IService;
-import cn.cerc.mis.core.IStatus;
-import cn.cerc.mis.core.ServiceStatus;
+import cn.cerc.mis.client.IServiceProxy;
+import cn.cerc.mis.client.Microservice;
 import cn.cerc.mis.other.BufferType;
 import cn.cerc.mis.other.MemoryBuffer;
 

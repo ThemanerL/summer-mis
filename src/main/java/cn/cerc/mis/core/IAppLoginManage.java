@@ -1,10 +1,8 @@
-package cn.cerc.mis.tools;
+package cn.cerc.mis.core;
 
 import java.io.IOException;
 
 import javax.servlet.ServletException;
-
-import cn.cerc.mis.core.IForm;
 
 public interface IAppLoginManage {
 

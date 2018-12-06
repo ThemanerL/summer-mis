@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import cn.cerc.mis.other.ISystemTable;
 import cn.cerc.core.DataSet;
 import cn.cerc.core.IHandle;
 

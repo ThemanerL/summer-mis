@@ -1,8 +1,8 @@
 package cn.cerc.mis.message;
 
-import cn.cerc.mis.client.LocalService;
 import cn.cerc.core.IHandle;
 import cn.cerc.core.Record;
+import cn.cerc.mis.core.LocalService;
 
 /**
  * 专用于消息发送
