@@ -6,9 +6,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
+import cn.cerc.core.IHandle;
+import cn.cerc.core.SupportHandle;
 import cn.cerc.db.core.IAppConfig;
 import cn.cerc.db.core.ServerConfig;
-import cn.cerc.core.IHandle;
 
 public class Application {
     // private static final Logger log = LoggerFactory.getLogger(Application.class);
@@ -117,8 +118,8 @@ public class Application {
 
         T bean = context.getBean(beanId, requiredType);
         if (bean != null && handle != null) {
-            if (bean instanceof IService)
-                ((IService) bean).init(handle);
+            if (bean instanceof SupportHandle)
+                ((SupportHandle) bean).init(handle);
         }
         return bean;
     }

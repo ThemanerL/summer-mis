@@ -2,10 +2,9 @@ package cn.cerc.mis.core;
 
 import cn.cerc.core.DataSet;
 import cn.cerc.core.IHandle;
+import cn.cerc.core.SupportHandle;
 
-public interface IService {
-    public void init(IHandle handle);
-
+public interface IService extends SupportHandle {
     public IStatus execute(DataSet dataIn, DataSet dataOut) throws ServiceException;
 
     default ServiceStatus fail(String format, Object... args) {
