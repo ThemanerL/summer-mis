@@ -17,11 +17,9 @@ import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 
+import cn.cerc.core.IHandle;
 import cn.cerc.db.core.IAppConfig;
 import cn.cerc.db.core.ServerConfig;
-import cn.cerc.mis.core.AppHandle;
-import cn.cerc.mis.core.Application;
-import cn.cerc.mis.core.PageException;
 import cn.cerc.mis.other.BufferType;
 import cn.cerc.mis.other.MemoryBuffer;
 import cn.cerc.mis.page.JspPage;
@@ -83,46 +81,39 @@ public class StartForms implements Filter {
             form.setClient(info);
 
             // 建立数据库资源
-            try (AppHandle handle = createHandle(req)) {
-                try {
-                    handle.setProperty(Application.sessionId, req.getSession().getId());
-                    handle.setProperty(Application.deviceLanguage, info.getLanguage());
-                    req.setAttribute("myappHandle", handle);
-                    form.setHandle(handle);
+            IHandle handle = Application.getHandle();
+            try {
+                handle.setProperty(Application.sessionId, req.getSession().getId());
+                handle.setProperty(Application.deviceLanguage, info.getLanguage());
+                req.setAttribute("myappHandle", handle);
+                form.setHandle(handle);
 
-                    log.debug("进行安全检查，若未登录则显示登录对话框");
+                log.debug("进行安全检查，若未登录则显示登录对话框");
 
-                    if (!form.logon()) {
-                        IAppLoginManage page = Application.getBean("appLoginManage",
-                                IAppLoginManage.class);
-                        page.init(form);
-                        String cmd = page.checkToken(info.getSid());
-                        if (cmd != null) {
-                            // 若需要登录，则跳转到登录页
-                            if (cmd.startsWith("redirect:")) {
-                                resp.sendRedirect(cmd.substring(9));
-                            } else {
-                                String url = String.format("/WEB-INF/%s/%s", Application.getAppConfig().getPathForms(),
-                                        cmd);
-                                request.getServletContext().getRequestDispatcher(url).forward(request, response);
-                            }
-                        } else // 已授权通过
-                            callForm(form, funcCode);
-                    } else {
+                if (!form.logon()) {
+                    IAppLoginManage page = Application.getBean("appLoginManage", IAppLoginManage.class);
+                    page.init(form);
+                    String cmd = page.checkToken(info.getSid());
+                    if (cmd != null) {
+                        // 若需要登录，则跳转到登录页
+                        if (cmd.startsWith("redirect:")) {
+                            resp.sendRedirect(cmd.substring(9));
+                        } else {
+                            String url = String.format("/WEB-INF/%s/%s", Application.getAppConfig().getPathForms(),
+                                    cmd);
+                            request.getServletContext().getRequestDispatcher(url).forward(request, response);
+                        }
+                    } else // 已授权通过
                         callForm(form, funcCode);
-                    }
-                } catch (Exception e) {
-                    outputErrorPage(req, resp, e);
+                } else {
+                    callForm(form, funcCode);
                 }
+            } catch (Exception e) {
+                outputErrorPage(req, resp, e);
             }
         } catch (Exception e) {
             outputErrorPage(req, resp, e);
         }
-    }
-
-    // 创建环境管理控制器
-    protected AppHandle createHandle(HttpServletRequest req) {
-        return new AppHandle();
     }
 
     // 取得页面默认设置，如出错时指向哪个页面
