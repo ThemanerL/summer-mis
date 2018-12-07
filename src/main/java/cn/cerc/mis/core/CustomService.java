@@ -89,15 +89,16 @@ public class CustomService extends AbstractHandle implements IService, IRestful 
             }
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             Throwable err = e.getCause() != null ? e.getCause() : e;
+            String msg = err.getMessage() == null ? "error is null" : err.getMessage();
             if ((err instanceof ServiceException)) {
-                this.setMessage(err.getMessage());
-                ss.setMessage(err.getMessage());
+                this.setMessage(msg);
+                ss.setMessage(msg);
                 ss.setResult(false);
                 return ss;
             } else {
-                log.error(err.getMessage(), err);
-                this.setMessage(err.getMessage());
-                ss.setMessage(err.getMessage());
+                log.error(msg, err);
+                this.setMessage(msg);
+                ss.setMessage(msg);
                 ss.setResult(false);
                 return ss;
             }
