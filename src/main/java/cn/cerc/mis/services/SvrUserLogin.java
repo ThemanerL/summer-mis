@@ -2,6 +2,8 @@ package cn.cerc.mis.services;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import cn.cerc.core.DataSet;
@@ -32,6 +34,7 @@ import cn.cerc.mis.other.MemoryBuffer;
  * 用于用户登录
  */
 @Component
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class SvrUserLogin extends CustomService {
     private static final Logger log = LoggerFactory.getLogger(SvrUserLogin.class);
     private static String GuidNull = "";

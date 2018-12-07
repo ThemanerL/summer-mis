@@ -11,6 +11,8 @@ import java.util.TreeSet;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.google.gson.Gson;
@@ -24,6 +26,7 @@ import cn.cerc.mis.core.ISystemTable;
  * 扫描待翻译的中文
  */
 @Component
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class ExportChinese {
     private static final Logger log = LoggerFactory.getLogger(ExportChinese.class);
     private Set<String> items = new TreeSet<>();
