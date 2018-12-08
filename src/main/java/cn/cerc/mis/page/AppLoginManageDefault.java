@@ -37,11 +37,7 @@ public class AppLoginManageDefault extends AbstractJspPage implements IAppLoginM
     public static final String Notify_Url = "app.notify_url";
 
     public AppLoginManageDefault() {
-        super(null);
-    }
-
-    public AppLoginManageDefault(IForm form) {
-        super(form);
+        super();
     }
 
     @Override

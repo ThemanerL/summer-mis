@@ -12,16 +12,16 @@ import javax.servlet.http.HttpServletRequest;
 import cn.cerc.mis.core.AbstractForm;
 import cn.cerc.mis.core.AbstractJspPage;
 import cn.cerc.mis.core.Application;
+import cn.cerc.mis.core.HandleDefault;
+import cn.cerc.mis.core.IForm;
+import cn.cerc.mis.page.ExportFile;
+import cn.cerc.mis.page.IMenuBar;
 import cn.cerc.mis.rds.PassportRecord;
 import cn.cerc.ui.core.Component;
 import cn.cerc.ui.core.UrlRecord;
 import cn.cerc.ui.parts.RightMenus;
 import cn.cerc.ui.parts.UIFormHorizontal;
 import cn.cerc.ui.parts.UIFormVertical;
-import cn.cerc.mis.page.ExportFile;
-import cn.cerc.mis.page.IMenuBar;
-import cn.cerc.mis.core.HandleDefault;
-import cn.cerc.mis.core.IForm;
 
 /**
  * 主体子页面
@@ -33,7 +33,8 @@ public class UIPageBill extends AbstractJspPage {
     private String searchWaitingId = "";
 
     public UIPageBill(IForm form) {
-        super(form);
+        super();
+        setForm(form);
         initCssFile();
         initJsFile();
         if (!this.getForm().getClient().isPhone()) {

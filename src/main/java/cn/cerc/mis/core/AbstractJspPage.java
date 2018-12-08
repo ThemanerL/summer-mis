@@ -45,9 +45,8 @@ public abstract class AbstractJspPage extends UIComponent implements IPage {
     // 状态栏：快捷操作+按钮组
     private UIFooter footer;
 
-    public AbstractJspPage(IForm form) {
+    public AbstractJspPage() {
         super();
-        this.setForm(form);
         ServerConfig config = ServerConfig.getInstance();
         this.browserCacheVersion = config.getProperty("browser.cache.version", "1.0.0.0");
     }

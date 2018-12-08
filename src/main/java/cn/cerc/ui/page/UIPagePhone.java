@@ -13,13 +13,13 @@ import cn.cerc.db.core.ServerConfig;
 import cn.cerc.mis.core.AbstractForm;
 import cn.cerc.mis.core.AbstractJspPage;
 import cn.cerc.mis.core.Application;
+import cn.cerc.mis.core.HandleDefault;
+import cn.cerc.mis.core.IForm;
 import cn.cerc.mis.page.ExportFile;
 import cn.cerc.mis.page.IMenuBar;
 import cn.cerc.ui.core.Component;
 import cn.cerc.ui.core.UrlRecord;
 import cn.cerc.ui.parts.RightMenus;
-import cn.cerc.mis.core.HandleDefault;
-import cn.cerc.mis.core.IForm;
 
 /**
  * 主体子页面(公用)
@@ -32,7 +32,8 @@ public class UIPagePhone extends AbstractJspPage {
     private Component body;
 
     public UIPagePhone(IForm form) {
-        super(form);
+        super();
+        setForm(form);
         ServerConfig config = ServerConfig.getInstance();
         initCssFile();
         this.addCssFile(config.getProperty("phone-block.css", "jui/phone/phone-block.css"));

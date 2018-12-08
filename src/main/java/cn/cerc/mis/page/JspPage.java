@@ -6,11 +6,13 @@ import cn.cerc.mis.core.IForm;
 public class JspPage extends AbstractJspPage {
 
     public JspPage(IForm form) {
-        super(form);
+        super();
+        setForm(form);
     }
 
     public JspPage(IForm form, String jspFile) {
-        super(form);
+        super();
+        setForm(form);
         this.setJspFile(jspFile);
     }
 
