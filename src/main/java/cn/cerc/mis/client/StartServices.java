@@ -15,10 +15,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cn.cerc.core.DataSet;
+import cn.cerc.core.IHandle;
 import cn.cerc.core.Record;
 import cn.cerc.core.Utils;
 import cn.cerc.db.core.IAppConfig;
-import cn.cerc.mis.core.AppHandle;
 import cn.cerc.mis.core.Application;
 import cn.cerc.mis.core.IRestful;
 import cn.cerc.mis.core.IService;
@@ -76,8 +76,8 @@ public class StartServices extends HttpServlet {
         }
         log.debug(serviceCode);
 
-        try (AppHandle handle = new AppHandle()) {
-            // 执行指定函数
+        IHandle handle = Application.getHandle();
+        try { // 执行指定函数
             handle.init(req.getParameter("token"));
             handle.setProperty(sessionId, req.getSession().getId());
             IService bean = Application.getService(handle, serviceCode);

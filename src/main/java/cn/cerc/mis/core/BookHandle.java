@@ -47,11 +47,6 @@ public class BookHandle implements IHandle {
     }
 
     @Override
-    public void closeConnections() {
-
-    }
-
-    @Override
     public void setProperty(String key, Object value) {
         throw new RuntimeException("调用了未被实现的接口");
     }

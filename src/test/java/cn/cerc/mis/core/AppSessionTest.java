@@ -6,8 +6,8 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import cn.cerc.mis.other.UserNotFindException;
 import cn.cerc.core.IHandle;
+import cn.cerc.mis.other.UserNotFindException;
 
 public class AppSessionTest {
     private IHandle handle;
@@ -25,13 +25,11 @@ public class AppSessionTest {
     public void test_init() throws UserNotFindException {
         handle.init(corpNo, userCode, clientIP);
         assertEquals("公司别赋值有误", corpNo, handle.getCorpNo());
-        handle.closeConnections();
     }
 
     @Test(expected = ServiceException.class)
     @Ignore
     public void test_init_error() throws ServiceException, UserNotFindException {
         handle.init(corpNo, userCode + "X", clientIP);
-        handle.closeConnections();
     }
 }

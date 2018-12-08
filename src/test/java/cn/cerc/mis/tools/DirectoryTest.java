@@ -4,18 +4,19 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import cn.cerc.core.IHandle;
 import cn.cerc.core.TDateTime;
 import cn.cerc.core.Utils;
 import cn.cerc.db.mysql.SqlQuery;
-import cn.cerc.mis.core.AppHandle;
 import cn.cerc.mis.core.Application;
 import cn.cerc.mis.core.ISystemTable;
 
 public class DirectoryTest {
-    private AppHandle handle = new AppHandle();
+    private IHandle handle;
 
     @Before
     public void setUp() throws Exception {
+        handle = Application.getHandle();
     }
 
     @Test

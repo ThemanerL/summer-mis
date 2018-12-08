@@ -34,11 +34,6 @@ public class AbstractHandle implements IHandle {
     }
 
     @Override
-    public void closeConnections() {
-
-    }
-
-    @Override
     public String getUserName() {
         return handle.getUserName();
     }
