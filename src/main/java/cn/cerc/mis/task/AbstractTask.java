@@ -4,8 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import cn.cerc.core.IHandle;
 import cn.cerc.mis.core.AbstractHandle;
-import cn.cerc.mis.core.AppHandle;
 import cn.cerc.mis.core.Application;
 import cn.cerc.mis.core.ISystemTable;
 
@@ -47,7 +47,8 @@ public abstract class AbstractTask extends AbstractHandle implements Runnable {
      */
     @Override
     public void run() {
-        try (AppHandle handle = new AppHandle()) {
+        IHandle handle = Application.getHandle();
+        try {
             this.setHandle(handle);
             handle.setProperty(Application.userCode, "admin");
             this.execute();

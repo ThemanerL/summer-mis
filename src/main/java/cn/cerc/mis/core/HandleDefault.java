@@ -175,21 +175,16 @@ public class HandleDefault implements IHandle, AutoCloseable {
     }
 
     @Override
-    public void closeConnections() {
+    public void close() {
         for (String key : this.params.keySet()) {
             Object sess = this.params.get(key);
             try {
                 if (sess instanceof AutoCloseable)
                     ((AutoCloseable) sess).close();
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
         }
-    }
-
-    @Override
-    public void close() {
-        this.closeConnections();
     }
 
     public MysqlConnection getConnection() {

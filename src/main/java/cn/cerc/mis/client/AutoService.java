@@ -1,14 +1,14 @@
 package cn.cerc.mis.client;
 
+import cn.cerc.core.DataSet;
+import cn.cerc.core.IHandle;
 import cn.cerc.mis.core.Application;
 import cn.cerc.mis.core.IService;
 import cn.cerc.mis.core.IStatus;
 import cn.cerc.mis.core.ServiceException;
 import cn.cerc.mis.other.UserNotFindException;
-import cn.cerc.core.DataSet;
-import cn.cerc.core.IHandle;
 
-public class AutoService implements IHandle, AutoCloseable {
+public class AutoService implements IHandle {
     // private static final Logger log = Logger.getLogger(AutoService.class);
     private DataSet dataOut = new DataSet();
     private String message;
@@ -89,17 +89,6 @@ public class AutoService implements IHandle, AutoCloseable {
     }
 
     @Override
-    public void close() {
-        if (handle != null)
-            handle.closeConnections();
-    }
-
-    @Override
-    public void closeConnections() {
-
-    }
-
-    @Override
     public void setProperty(String key, Object value) {
         throw new RuntimeException("调用了未被实现的接口");
     }
@@ -118,4 +107,5 @@ public class AutoService implements IHandle, AutoCloseable {
     public boolean logon() {
         return false;
     }
+
 }

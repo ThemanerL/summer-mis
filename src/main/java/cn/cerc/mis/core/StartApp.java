@@ -11,9 +11,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import cn.cerc.core.IHandle;
 import cn.cerc.db.core.IAppConfig;
-import cn.cerc.mis.core.AppHandle;
-import cn.cerc.mis.core.Application;
 
 public class StartApp implements Filter {
     // private static final Logger log = Logger.getLogger(AppStart.class);
@@ -47,10 +46,10 @@ public class StartApp implements Filter {
                 IForm form = Application.getBean("MobileConfig", IForm.class);
                 form.setRequest((HttpServletRequest) request);
                 form.setResponse((HttpServletResponse) response);
-                try (AppHandle handle = new AppHandle()) {
-                    handle.setProperty(Application.sessionId, req.getSession().getId());
-                    form.setHandle(handle);
-                }
+
+                IHandle handle = Application.getHandle();
+                handle.setProperty(Application.sessionId, req.getSession().getId());
+                form.setHandle(handle);
                 IPage page = form.execute();
                 page.execute();
             } catch (Exception e) {

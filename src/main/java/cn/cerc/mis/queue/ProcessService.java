@@ -3,13 +3,13 @@ package cn.cerc.mis.queue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cn.cerc.mis.client.AutoService;
-import cn.cerc.mis.core.LocalService;
-import cn.cerc.mis.rds.StubHandle;
 import cn.cerc.core.DataSet;
 import cn.cerc.core.Record;
 import cn.cerc.core.TDateTime;
+import cn.cerc.mis.client.AutoService;
+import cn.cerc.mis.core.LocalService;
 import cn.cerc.mis.message.MessageProcess;
+import cn.cerc.mis.rds.StubHandle;
 import cn.cerc.mis.task.AbstractTask;
 
 /**
@@ -52,18 +52,17 @@ public class ProcessService extends AbstractTask {
         svr2.setProcess(MessageProcess.working.ordinal());
         updateMessage(svr2, msgId, subject);
         try {
-            try (AutoService svr3 = new AutoService(corpNo, userCode, svr2.getService());) {
-                svr3.getDataIn().appendDataSet(svr2.getDataIn(), true);
-                if (svr3.exec()) {
-                    svr2.getDataOut().appendDataSet(svr3.getDataOut(), true);
-                    svr2.setProcess(MessageProcess.ok.ordinal());
-                } else {
-                    svr2.getDataOut().appendDataSet(svr3.getDataOut(), true);
-                    svr2.setProcess(MessageProcess.error.ordinal());
-                }
-                svr2.getDataOut().getHead().setField("_message_", svr3.getMessage());
-                updateMessage(svr2, msgId, subject);
+            AutoService svr3 = new AutoService(corpNo, userCode, svr2.getService());
+            svr3.getDataIn().appendDataSet(svr2.getDataIn(), true);
+            if (svr3.exec()) {
+                svr2.getDataOut().appendDataSet(svr3.getDataOut(), true);
+                svr2.setProcess(MessageProcess.ok.ordinal());
+            } else {
+                svr2.getDataOut().appendDataSet(svr3.getDataOut(), true);
+                svr2.setProcess(MessageProcess.error.ordinal());
             }
+            svr2.getDataOut().getHead().setField("_message_", svr3.getMessage());
+            updateMessage(svr2, msgId, subject);
         } catch (Throwable e) {
             e.printStackTrace();
             svr2.setProcess(MessageProcess.error.ordinal());

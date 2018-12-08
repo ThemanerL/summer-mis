@@ -114,13 +114,4 @@ public class StubHandle implements IHandle, AutoCloseable {
             obj.close();
     }
 
-    @Override
-    public void closeConnections() {
-        try {
-            close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
 }
