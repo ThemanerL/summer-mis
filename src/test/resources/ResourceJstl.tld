@@ -14,7 +14,7 @@
     <tag>
         <description>local resource string</description>
         <name>string</name>
-        <tag-class>cn.cerc.jmis.language.ResourceJstl</tag-class>
+        <tag-class>cn.cerc.mis.language.ResourceJstl</tag-class>
         <body-content>scriptless</body-content>
         <attribute>
             <description> 
