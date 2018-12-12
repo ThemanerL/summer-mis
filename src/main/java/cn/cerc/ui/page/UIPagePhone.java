@@ -56,7 +56,7 @@ public class UIPagePhone extends AbstractJspPage {
         HandleDefault sess = (HandleDefault) form.getHandle().getProperty(null);
         if (sess.logon()) {
             List<UrlRecord> rightMenus = getHeader().getRightMenus();
-            RightMenus menus = Application.getBean("RightMenus", RightMenus.class);
+            RightMenus menus = Application.getRightMenus();
             menus.setHandle(form.getHandle());
             for (IMenuBar item : menus.getItems())
                 item.enrollMenu(form, rightMenus);

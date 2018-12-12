@@ -10,6 +10,7 @@ import cn.cerc.core.IHandle;
 import cn.cerc.core.SupportHandle;
 import cn.cerc.db.core.IAppConfig;
 import cn.cerc.db.core.ServerConfig;
+import cn.cerc.ui.parts.RightMenus;
 
 public class Application {
     // private static final Logger log = LoggerFactory.getLogger(Application.class);
@@ -175,4 +176,9 @@ public class Application {
             throw new RuntimeException("not support language: " + lang);
     }
 
+    public static RightMenus getRightMenus() {
+        init();
+        String beanId = context.containsBean("RightMenus") ? "RightMenus" : "rightMenus";
+        return context.getBean(beanId, RightMenus.class);
+    }
 }

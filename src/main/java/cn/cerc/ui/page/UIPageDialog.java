@@ -48,7 +48,7 @@ public class UIPageDialog extends AbstractJspPage {
         request.setAttribute("logon", sess.logon());
         if (sess.logon()) {
             List<UrlRecord> rightMenus = getHeader().getRightMenus();
-            RightMenus menus = Application.getBean("RightMenus", RightMenus.class);
+            RightMenus menus = Application.getRightMenus();
             menus.setHandle(form.getHandle());
             for (IMenuBar item : menus.getItems())
                 item.enrollMenu(form, rightMenus);
