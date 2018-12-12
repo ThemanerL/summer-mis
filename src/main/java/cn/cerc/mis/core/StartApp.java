@@ -36,14 +36,18 @@ public class StartApp implements Filter {
             IAppConfig conf = Application.getAppConfig();
             resp.sendRedirect(String.format("/%s/%s", conf.getPathForms(), conf.getFormWelcome()));
             return;
-        } else if (uri.equals("/MobileConfig")) {
+        } else if (uri.equals("/MobileConfig") || uri.equals("/mobileConfig")) {
             if (req.getParameter(ClientDevice.deviceId_key) != null)
                 req.getSession().setAttribute(ClientDevice.deviceId_key, req.getParameter(ClientDevice.deviceId_key));
             if (req.getParameter(ClientDevice.deviceType_key) != null)
                 req.getSession().setAttribute(ClientDevice.deviceType_key,
                         req.getParameter(ClientDevice.deviceType_key));
             try {
-                IForm form = Application.getBean("MobileConfig", IForm.class);
+                IForm form;
+                if (Application.getContext().containsBean("mobileConfig"))
+                    form = Application.getBean("mobileConfig", IForm.class);
+                else
+                    form = Application.getBean("MobileConfig", IForm.class);
                 form.setRequest((HttpServletRequest) request);
                 form.setResponse((HttpServletResponse) response);
 
