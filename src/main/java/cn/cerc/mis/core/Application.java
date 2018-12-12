@@ -103,7 +103,7 @@ public class Application {
         return bean;
     }
 
-    public static <T> T get(IHandle handle, Class<T> requiredType) {
+    public static <T> T get(Class<T> requiredType) {
         init();
 
         String[] items = requiredType.getName().split("\\.");
@@ -117,6 +117,11 @@ public class Application {
         }
 
         T bean = context.getBean(beanId, requiredType);
+        return bean;
+    }
+
+    public static <T> T get(IHandle handle, Class<T> requiredType) {
+        T bean = get(requiredType);
         if (bean != null && handle != null) {
             if (bean instanceof SupportHandle)
                 ((SupportHandle) bean).init(handle);
@@ -160,4 +165,5 @@ public class Application {
         else
             throw new RuntimeException("not support language: " + lang);
     }
+
 }
