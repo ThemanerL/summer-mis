@@ -95,6 +95,15 @@ public class Application {
         return context.getBean(beanCode, requiredType);
     }
 
+    public static IAppErrorPage getAppErrorPage() {
+        init();
+
+        if (context.containsBean("appErrorPage"))
+            return context.getBean("appErrorPage", IAppErrorPage.class);
+
+        return context.getBean("appErrorPageDefault", IAppErrorPage.class);
+    }
+
     public static IService getService(IHandle handle, String serviceCode) {
         init();
         IService bean = context.getBean(serviceCode, IService.class);
