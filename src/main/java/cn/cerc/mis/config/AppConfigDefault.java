@@ -3,8 +3,14 @@ package cn.cerc.mis.config;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import cn.cerc.db.core.IAppConfig;
 
+@Component
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class AppConfigDefault implements IAppConfig {
     private Map<String, String> params = new HashMap<>();
 

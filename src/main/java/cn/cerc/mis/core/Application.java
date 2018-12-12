@@ -57,8 +57,8 @@ public class Application {
 
         if (context.containsBean("appConfig"))
             return context.getBean("appConfig", IAppConfig.class);
-        else
-            throw new RuntimeException(String.format("%s 中没有找到 bean: appConfig", xmlFile));
+
+        return context.getBean("appConfigDefault", IAppConfig.class);
     }
 
     public static IHandle getHandle() {
