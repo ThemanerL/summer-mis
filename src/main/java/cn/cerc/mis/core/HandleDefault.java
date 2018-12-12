@@ -13,7 +13,12 @@ import cn.cerc.core.IConnection;
 import cn.cerc.core.IHandle;
 import cn.cerc.core.Record;
 import cn.cerc.core.Utils;
+import cn.cerc.db.jiguang.JiguangConnection;
+import cn.cerc.db.mongo.MongoConnection;
 import cn.cerc.db.mysql.MysqlConnection;
+import cn.cerc.db.mysql.SlaveMysqlConnection;
+import cn.cerc.db.oss.OssConnection;
+import cn.cerc.db.queue.AliyunQueueConnection;
 import cn.cerc.mis.other.BufferType;
 import cn.cerc.mis.other.MemoryBuffer;
 
@@ -146,8 +151,38 @@ public class HandleDefault implements IHandle, AutoCloseable {
         }
 
         Object result = params.get(key);
-        if (result == null && !params.containsKey(key) && connections.containsKey(key)) {
-            result = connections.get(key);
+        if (result == null && !params.containsKey(key)) {
+            if (connections.containsKey(key))
+                return connections.get(key);
+            if (MysqlConnection.sessionId.equals(key)) {
+                connections.put(MysqlConnection.sessionId,
+                        Application.getBean("mysqlConnection", MysqlConnection.class));
+                return connections.get(key);
+            }
+            if (SlaveMysqlConnection.sessionId.equals(key)) {
+                connections.put(SlaveMysqlConnection.sessionId,
+                        Application.getBean("slaveMysqlConnection", SlaveMysqlConnection.class));
+                return connections.get(key);
+            }
+            if (OssConnection.sessionId.equals(key)) {
+                connections.put(OssConnection.sessionId, Application.getBean("ossConnection", OssConnection.class));
+                return connections.get(key);
+            }
+            if (AliyunQueueConnection.sessionId.equals(key)) {
+                connections.put(AliyunQueueConnection.sessionId,
+                        Application.getBean("aliyunQueueConnection", AliyunQueueConnection.class));
+                return connections.get(key);
+            }
+            if (MongoConnection.sessionId.equals(key)) {
+                connections.put(MongoConnection.sessionId,
+                        Application.getBean("mongoConnection", MongoConnection.class));
+                return connections.get(key);
+            }
+            if (JiguangConnection.sessionId.equals(key)) {
+                connections.put(JiguangConnection.sessionId,
+                        Application.getBean("jiguangConnection", JiguangConnection.class));
+                return connections.get(key);
+            }
         }
         return result;
     }
