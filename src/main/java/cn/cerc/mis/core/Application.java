@@ -10,7 +10,6 @@ import cn.cerc.core.IHandle;
 import cn.cerc.core.SupportHandle;
 import cn.cerc.db.core.IAppConfig;
 import cn.cerc.db.core.ServerConfig;
-import cn.cerc.ui.parts.RightMenus;
 
 public class Application {
     // private static final Logger log = LoggerFactory.getLogger(Application.class);
@@ -86,14 +85,14 @@ public class Application {
         return bean;
     }
 
-    public static boolean containsBean(String beanCode) {
+    public static boolean containsBean(String beanId) {
         init();
-        return context.containsBean(beanCode);
+        return context.containsBean(beanId);
     }
 
-    public static <T> T getBean(String beanCode, Class<T> requiredType) {
+    public static <T> T getBean(String beanId, Class<T> requiredType) {
         init();
-        return context.getBean(beanCode, requiredType);
+        return context.getBean(beanId, requiredType);
     }
 
     public static IAppErrorPage getAppErrorPage() {
@@ -139,6 +138,16 @@ public class Application {
         return bean;
     }
 
+    public static <T> T get(String beanId, Class<T> requiredType) {
+        init();
+        return context.getBean(beanId, requiredType);
+    }
+
+    public static <T> T get(String beanId, Class<T> requiredType, String beanDefaultId) {
+        init();
+        return context.getBean(context.containsBean(beanId) ? beanId : beanDefaultId, requiredType);
+    }
+
     public static IForm getForm(HttpServletRequest req, HttpServletResponse resp, String formId) {
         if (formId == null || formId.equals("") || formId.equals("service"))
             return null;
@@ -176,9 +185,4 @@ public class Application {
             throw new RuntimeException("not support language: " + lang);
     }
 
-    public static RightMenus getRightMenus() {
-        init();
-        String beanId = context.containsBean("RightMenus") ? "RightMenus" : "rightMenus";
-        return context.getBean(beanId, RightMenus.class);
-    }
 }
