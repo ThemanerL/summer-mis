@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 import cn.cerc.core.IHandle;
 import cn.cerc.db.core.IAppConfig;
 import cn.cerc.db.core.ServerConfig;
+import cn.cerc.mis.config.IAppStaticFile;
 import cn.cerc.mis.other.BufferType;
 import cn.cerc.mis.other.MemoryBuffer;
 import cn.cerc.mis.page.JspPage;
@@ -38,7 +39,8 @@ public class StartForms implements Filter {
         String uri = req.getRequestURI();
 
         // 遇到静态文件直接输出
-        if (isStatic(uri)) {
+        IAppStaticFile staticFile = Application.get("appStaticFile", IAppStaticFile.class, "appStaticFileDefault");
+        if (staticFile.isStaticFile(uri)) {
             chain.doFilter(req, resp);
             return;
         }
@@ -125,18 +127,6 @@ public class StartForms implements Filter {
     // 取得要执行的页面控制器
     protected IForm createForm(HttpServletRequest req, HttpServletResponse resp, String formId) {
         return Application.getForm(req, resp, formId);
-    }
-
-    // 判断请求的是否为静态文件
-    protected boolean isStatic(String uri) {
-        if (uri.endsWith(".css") || uri.endsWith(".jpg") || uri.endsWith(".gif") || uri.endsWith(".png")
-                || uri.endsWith(".bmp") || uri.endsWith(".js") || uri.endsWith(".mp3") || uri.endsWith(".icon")
-                || uri.endsWith(".apk") || uri.endsWith(".exe") || uri.endsWith(".jsp") || uri.endsWith(".htm")
-                || uri.endsWith(".html") || uri.endsWith(".manifest")) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     protected boolean checkEnableTime() {

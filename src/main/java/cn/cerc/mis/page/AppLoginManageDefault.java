@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import com.google.gson.Gson;
 
@@ -29,6 +32,8 @@ import cn.cerc.mis.page.qrcode.SocketTool;
 import cn.cerc.security.sapi.JayunAPI;
 import cn.cerc.security.sapi.JayunSecurity;
 
+@Component
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class AppLoginManageDefault extends AbstractJspPage implements IAppLoginManage {
 
     private static final Logger log = LoggerFactory.getLogger(AppLoginManageDefault.class);
