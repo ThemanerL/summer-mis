@@ -29,7 +29,7 @@ import cn.cerc.mis.core.IStatus;
 
 //@Controller
 //@Scope(WebApplicationContext.SCOPE_REQUEST)
-//@RequestMapping("/service")
+//@RequestMapping("/services")
 public class StartServiceDefault {
     @Autowired
     private HttpServletRequest req;
