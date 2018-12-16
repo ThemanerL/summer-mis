@@ -1,18 +1,20 @@
 package cn.cerc.mis.core;
 
+import java.io.Serializable;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 
-import cn.cerc.mis.core.Application;
 import cn.cerc.mis.other.BufferType;
 import cn.cerc.mis.other.MemoryBuffer;
 
 @Component
 @Scope(WebApplicationContext.SCOPE_SESSION)
-public class ClientDevice implements IClient {
+public class ClientDevice implements IClient, Serializable {
+    private static final long serialVersionUID = -3593077761901636920L;
     // private static final Logger log = Logger.LoggerFactory(DeviceInfo.class);
     private String sid; // application session id;
     private String deviceId; // device id

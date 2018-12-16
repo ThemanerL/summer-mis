@@ -23,8 +23,8 @@ import cn.cerc.mis.other.BufferType;
 import cn.cerc.mis.other.MemoryBuffer;
 
 @Component
-// @Scope(WebApplicationContext.SCOPE_REQUEST)
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+// @Scope(WebApplicationContext.SCOPE_REQUEST)
 public class HandleDefault implements IHandle, AutoCloseable {
     private static final Logger log = LoggerFactory.getLogger(HandleDefault.class);
     private Map<String, IConnection> connections = new HashMap<>();
