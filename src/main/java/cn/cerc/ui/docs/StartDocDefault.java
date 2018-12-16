@@ -24,10 +24,6 @@ public class StartDocDefault {
     @Autowired
     private HttpServletResponse resp;
 
-    public StartDocDefault() {
-        super();
-    }
-
     @RequestMapping("/")
     @ResponseBody
     public String doGet() {
