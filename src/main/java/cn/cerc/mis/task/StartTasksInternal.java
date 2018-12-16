@@ -8,7 +8,7 @@ import javax.servlet.ServletContextListener;
 import cn.cerc.db.core.ServerConfig;
 
 //使用内部驱动定时任务
-@Deprecated
+@Deprecated // 请改使用 StartTaskDefault
 public class StartTasksInternal implements ServletContextListener {
     private static final int step = 500;
     private Timer timer = null;

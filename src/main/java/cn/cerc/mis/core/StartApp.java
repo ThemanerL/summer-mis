@@ -31,10 +31,12 @@ public class StartApp {
             req.getSession().setAttribute(ClientDevice.deviceType_key, req.getParameter(ClientDevice.deviceType_key));
 
         IAppConfig conf = Application.getAppConfig();
-        return String.format("redirect：/%s/%s", conf.getPathForms(), conf.getFormWelcome());
+        String jspFile = String.format("redirect：/%s/%s", conf.getPathForms(), conf.getFormWelcome());
+        return jspFile;
     }
 
     @RequestMapping("/MobileConfig")
+    @Deprecated
     public String MobileConfig() {
         return mobileConfig();
     }
