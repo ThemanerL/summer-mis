@@ -26,6 +26,7 @@ import cn.cerc.mis.other.MemoryBuffer;
 import cn.cerc.mis.page.JspPage;
 import cn.cerc.mis.page.RedirectPage;
 
+@Deprecated // 请改使用 StartFormDefault
 public class StartForms implements Filter {
     private static final Logger log = LoggerFactory.getLogger(StartForms.class);
 

@@ -17,6 +17,7 @@ import cn.cerc.core.IHandle;
 
 //@Controller
 //@Scope(WebApplicationContext.SCOPE_REQUEST)
+//@RequestMapping("/forms")
 public class StartFormDefault implements ApplicationContextAware {
     private static final Logger log = LoggerFactory.getLogger(StartFormDefault.class);
     private ApplicationContext applicationContext;
