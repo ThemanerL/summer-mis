@@ -23,8 +23,8 @@ import cn.cerc.mis.config.AppLogin;
 @Controller
 @Scope(WebApplicationContext.SCOPE_REQUEST)
 @RequestMapping("/sample")
-public class StartSample implements ApplicationContextAware {
-    private static final Logger log = LoggerFactory.getLogger(StartSample.class);
+public class StartFormDefault implements ApplicationContextAware {
+    private static final Logger log = LoggerFactory.getLogger(StartFormDefault.class);
     private ApplicationContext applicationContext;
     @Autowired
     private HttpServletRequest request;
@@ -47,9 +47,9 @@ public class StartSample implements ApplicationContextAware {
 
     @RequestMapping("/{formId}.{funcId}")
     public String execute(@PathVariable String formId, @PathVariable String funcId) {
-        log.debug(String.format("formId: Frm%s, funcId: %s", formId, funcId));
+        log.debug(String.format("formId: %s, funcId: %s", formId, funcId));
         if (!applicationContext.containsBean(formId))
-            return String.format("formId: Frm%s, funcId: %s", formId, funcId);
+            return String.format("formId: %s, funcId: %s", formId, funcId);
         IForm form = applicationContext.getBean(formId, IForm.class);
         try {
             form.setHandle(handle);
