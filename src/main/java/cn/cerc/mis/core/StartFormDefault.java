@@ -10,13 +10,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.context.WebApplicationContext;
 
 import cn.cerc.core.IHandle;
+import cn.cerc.db.mysql.MysqlConnection;
+import cn.cerc.mis.config.AppLogin;
 
-//@Controller
-//@Scope(WebApplicationContext.SCOPE_REQUEST)
+@Controller
+@Scope(WebApplicationContext.SCOPE_REQUEST)
+@RequestMapping("/sample")
 public class StartFormDefault implements ApplicationContextAware {
     private static final Logger log = LoggerFactory.getLogger(StartFormDefault.class);
     private ApplicationContext applicationContext;
@@ -32,9 +38,12 @@ public class StartFormDefault implements ApplicationContextAware {
     private ClientDevice clientDevice;
     @Autowired
     @Qualifier("appLoginManage")
-    private IAppLoginManage appLoginManage;
+    private AppLogin loginManage;
     @Autowired
     private IPassport passport;
+    @Autowired
+    @Qualifier("mysqlConnection")
+    private MysqlConnection sqlConnection;
 
     @RequestMapping("/{formId}.{funcId}")
     public String execute(@PathVariable String formId, @PathVariable String funcId) {
@@ -51,6 +60,7 @@ public class StartFormDefault implements ApplicationContextAware {
 
             handle.setProperty(Application.sessionId, request.getSession().getId());
             handle.setProperty(Application.deviceLanguage, clientDevice.getLanguage());
+            handle.setProperty(MysqlConnection.sessionId, sqlConnection);
 
             request.setAttribute("myappHandle", handle);
             request.setAttribute("_showMenu_", !ClientDevice.device_ee.equals(clientDevice.getDevice()));
@@ -64,10 +74,10 @@ public class StartFormDefault implements ApplicationContextAware {
                 response.setContentType("text/html;charset=UTF-8");
 
             // 执行自动登录
-            appLoginManage.init(form);
-            String jspFile = appLoginManage.checkToken(clientDevice.getSid());
+            loginManage.init(form);
+            String jspFile = loginManage.checkToken(clientDevice.getSid());
             if (jspFile != null) {
-                log.info("需要登录： {}", request.getRequestURL());
+                log.warn(String.format("登录执行错误 %s", request.getRequestURL()));
                 return jspFile;
             }
 
@@ -82,10 +92,7 @@ public class StartFormDefault implements ApplicationContextAware {
             IPage page = form.execute();
             if (page == null)
                 return null;
-
-            jspFile = page.execute();
-            log.info(jspFile);
-            return jspFile;
+            return page.execute();
         } catch (Exception e) {
             e.printStackTrace();
             return e.getMessage();
