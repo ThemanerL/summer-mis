@@ -1,12 +1,10 @@
 package cn.cerc.mis.task;
 
 import java.util.Calendar;
-import java.util.TimerTask;
-
-import javax.servlet.ServletContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Scheduled;
 
 import cn.cerc.core.IHandle;
 import cn.cerc.core.TDateTime;
@@ -16,23 +14,16 @@ import cn.cerc.mis.core.Application;
 import cn.cerc.mis.other.BufferType;
 import cn.cerc.mis.rds.StubHandle;
 
-@Deprecated // 请改使用 StartTaskDefault
-public class ProcessTimerTask extends TimerTask {
-    private static final Logger log = LoggerFactory.getLogger(ProcessTimerTask.class);
+public class StartTaskDefault implements Runnable {
+    private static final Logger log = LoggerFactory.getLogger(StartTaskDefault.class);
     private static boolean isRunning = false;
     // 晚上12点执行，也即0点开始执行
     private static final int C_SCHEDULE_HOUR = 0;
     private static String lock;
 
-    // 运行环境
-    private ServletContext context = null;
-
-    public ProcessTimerTask(ServletContext context) {
-        this.context = context;
-    }
-
     // 循环反复执行
     @Override
+    @Scheduled(fixedRate = 500)
     public void run() {
         Calendar c = Calendar.getInstance();
         if (!isRunning) {
@@ -53,7 +44,7 @@ public class ProcessTimerTask extends TimerTask {
             }
             isRunning = false;
         } else {
-            context.log("上一次任务执行还未结束");
+            log.info("上一次任务执行还未结束");
         }
     }
 

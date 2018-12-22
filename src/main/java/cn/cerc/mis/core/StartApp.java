@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import cn.cerc.core.IHandle;
 import cn.cerc.db.core.IAppConfig;
 
+@Deprecated // 请改使用 StartAppDefault
 public class StartApp implements Filter {
     // private static final Logger log = Logger.getLogger(AppStart.class);
 

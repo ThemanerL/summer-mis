@@ -6,13 +6,16 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.cerc.core.DataSet;
 import cn.cerc.core.IHandle;
@@ -24,42 +27,60 @@ import cn.cerc.mis.core.IRestful;
 import cn.cerc.mis.core.IService;
 import cn.cerc.mis.core.IStatus;
 
-@Deprecated // 请改使用 StartServiceDefault
-public class StartServices extends HttpServlet {
-    private static final Logger log = LoggerFactory.getLogger(StartServices.class);
-    private static final long serialVersionUID = 1L;
+//@Controller
+//@Scope(WebApplicationContext.SCOPE_REQUEST)
+//@RequestMapping("/services")
+public class StartServiceDefault {
+    @Autowired
+    private HttpServletRequest req;
+    @Autowired
+    private HttpServletResponse resp;
+
+    private static final Logger log = LoggerFactory.getLogger(StartServiceDefault.class);
     public final String outMsg = "{\"result\":%s,\"message\":\"%s\"}";
     private static Map<String, String> services;
     private static final String sessionId = "sessionId";
 
-    @Override
-    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doProcess("get", req, resp); // select
+    @RequestMapping("/")
+    @ResponseBody
+    public void doGet() {
+        doProcess("get", null);
     }
 
-    @Override
-    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doProcess("post", req, resp); // insert
+    @RequestMapping(method = RequestMethod.GET, value = "/{uri}")
+    @ResponseBody
+    public void doGet(@PathVariable String uri) {
+        doProcess("get", uri); // select
     }
 
-    @Override
-    public void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doProcess("put", req, resp); // modify
+    @RequestMapping(method = RequestMethod.POST, value = "/{uri}")
+    @ResponseBody
+    public void doPost(@PathVariable String uri) {
+        doProcess("post", uri); // insert
     }
 
-    @Override
-    public void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doProcess("delete", req, resp);
+    @RequestMapping(method = RequestMethod.PUT, value = "/{uri}")
+    @ResponseBody
+    public void doPut(@PathVariable String uri) {
+        doProcess("put", uri); // modify
     }
 
-    private void doProcess(String method, HttpServletRequest req, HttpServletResponse resp)
-            throws UnsupportedEncodingException, IOException {
-        String uri = req.getRequestURI();
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{uri}")
+    @ResponseBody
+    public void doDelete(@PathVariable String uri) {
+        doProcess("delete", uri);
+    }
+
+    private void doProcess(String method, String uri) {
         IAppConfig conf = Application.getAppConfig();
         if (!uri.startsWith("/" + conf.getPathServices()))
             return;
 
-        req.setCharacterEncoding("UTF-8");
+        try {
+            req.setCharacterEncoding("UTF-8");
+        } catch (UnsupportedEncodingException e1) {
+            e1.printStackTrace();
+        }
         resp.setContentType("text/html;charset=UTF-8");
         ResponseData respData = new ResponseData();
 
@@ -72,7 +93,11 @@ public class StartServices extends HttpServlet {
         log.info(req.getRequestURI() + " => " + serviceCode);
         if (serviceCode == null) {
             respData.setMessage("restful not find: " + req.getRequestURI());
-            resp.getWriter().write(respData.toString());
+            try {
+                resp.getWriter().write(respData.toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             return;
         }
         log.debug(serviceCode);
@@ -103,7 +128,11 @@ public class StartServices extends HttpServlet {
             respData.setResult(false);
             respData.setMessage(err.getMessage());
         }
-        resp.getWriter().write(respData.toString());
+        try {
+            resp.getWriter().write(respData.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getServiceCode(String method, String uri, Record headIn) {

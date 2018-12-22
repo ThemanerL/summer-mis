@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import cn.cerc.db.core.ServerConfig;
 
+@Deprecated // 请改使用 StartDocDefault
 public class StartDocs extends HttpServlet {
     private static final long serialVersionUID = 1L;
 

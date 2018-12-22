@@ -42,18 +42,16 @@ public class WebSocket {
      * 
      * 连接建立成功调用的方法
      * 
-     * @param session
-     *            可选的参数。session为与某个客户端的连接会话，需要通过它来给客户端发送数据
-     * @param config
-     *            端点配置
+     * @param session 可选的参数。session为与某个客户端的连接会话，需要通过它来给客户端发送数据
+     * @param config  端点配置
      */
     @OnOpen
     public void onOpen(Session session, EndpointConfig config) {
         httpSession = (HttpSession) config.getUserProperties().get(HttpSession.class.getName());
         this.session = session;
         items.put(httpSession.getId(), this);
-        log.info("有新连接加入！当前在线人数为 {}", items.size());
-        log.info("sessionId: {}", httpSession.getId());
+        log.debug("有新连接加入！当前在线人数为 {}", items.size());
+        log.debug("sessionId: {}", httpSession.getId());
     }
 
     /**
@@ -62,20 +60,19 @@ public class WebSocket {
     @OnClose
     public void onClose() {
         items.remove(httpSession.getId()); // 从map中删除
-        log.info("有一连接关闭！当前在线人数为 {}", items.size());
+        log.debug("有一连接关闭！当前在线人数为 {}", items.size());
     }
 
     /**
      * 收到客户端消息后调用的方法
      * 
-     * @param message
-     *            客户端发送过来的消息
-     * @param session
-     *            可选的参数
+     * @param message 客户端发送过来的消息
+     * @param session 可选的参数
      */
     @OnMessage
     public void onMessage(String message, Session session) {
-        log.info("来自客户端的消息:sessionId {}, message {}", session.getId(), message);
+        log.debug("来自客户端的消息:sessionId {}, message {}", session.getId(), message);
+
         // 群发消息
         for (String key : items.keySet()) {
             if (!items.get(key).sendMessage(message)) {
@@ -87,10 +84,8 @@ public class WebSocket {
     /**
      * 发生错误时调用
      * 
-     * @param session
-     *            当前连接
-     * @param error
-     *            错误
+     * @param session 当前连接
+     * @param error   错误
      */
     @OnError
     public void onError(Session session, Throwable error) {
@@ -102,7 +97,7 @@ public class WebSocket {
         boolean result = true;
         try {
             this.session.getBasicRemote().sendText(json);
-            log.info("sendMessage: {}", json);
+            log.debug("sendMessage: {}", json);
         } catch (IOException e) {
             this.message = e.getMessage();
             result = false;

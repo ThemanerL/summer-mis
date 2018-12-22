@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-//使用外部驱动:
+@Deprecated // 请改使用 StartTaskDefault
 public class StartTasksExternal implements Filter {
     private static final Logger log = LoggerFactory.getLogger(StartTasksExternal.class);
 

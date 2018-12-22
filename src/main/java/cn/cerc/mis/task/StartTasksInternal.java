@@ -7,7 +7,8 @@ import javax.servlet.ServletContextListener;
 
 import cn.cerc.db.core.ServerConfig;
 
-//使用内 部驱动定时任务
+//使用内部驱动定时任务
+@Deprecated // 请改使用 StartTaskDefault
 public class StartTasksInternal implements ServletContextListener {
     private static final int step = 500;
     private Timer timer = null;
@@ -17,7 +18,7 @@ public class StartTasksInternal implements ServletContextListener {
         if (ServerConfig.enableTaskService()) {
             timer = new Timer(true);
             event.getServletContext().log("定时器已启动");
-            // 3秒后开始启动，5*1000表示每隔5秒执行任务
+            // 3秒后开始启动，3*1000表示每隔3秒执行任务
             timer.schedule(new ProcessTimerTask(event.getServletContext()), 3 * 1000, step);
             event.getServletContext().log("已经添加任务");
         }
