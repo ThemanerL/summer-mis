@@ -108,4 +108,9 @@ public class AutoService implements IHandle {
         return false;
     }
 
+    @Override
+    public void close() throws Exception {
+        handle.close();
+    }
+
 }

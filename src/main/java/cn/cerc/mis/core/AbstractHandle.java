@@ -58,4 +58,10 @@ public class AbstractHandle implements IHandle {
         return false;
     }
 
+    @Override
+    public void close() throws Exception {
+        if (handle != null)
+            handle.close();
+    }
+
 }
