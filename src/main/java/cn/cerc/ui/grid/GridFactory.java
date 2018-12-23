@@ -1,6 +1,6 @@
 package cn.cerc.ui.grid;
 
-import cn.cerc.mis.form.IForm;
+import cn.cerc.mis.core.IForm;
 import cn.cerc.ui.parts.UIComponent;
 
 public class GridFactory {

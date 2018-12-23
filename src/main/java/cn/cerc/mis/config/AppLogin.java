@@ -21,20 +21,20 @@ import cn.cerc.core.Utils;
 import cn.cerc.db.core.IAppConfig;
 import cn.cerc.db.core.ServerConfig;
 import cn.cerc.mis.client.LocalService;
+import cn.cerc.mis.core.AbstractForm;
 import cn.cerc.mis.core.AbstractJspPage;
 import cn.cerc.mis.core.Application;
 import cn.cerc.mis.core.ClientDevice;
-import cn.cerc.mis.core.IAppLoginManage;
+import cn.cerc.mis.core.IAppLogin;
+import cn.cerc.mis.core.IForm;
 import cn.cerc.mis.core.RequestData;
-import cn.cerc.mis.form.AbstractForm;
-import cn.cerc.mis.form.IForm;
 import cn.cerc.mis.page.qrcode.SocketTool;
 import cn.cerc.security.sapi.JayunAPI;
 import cn.cerc.security.sapi.JayunSecurity;
 
 @Component
 @Scope(WebApplicationContext.SCOPE_REQUEST)
-public class AppLogin extends AbstractJspPage implements IAppLoginManage {
+public class AppLogin extends AbstractJspPage implements IAppLogin {
     private static final Logger log = LoggerFactory.getLogger(AppLogin.class);
 
     // 配置在服务器的用户名下面 summer-application.properties

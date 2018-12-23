@@ -10,7 +10,6 @@ import cn.cerc.core.IHandle;
 import cn.cerc.core.SupportHandle;
 import cn.cerc.db.core.IAppConfig;
 import cn.cerc.db.core.ServerConfig;
-import cn.cerc.mis.form.IForm;
 
 public class Application {
     // private static final Logger log = LoggerFactory.getLogger(Application.class);

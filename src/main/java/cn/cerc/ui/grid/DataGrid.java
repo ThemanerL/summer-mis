@@ -2,7 +2,7 @@ package cn.cerc.ui.grid;
 
 import cn.cerc.core.DataSet;
 import cn.cerc.core.Utils;
-import cn.cerc.mis.form.IForm;
+import cn.cerc.mis.core.IForm;
 import cn.cerc.ui.core.HtmlWriter;
 import cn.cerc.ui.core.IField;
 import cn.cerc.ui.grid.lines.AbstractGridLine;

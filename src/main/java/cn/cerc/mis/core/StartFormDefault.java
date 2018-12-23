@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import cn.cerc.core.IHandle;
-import cn.cerc.mis.form.IForm;
 
 //@Controller
 //@Scope(WebApplicationContext.SCOPE_REQUEST)
@@ -34,7 +33,7 @@ public class StartFormDefault implements ApplicationContextAware {
     private ClientDevice clientDevice;
     @Autowired
     @Qualifier("appLoginManage")
-    private IAppLoginManage appLoginManage;
+    private IAppLogin appLoginManage;
     @Autowired
     private IPassport passport;
 

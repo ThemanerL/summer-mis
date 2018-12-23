@@ -10,11 +10,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 import cn.cerc.core.DataSet;
+import cn.cerc.mis.core.AbstractForm;
 import cn.cerc.mis.core.AbstractJspPage;
 import cn.cerc.mis.core.Application;
 import cn.cerc.mis.core.HandleDefault;
-import cn.cerc.mis.form.AbstractForm;
-import cn.cerc.mis.form.IForm;
+import cn.cerc.mis.core.IForm;
 import cn.cerc.mis.other.MemoryBuffer;
 import cn.cerc.mis.page.ExportFile;
 import cn.cerc.mis.page.IMenuBar;

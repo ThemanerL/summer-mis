@@ -22,7 +22,6 @@ import cn.cerc.db.core.IAppConfig;
 import cn.cerc.db.core.ServerConfig;
 import cn.cerc.mis.client.LocalService;
 import cn.cerc.mis.config.IAppStaticFile;
-import cn.cerc.mis.form.IForm;
 import cn.cerc.mis.other.BufferType;
 import cn.cerc.mis.other.MemoryBuffer;
 import cn.cerc.mis.page.JspPage;
@@ -96,7 +95,7 @@ public class StartForms implements Filter {
                 log.debug("进行安全检查，若未登录则显示登录对话框");
 
                 if (!form.logon()) {
-                    IAppLoginManage page = Application.get("appLoginManage", IAppLoginManage.class,
+                    IAppLogin page = Application.get("appLoginManage", IAppLogin.class,
                             "appLoginManageDefault");
                     page.init(form);
                     String cmd = page.checkToken(info.getSid());

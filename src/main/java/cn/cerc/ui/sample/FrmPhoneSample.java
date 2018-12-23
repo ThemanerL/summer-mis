@@ -1,7 +1,7 @@
 package cn.cerc.ui.sample;
 
+import cn.cerc.mis.core.AbstractForm;
 import cn.cerc.mis.core.IPage;
-import cn.cerc.mis.form.AbstractForm;
 import cn.cerc.ui.page.UIPagePhone;
 import cn.cerc.ui.phone.Block101;
 import cn.cerc.ui.phone.Block102;

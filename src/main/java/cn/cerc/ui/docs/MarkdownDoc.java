@@ -13,7 +13,7 @@ import com.vladsch.flexmark.parser.Parser;
 import com.vladsch.flexmark.parser.ParserEmulationProfile;
 import com.vladsch.flexmark.util.options.MutableDataSet;
 
-import cn.cerc.mis.form.IForm;
+import cn.cerc.mis.core.IForm;
 
 public class MarkdownDoc {
     private ServletContext servletContext;

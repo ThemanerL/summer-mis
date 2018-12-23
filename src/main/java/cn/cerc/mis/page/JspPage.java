@@ -1,7 +1,7 @@
 package cn.cerc.mis.page;
 
 import cn.cerc.mis.core.AbstractJspPage;
-import cn.cerc.mis.form.IForm;
+import cn.cerc.mis.core.IForm;
 
 public class JspPage extends AbstractJspPage {
 

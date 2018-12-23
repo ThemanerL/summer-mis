@@ -6,8 +6,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import cn.cerc.mis.form.IForm;
-
 public interface IPage {
     public void setForm(IForm form);
 

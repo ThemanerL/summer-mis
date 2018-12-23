@@ -1,11 +1,9 @@
-package cn.cerc.mis.form;
+package cn.cerc.mis.core;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cn.cerc.core.IHandle;
-import cn.cerc.mis.core.IClient;
-import cn.cerc.mis.core.IPage;
 
 public interface IForm {
     // 页面标题

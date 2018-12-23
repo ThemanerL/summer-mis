@@ -13,7 +13,7 @@ import cn.cerc.ui.other.BuildUrl;
 import cn.cerc.ui.parts.UIComponent;
 import cn.cerc.core.DataSet;
 import cn.cerc.core.Record;
-import cn.cerc.mis.form.IForm;
+import cn.cerc.mis.core.IForm;
 
 // 手机专用表格
 public class PhoneGrid extends AbstractGrid {
