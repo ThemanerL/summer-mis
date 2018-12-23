@@ -67,7 +67,7 @@ public class BookHandle implements IHandle {
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() {
         if (handle != null)
             handle.close();
     }
