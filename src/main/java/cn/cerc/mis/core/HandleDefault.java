@@ -211,8 +211,8 @@ public class HandleDefault implements IHandle {
 
     @Override
     public void close() {
-        for (String key : this.params.keySet()) {
-            Object sess = this.params.get(key);
+        for (String key : this.connections.keySet()) {
+            Object sess = this.connections.get(key);
             try {
                 if (sess instanceof AutoCloseable)
                     ((AutoCloseable) sess).close();
