@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import cn.cerc.core.IHandle;
+import cn.cerc.mis.form.IForm;
 
 //@Controller
 //@Scope(WebApplicationContext.SCOPE_REQUEST)

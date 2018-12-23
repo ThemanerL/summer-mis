@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import cn.cerc.core.IHandle;
 import cn.cerc.core.Record;
-import cn.cerc.mis.core.LocalService;
+import cn.cerc.mis.client.LocalService;
 
 public class ResourceBuffer {
     private static final Logger log = LoggerFactory.getLogger(ResourceBuffer.class);

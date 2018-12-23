@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import cn.cerc.core.IHandle;
 import cn.cerc.db.core.IAppConfig;
+import cn.cerc.mis.form.IForm;
 
 @Deprecated // 请改使用 StartAppDefault
 public class StartApp implements Filter {

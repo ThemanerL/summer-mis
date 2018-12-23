@@ -6,7 +6,7 @@ import java.util.Map;
 import cn.cerc.core.IHandle;
 import cn.cerc.core.TDateTime;
 import cn.cerc.core.Utils;
-import cn.cerc.mis.core.LocalService;
+import cn.cerc.mis.client.LocalService;
 
 public class UserOptions {
     // 用户级参数

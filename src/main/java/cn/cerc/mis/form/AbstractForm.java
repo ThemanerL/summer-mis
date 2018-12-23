@@ -1,4 +1,4 @@
-package cn.cerc.mis.core;
+package cn.cerc.mis.form;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,8 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import cn.cerc.mis.core.AbstractHandle;
+import cn.cerc.mis.core.ClientDevice;
 import cn.cerc.mis.core.IClient;
-import cn.cerc.mis.core.IForm;
+import cn.cerc.mis.core.ISystemTable;
 import cn.cerc.core.IHandle;
 
 public abstract class AbstractForm extends AbstractHandle implements IForm {

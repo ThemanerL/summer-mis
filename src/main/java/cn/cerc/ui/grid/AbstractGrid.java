@@ -13,7 +13,7 @@ import cn.cerc.ui.grid.lines.MasterGridLine;
 import cn.cerc.ui.parts.UIActionForm;
 import cn.cerc.ui.parts.UIComponent;
 import cn.cerc.core.DataSet;
-import cn.cerc.mis.core.IForm;
+import cn.cerc.mis.form.IForm;
 
 public abstract class AbstractGrid extends UIComponent implements DataSource {
     // 数据源

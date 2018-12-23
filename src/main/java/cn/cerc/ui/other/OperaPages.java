@@ -2,7 +2,7 @@ package cn.cerc.ui.other;
 
 import javax.servlet.http.HttpServletRequest;
 
-import cn.cerc.mis.core.IForm;
+import cn.cerc.mis.form.IForm;
 import cn.cerc.ui.core.HtmlWriter;
 import cn.cerc.ui.grid.MutiPage;
 import cn.cerc.ui.parts.UIComponent;

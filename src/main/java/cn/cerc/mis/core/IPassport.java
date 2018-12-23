@@ -1,5 +1,6 @@
 package cn.cerc.mis.core;
 
+import cn.cerc.mis.form.IForm;
 import cn.cerc.mis.rds.PassportRecord;
 import cn.cerc.core.IHandle;
 
