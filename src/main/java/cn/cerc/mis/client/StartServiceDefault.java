@@ -127,6 +127,8 @@ public class StartServiceDefault {
             log.error(err.getMessage(), err);
             respData.setResult(false);
             respData.setMessage(err.getMessage());
+        } finally {
+            handle.close();
         }
         try {
             resp.getWriter().write(respData.toString());
