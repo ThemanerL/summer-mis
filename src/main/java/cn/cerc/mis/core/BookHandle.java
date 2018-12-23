@@ -65,4 +65,10 @@ public class BookHandle implements IHandle {
     public boolean logon() {
         return false;
     }
+
+    @Override
+    public void close() {
+        if (handle != null)
+            handle.close();
+    }
 }

@@ -108,10 +108,8 @@ public class StubHandle implements IHandle, AutoCloseable {
     }
 
     @Override
-    public void close() throws Exception {
-        MysqlConnection obj = (MysqlConnection) this.getProperty(MysqlConnection.sessionId);
-        if (obj != null)
-            obj.close();
+    public void close() {
+        handle.close();
     }
 
 }

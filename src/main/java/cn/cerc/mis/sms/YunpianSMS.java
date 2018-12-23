@@ -17,6 +17,7 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import cn.cerc.core.IHandle;
 import cn.cerc.db.core.ServerConfig;
 import cn.cerc.mis.core.Application;
 import cn.cerc.mis.language.R;
@@ -71,7 +72,12 @@ public class YunpianSMS {
                     return false;
                 }
             } else {
-                this.message = R.asString(Application.getHandle(), "网络故障，简讯发送请求失败！");
+                IHandle handle = Application.getHandle();
+                try {
+                    this.message = R.asString(handle, "网络故障，简讯发送请求失败！");
+                } finally {
+                    handle.close();
+                }
                 return false;
             }
         } catch (Exception e) {

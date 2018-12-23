@@ -102,6 +102,8 @@ public class StartServices extends HttpServlet {
             log.error(err.getMessage(), err);
             respData.setResult(false);
             respData.setMessage(err.getMessage());
+        } finally {
+            handle.close();
         }
         resp.getWriter().write(respData.toString());
     }

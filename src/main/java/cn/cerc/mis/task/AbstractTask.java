@@ -54,6 +54,8 @@ public abstract class AbstractTask extends AbstractHandle implements Runnable {
             this.execute();
         } catch (Exception e) {
             log.error(e.getMessage(), e);
+        } finally {
+            handle.close();
         }
     }
 

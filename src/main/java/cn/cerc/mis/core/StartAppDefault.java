@@ -54,10 +54,14 @@ public class StartAppDefault {
             form.setResponse(resp);
 
             IHandle handle = Application.getHandle();
-            handle.setProperty(Application.sessionId, req.getSession().getId());
-            form.setHandle(handle);
-            IPage page = form.execute();
-            return page.execute();
+            try {
+                handle.setProperty(Application.sessionId, req.getSession().getId());
+                form.setHandle(handle);
+                IPage page = form.execute();
+                return page.execute();
+            } finally {
+                handle.close();
+            }
         } catch (Exception e) {
             try {
                 resp.getWriter().print(e.getMessage());
