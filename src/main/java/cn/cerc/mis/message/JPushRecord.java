@@ -4,7 +4,7 @@ import cn.cerc.core.DataSet;
 import cn.cerc.core.IHandle;
 import cn.cerc.db.jiguang.ClientType;
 import cn.cerc.db.jiguang.JiguangPush;
-import cn.cerc.mis.client.LocalService;
+import cn.cerc.mis.core.LocalService;
 
 /**
  * 往指定用户的所有移动设备发送消息

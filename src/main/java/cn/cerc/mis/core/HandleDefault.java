@@ -19,7 +19,6 @@ import cn.cerc.db.mysql.MysqlConnection;
 import cn.cerc.db.mysql.SlaveMysqlConnection;
 import cn.cerc.db.oss.OssConnection;
 import cn.cerc.db.queue.AliyunQueueConnection;
-import cn.cerc.mis.client.LocalService;
 import cn.cerc.mis.other.BufferType;
 import cn.cerc.mis.other.MemoryBuffer;
 

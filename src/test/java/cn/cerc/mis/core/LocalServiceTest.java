@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import cn.cerc.mis.client.LocalService;
 import cn.cerc.mis.rds.StubHandle;
 
 public class LocalServiceTest {
