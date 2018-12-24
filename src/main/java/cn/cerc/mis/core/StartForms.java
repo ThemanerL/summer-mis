@@ -113,8 +113,6 @@ public class StartForms implements Filter {
                 }
             } catch (Exception e) {
                 outputErrorPage(req, resp, e);
-            } finally {
-                handle.close();
             }
         } catch (Exception e) {
             outputErrorPage(req, resp, e);

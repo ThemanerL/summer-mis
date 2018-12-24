@@ -53,14 +53,10 @@ public class StartApp implements Filter {
                 form.setResponse((HttpServletResponse) response);
 
                 IHandle handle = Application.getHandle();
-                try {
-                    handle.setProperty(Application.sessionId, req.getSession().getId());
-                    form.setHandle(handle);
-                    IPage page = form.execute();
-                    page.execute();
-                } finally {
-                    handle.close();
-                }
+                handle.setProperty(Application.sessionId, req.getSession().getId());
+                form.setHandle(handle);
+                IPage page = form.execute();
+                page.execute();
             } catch (Exception e) {
                 resp.getWriter().print(e.getMessage());
             }
