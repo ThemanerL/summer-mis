@@ -10,7 +10,6 @@ import cn.cerc.core.DataSet;
 import cn.cerc.core.IHandle;
 import cn.cerc.core.Record;
 import cn.cerc.db.core.ServerConfig;
-import cn.cerc.db.core.ServerVersion;
 import cn.cerc.db.queue.AliyunQueueConnection;
 import cn.cerc.db.queue.QueueDB;
 import cn.cerc.db.queue.QueueQuery;
@@ -99,7 +98,7 @@ public class AsyncService implements IServiceProxy {
         if (this.process == 2) {
             // 返回消息的编号插入到阿里云消息队列
             QueueQuery ds = new QueueQuery(handle);
-            if (ServerConfig.getVersion() == ServerVersion.test) {
+            if (ServerConfig.isServerDevelop()) {
                 ds.add("select * from %s", QueueDB.TEST);
             } else {
                 ds.add("select * from %s", AliyunQueueConnection.defaultQueue);
