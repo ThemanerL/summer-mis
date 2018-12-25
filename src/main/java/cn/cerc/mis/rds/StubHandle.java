@@ -20,14 +20,19 @@ public class StubHandle implements IHandle, AutoCloseable {
     private static final String clientIP = "127.0.0.1";
 
     public StubHandle() {
-        this(DefaultBook, DefaultUser);
+        handle = Application.getHandle();
+        handle.init(DefaultBook, DefaultUser, clientIP);
     }
 
+    public StubHandle(String corpNo, String userCode) {
+        handle = Application.getHandle();
+        handle.init(corpNo, userCode, clientIP);
+    }
+
+    @Deprecated
     public StubHandle(String corpNo) {
         handle = Application.getHandle();
-
         ISystemTable systemTable = Application.getBean("systemTable", ISystemTable.class);
-
         SqlQuery ds = new SqlQuery(this);
         ds.setMaximum(1);
         ds.add("select Code_ from " + systemTable.getUserInfo());
@@ -37,11 +42,6 @@ public class StubHandle implements IHandle, AutoCloseable {
             throw new RuntimeException("找不到默认帐号：CorpNo=" + corpNo);
         String userCode = ds.getString("Code_");
 
-        handle.init(corpNo, userCode, clientIP);
-    }
-
-    public StubHandle(String corpNo, String userCode) {
-        handle = Application.getHandle();
         handle.init(corpNo, userCode, clientIP);
     }
 
