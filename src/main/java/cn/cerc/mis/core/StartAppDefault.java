@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import cn.cerc.core.IHandle;
@@ -19,6 +20,9 @@ public class StartAppDefault {
     private HttpServletRequest req;
     @Autowired
     private HttpServletResponse resp;
+    @Autowired
+    @Qualifier("appConfig")
+    private IAppConfig appConfig;
 
     @RequestMapping("/")
     public String doGet() {
@@ -27,9 +31,8 @@ public class StartAppDefault {
         if (req.getParameter(ClientDevice.deviceType_key) != null)
             req.getSession().setAttribute(ClientDevice.deviceType_key, req.getParameter(ClientDevice.deviceType_key));
 
-        IAppConfig conf = Application.getAppConfig();
-        String jspFile = String.format("redirect：/%s/%s", conf.getPathForms(), conf.getFormWelcome());
-        return jspFile;
+        String url = String.format("redirect:/%s/%s", appConfig.getPathForms(), appConfig.getFormWelcome());
+        return url;
     }
 
     @RequestMapping("/MobileConfig")
