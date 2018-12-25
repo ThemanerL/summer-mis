@@ -85,7 +85,8 @@ public class StartFormDefault implements ApplicationContextAware {
                 return null;
 
             jspFile = page.execute();
-            log.info(jspFile);
+            if (log.isDebugEnabled())
+                log.debug(jspFile);
             return jspFile;
         } catch (Exception e) {
             e.printStackTrace();

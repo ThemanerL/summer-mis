@@ -15,7 +15,6 @@ import cn.cerc.core.MD5;
 import cn.cerc.core.Record;
 import cn.cerc.db.cache.Redis;
 import cn.cerc.db.core.ServerConfig;
-import cn.cerc.db.core.ServerVersion;
 import cn.cerc.mis.client.IServiceProxy;
 import cn.cerc.mis.client.Microservice;
 import cn.cerc.mis.other.BufferType;
@@ -105,7 +104,7 @@ public class LocalService implements IServiceProxy {
                     && !"SvrUserMessages.getWaitList".equals(this.serviceCode)) {
                 log.info(this.serviceCode);
             }
-            if (ServerConfig.getVersion() == ServerVersion.master) {
+            if (ServerConfig.isServerMaster()) {
                 IStatus status = bean.execute(dataIn, dataOut);
                 boolean result = status.getResult();
                 message = status.getMessage();
