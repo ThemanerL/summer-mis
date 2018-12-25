@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import cn.cerc.mis.core.IClient;
-import cn.cerc.mis.core.IForm;
 import cn.cerc.core.IHandle;
 
 public abstract class AbstractForm extends AbstractHandle implements IForm {
