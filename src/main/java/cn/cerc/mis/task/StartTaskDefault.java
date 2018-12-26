@@ -4,6 +4,9 @@ import java.util.Calendar;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import cn.cerc.core.IHandle;
@@ -14,12 +17,13 @@ import cn.cerc.mis.core.Application;
 import cn.cerc.mis.other.BufferType;
 import cn.cerc.mis.rds.StubHandle;
 
-public class StartTaskDefault implements Runnable {
+public class StartTaskDefault implements Runnable, ApplicationContextAware {
     private static final Logger log = LoggerFactory.getLogger(StartTaskDefault.class);
     private static boolean isRunning = false;
     // 晚上12点执行，也即0点开始执行
     private static final int C_SCHEDULE_HOUR = 0;
     private static String lock;
+    private ApplicationContext context;
 
     // 循环反复执行
     @Override
@@ -60,7 +64,7 @@ public class StartTaskDefault implements Runnable {
             return;
 
         lock = str;
-        for (String beanId : Application.getContext().getBeanNamesForType(AbstractTask.class)) {
+        for (String beanId : context.getBeanNamesForType(AbstractTask.class)) {
             AbstractTask task = getTask(handle, beanId);
             if (task == null)
                 continue;
@@ -94,5 +98,10 @@ public class StartTaskDefault implements Runnable {
         if (task != null)
             task.setHandle(handle);
         return task;
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.context = applicationContext;
     }
 }
