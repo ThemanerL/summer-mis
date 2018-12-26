@@ -47,7 +47,7 @@ public abstract class AbstractTask extends AbstractHandle implements Runnable {
      */
     @Override
     public void run() {
-        IHandle handle = Application.getHandle();
+        HandleDefault handle = new HandleDefault()
         try {
             this.setHandle(handle);
             handle.setProperty(Application.userCode, "admin");
