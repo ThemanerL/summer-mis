@@ -33,7 +33,7 @@ public class StartFormDefault implements ApplicationContextAware {
     private ClientDevice clientDevice;
     @Autowired
     @Qualifier("appLoginManage")
-    private IAppLogin appLoginManage;
+    private IAppLoginManage appLoginManage;
     @Autowired
     private IPassport passport;
 

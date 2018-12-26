@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 
-public interface IAppLogin {
+public interface IAppLoginManage {
 
     void init(IForm form);
 

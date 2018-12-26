@@ -24,7 +24,7 @@ import cn.cerc.mis.core.AbstractForm;
 import cn.cerc.mis.core.AbstractJspPage;
 import cn.cerc.mis.core.Application;
 import cn.cerc.mis.core.ClientDevice;
-import cn.cerc.mis.core.IAppLogin;
+import cn.cerc.mis.core.IAppLoginManage;
 import cn.cerc.mis.core.IForm;
 import cn.cerc.mis.core.LocalService;
 import cn.cerc.mis.core.RequestData;
@@ -34,14 +34,14 @@ import cn.cerc.security.sapi.JayunSecurity;
 
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class AppLoginDefault extends AbstractJspPage implements IAppLogin {
+public class AppLoginManageDefault extends AbstractJspPage implements IAppLoginManage {
 
-    private static final Logger log = LoggerFactory.getLogger(AppLoginDefault.class);
+    private static final Logger log = LoggerFactory.getLogger(AppLoginManageDefault.class);
 
     // 配置在服务器的用户名下面 summer-application.properties
     public static final String Notify_Url = "app.notify_url";
 
-    public AppLoginDefault() {
+    public AppLoginManageDefault() {
         super();
     }
 
