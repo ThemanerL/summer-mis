@@ -5,6 +5,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -14,7 +16,7 @@ import cn.cerc.db.core.IAppConfig;
 import cn.cerc.db.core.ServerConfig;
 
 public class Application {
-    // private static final Logger log = LoggerFactory.getLogger(Application.class);
+    private static final Logger log = LoggerFactory.getLogger(Application.class);
     private static ApplicationContext context;
 
     // Tomcat JSESSION.ID
@@ -41,8 +43,11 @@ public class Application {
     public static final String LangageDefault = "cn"; // 可选：cn/en
 
     public static void setContext(ApplicationContext applicationContext) {
-        if (context != applicationContext)
+        if (context != applicationContext) {
+            if (context != null)
+                log.warn("applicationContext overload!");
             context = applicationContext;
+        }
     }
 
     public static ApplicationContext getContext() {
@@ -126,7 +131,7 @@ public class Application {
         if (formId == null || formId.equals("") || formId.equals("service"))
             return null;
 
-        context = WebApplicationContextUtils.getRequiredWebApplicationContext(req.getServletContext());
+        setContext(WebApplicationContextUtils.getRequiredWebApplicationContext(req.getServletContext()));
 
         if (!context.containsBean(formId))
             throw new RuntimeException(String.format("form %s not find!", formId));
