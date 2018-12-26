@@ -25,6 +25,7 @@ public class StartApp implements Filter {
         HttpServletResponse resp = (HttpServletResponse) response;
 
         String uri = req.getRequestURI();
+        Application.get(req);
 
         // 处理默认首页问题
         if (uri.equals("/")) {
