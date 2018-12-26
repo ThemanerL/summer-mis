@@ -3,10 +3,11 @@ package cn.cerc.mis.task;
 import java.util.Calendar;
 import java.util.TimerTask;
 
-import javax.servlet.ServletContext;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 
 import cn.cerc.core.IHandle;
 import cn.cerc.core.TDateTime;
@@ -17,19 +18,14 @@ import cn.cerc.mis.other.BufferType;
 import cn.cerc.mis.rds.StubHandle;
 
 @Deprecated // 请改使用 StartTaskDefault
-public class ProcessTimerTask extends TimerTask {
+public class ProcessTimerTask extends TimerTask implements ApplicationContextAware {
     private static final Logger log = LoggerFactory.getLogger(ProcessTimerTask.class);
     private static boolean isRunning = false;
     // 晚上12点执行，也即0点开始执行
     private static final int C_SCHEDULE_HOUR = 0;
     private static String lock;
-
     // 运行环境
-    private ServletContext context = null;
-
-    public ProcessTimerTask(ServletContext context) {
-        this.context = context;
-    }
+    private ApplicationContext context = null;
 
     // 循环反复执行
     @Override
@@ -53,7 +49,7 @@ public class ProcessTimerTask extends TimerTask {
             }
             isRunning = false;
         } else {
-            context.log("上一次任务执行还未结束");
+            log.info("上一次任务执行还未结束");
         }
     }
 
@@ -69,7 +65,7 @@ public class ProcessTimerTask extends TimerTask {
             return;
 
         lock = str;
-        for (String beanId : Application.getContext().getBeanNamesForType(AbstractTask.class)) {
+        for (String beanId : context.getBeanNamesForType(AbstractTask.class)) {
             AbstractTask task = getTask(handle, beanId);
             if (task == null)
                 continue;
@@ -103,5 +99,10 @@ public class ProcessTimerTask extends TimerTask {
         if (task != null)
             task.setHandle(handle);
         return task;
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext context) throws BeansException {
+        this.context = context;
     }
 }

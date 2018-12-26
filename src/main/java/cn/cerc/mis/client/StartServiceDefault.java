@@ -89,7 +89,7 @@ public class StartServiceDefault {
         String str = getParams(req);
         if (null != str && !"[{}]".equals(str))
             dataIn.setJSON(str);
-        String serviceCode = getServiceCode(method, req.getRequestURI().substring(1), dataIn.getHead());
+        String serviceCode = getServiceCode(req, method, req.getRequestURI().substring(1), dataIn.getHead());
         log.info(req.getRequestURI() + " => " + serviceCode);
         if (serviceCode == null) {
             respData.setMessage("restful not find: " + req.getRequestURI());
@@ -137,8 +137,8 @@ public class StartServiceDefault {
         }
     }
 
-    public String getServiceCode(String method, String uri, Record headIn) {
-        loadServices();
+    public String getServiceCode(HttpServletRequest req, String method, String uri, Record headIn) {
+        loadServices(req);
         String[] paths = uri.split("/");
         if (paths.length < 2)
             return null;
@@ -214,11 +214,11 @@ public class StartServiceDefault {
         }
     }
 
-    private static void loadServices() {
+    private static void loadServices(HttpServletRequest req) {
         if (services != null)
             return;
         services = new HashMap<>();
-        for (String serviceCode : Application.getContext().getBeanNamesForType(IRestful.class)) {
+        for (String serviceCode : Application.get(req).getBeanNamesForType(IRestful.class)) {
             IRestful service = Application.getBean(serviceCode, IRestful.class);
             String path = service.getRestPath();
             if (null != path && !"".equals(path)) {

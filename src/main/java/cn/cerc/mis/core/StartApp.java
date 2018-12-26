@@ -45,7 +45,7 @@ public class StartApp implements Filter {
                         req.getParameter(ClientDevice.deviceType_key));
             try {
                 IForm form;
-                if (Application.getContext().containsBean("mobileConfig"))
+                if (Application.get(req).containsBean("mobileConfig"))
                     form = Application.getBean("mobileConfig", IForm.class);
                 else
                     form = Application.getBean("MobileConfig", IForm.class);

@@ -48,11 +48,7 @@ public class StartAppDefault {
         if (req.getParameter(ClientDevice.deviceType_key) != null)
             req.getSession().setAttribute(ClientDevice.deviceType_key, req.getParameter(ClientDevice.deviceType_key));
         try {
-            IForm form;
-            if (Application.getContext().containsBean("mobileConfig"))
-                form = Application.getBean("mobileConfig", IForm.class);
-            else
-                form = Application.getBean("MobileConfig", IForm.class);
+            IForm form = Application.getBean(IForm.class, "MobileConfig", "mobileConfig");
             form.setRequest(req);
             form.setResponse(resp);
 

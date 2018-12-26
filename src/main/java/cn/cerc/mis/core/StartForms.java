@@ -40,7 +40,7 @@ public class StartForms implements Filter {
         String uri = req.getRequestURI();
 
         // 遇到静态文件直接输出
-        IAppStaticFile staticFile = Application.get("appStaticFile", IAppStaticFile.class, "appStaticFileDefault");
+        IAppStaticFile staticFile = Application.getBean(IAppStaticFile.class, "appStaticFile", "appStaticFileDefault");
         if (staticFile.isStaticFile(uri)) {
             chain.doFilter(req, resp);
             return;
@@ -60,18 +60,16 @@ public class StartForms implements Filter {
         req.setAttribute("logon", false);
 
         // 验证菜单是否启停
-        if (Application.containsBean("AppFormFilter")) {
-            IFormFilter formFilter = Application.getBean("AppFormFilter", IFormFilter.class);
-            if (formFilter != null) {
-                if (formFilter.doFilter(resp, formId, funcCode)) {
-                    return;
-                }
+        IFormFilter formFilter = Application.getBean(IFormFilter.class, "AppFormFilter");
+        if (formFilter != null) {
+            if (formFilter.doFilter(resp, formId, funcCode)) {
+                return;
             }
         }
 
         IForm form = null;
         try {
-            form = createForm(req, resp, formId);
+            form = Application.getForm(req, resp, formId);
             if (form == null) {
                 outputErrorPage(req, resp, new RuntimeException("error servlet:" + req.getServletPath()));
                 return;
@@ -94,7 +92,7 @@ public class StartForms implements Filter {
                 log.debug("进行安全检查，若未登录则显示登录对话框");
 
                 if (!form.logon()) {
-                    IAppLoginManage page = Application.get("appLoginManage", IAppLoginManage.class,
+                    IAppLoginManage page = Application.getBean(IAppLoginManage.class, "appLoginManage",
                             "appLoginManageDefault");
                     page.init(form);
                     String cmd = page.checkToken(info.getSid());
@@ -123,11 +121,6 @@ public class StartForms implements Filter {
     // 取得页面默认设置，如出错时指向哪个页面
     protected IAppConfig createConfig() {
         return Application.getAppConfig();
-    }
-
-    // 取得要执行的页面控制器
-    protected IForm createForm(HttpServletRequest req, HttpServletResponse resp, String formId) {
-        return Application.getForm(req, resp, formId);
     }
 
     protected boolean checkEnableTime() {
@@ -383,7 +376,8 @@ public class StartForms implements Filter {
         if (err == null) {
             err = e;
         }
-        IAppErrorPage errorPage = Application.getAppErrorPage();
+        IAppErrorPage errorPage = Application.get(request).getBean(IAppErrorPage.class, "appErrorPage",
+                "appErrorPageDefault");
         if (errorPage != null) {
             String result = errorPage.getErrorPage(request, response, err);
             if (result != null) {
