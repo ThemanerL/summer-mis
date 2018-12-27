@@ -25,7 +25,7 @@ public class ProcessTimerTask extends TimerTask implements ApplicationContextAwa
     private static final int C_SCHEDULE_HOUR = 0;
     private static String lock;
     // 运行环境
-    private ApplicationContext context = null;
+    private ApplicationContext context;
 
     // 循环反复执行
     @Override
