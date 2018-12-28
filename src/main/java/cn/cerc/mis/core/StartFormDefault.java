@@ -20,7 +20,7 @@ import cn.cerc.core.IHandle;
 //@RequestMapping("/forms")
 public class StartFormDefault implements ApplicationContextAware {
     private static final Logger log = LoggerFactory.getLogger(StartFormDefault.class);
-    private ApplicationContext applicationContext;
+    private ApplicationContext context;
     @Autowired
     private HttpServletRequest request;
     @Autowired
@@ -32,17 +32,18 @@ public class StartFormDefault implements ApplicationContextAware {
     @Qualifier("clientDevice")
     private ClientDevice clientDevice;
     @Autowired
-    @Qualifier("appLoginManage")
-    private IAppLoginManage appLoginManage;
-    @Autowired
     private IPassport passport;
+    private IAppLogin appLogin;
 
     @RequestMapping("/{formId}.{funcId}")
     public String execute(@PathVariable String formId, @PathVariable String funcId) {
         log.debug(String.format("formId: %s, funcId: %s", formId, funcId));
-        if (!applicationContext.containsBean(formId))
+        if (!context.containsBean(formId))
             return String.format("formId: %s, funcId: %s", formId, funcId);
-        IForm form = applicationContext.getBean(formId, IForm.class);
+
+        Application.setContext(context);
+        appLogin = Application.getBean(IAppLogin.class, "appLogin", "appLoginManage", "appLoginManageDefault");
+        IForm form = context.getBean(formId, IForm.class);
         try {
             form.setHandle(handle);
             form.setRequest(request);
@@ -65,8 +66,8 @@ public class StartFormDefault implements ApplicationContextAware {
                 response.setContentType("text/html;charset=UTF-8");
 
             // 执行自动登录
-            appLoginManage.init(form);
-            String jspFile = appLoginManage.checkToken(clientDevice.getSid());
+            appLogin.init(form);
+            String jspFile = appLogin.checkToken(clientDevice.getSid());
             if (jspFile != null) {
                 log.info("需要登录： {}", request.getRequestURL());
                 return jspFile;
@@ -101,6 +102,6 @@ public class StartFormDefault implements ApplicationContextAware {
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        this.applicationContext = applicationContext;
+        this.context = applicationContext;
     }
 }
