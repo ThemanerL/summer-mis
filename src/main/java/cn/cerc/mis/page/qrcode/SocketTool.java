@@ -47,6 +47,7 @@ public class SocketTool {
                     continue;
                 }
             }
+
         } else if (domain.indexOf("https://") != -1) {
             socketUrl = domain.replace("https", "wss");
         }
