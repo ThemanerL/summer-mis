@@ -39,6 +39,7 @@ public class AppLoginDefault extends AbstractJspPage implements IAppLogin {
     private static final Logger log = LoggerFactory.getLogger(AppLoginDefault.class);
 
     // 配置在服务器的用户名下面 summer-application.properties
+    public static final String Socket_Url = "app.socket_url";
     public static final String Notify_Url = "app.notify_url";
 
     public AppLoginDefault() {
@@ -70,7 +71,9 @@ public class AppLoginDefault extends AbstractJspPage implements IAppLogin {
         SocketTool tool = new SocketTool();
         String domain = tool.getDomain(getRequest());
 
-        String socket_url = tool.getSocketUrl(getRequest());
+        String socket_url = config.getProperty(Socket_Url);
+        if (socket_url == null || "".contentEquals(socket_url))
+            throw new RuntimeException("系统参数socket_url没有配置");
         this.add("socketUrl", socket_url);
 
         // 判断当前客户端类型
