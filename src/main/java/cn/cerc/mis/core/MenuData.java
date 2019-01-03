@@ -3,7 +3,6 @@ package cn.cerc.mis.core;
 import com.google.gson.Gson;
 
 public class MenuData {
-    private String clazz;
     // 页面类名代码，用于css定位
     private String id = "";
     // 页面标题
@@ -19,7 +18,7 @@ public class MenuData {
     // 适用版本
     private String versions;
     // 页面版面代码，用于排版定位
-    private String formNo = "000";
+    private String pageNo = "000";
     private boolean web; // 是否支持Web调用
     private boolean win; // 是否支持Window调用
     private boolean phone; // 是否支持phone调用
@@ -75,12 +74,13 @@ public class MenuData {
         this.parent = parent;
     }
 
+    @Deprecated // 此函数不再需要
     public String getClazz() {
-        return clazz;
+        return "";
     }
 
+    @Deprecated // 此函数不再需要
     public void setClazz(String clazz) {
-        this.clazz = clazz;
     }
 
     public String getImage() {
@@ -113,12 +113,22 @@ public class MenuData {
         this.versions = versions;
     }
 
+    @Deprecated // 请改使用 getPageNo
     public String getFormNo() {
-        return formNo;
+        return pageNo;
     }
 
-    public void setFormNo(String formNo) {
-        this.formNo = formNo;
+    public String getPageNo() {
+        return pageNo;
+    }
+
+    @Deprecated // 请改使用 setPageNo
+    public void setFormNo(String pageNo) {
+        this.pageNo = pageNo;
+    }
+
+    public void setPageNo(String pageNo) {
+        this.pageNo = pageNo;
     }
 
     public boolean isWeb() {
@@ -184,4 +194,5 @@ public class MenuData {
     public void setPhone(boolean phone) {
         this.phone = phone;
     }
+
 }
