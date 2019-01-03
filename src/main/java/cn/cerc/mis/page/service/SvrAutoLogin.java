@@ -72,7 +72,7 @@ public class SvrAutoLogin {
             }
 
             // 更新当前用户总数
-            SvrUserLogin svrUserLogin = Application.get(sess, SvrUserLogin.class);
+            SvrUserLogin svrUserLogin = Application.getBean(sess, SvrUserLogin.class);
             svrUserLogin.updateCurrentUser("unknow", "", form.getClient().getLanguage());
 
             try (MemoryBuffer buff = new MemoryBuffer(BufferType.getSessionInfo, userId, deviceId)) {
@@ -84,7 +84,7 @@ public class SvrAutoLogin {
             }
 
             // 检查设备码
-            SvrUserLogin svrLogin = Application.get(handle, SvrUserLogin.class);
+            SvrUserLogin svrLogin = Application.getBean(handle, SvrUserLogin.class);
             svrLogin.enrollMachineInfo(dsUser.getString("CorpNo_"), userCode, deviceId, "浏览器");
 
             // 设置登录信息
