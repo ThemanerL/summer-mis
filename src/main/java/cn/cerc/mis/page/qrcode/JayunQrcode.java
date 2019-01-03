@@ -8,6 +8,9 @@ import java.util.TreeMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.gson.Gson;
 
 import cn.cerc.core.MD5;
@@ -15,6 +18,8 @@ import cn.cerc.db.core.ServerConfig;
 import cn.cerc.security.sapi.JayunAPI;
 
 public class JayunQrcode {
+
+    private static final Logger log = LoggerFactory.getLogger(JayunQrcode.class);
 
     private static final String ACTION_LOGIN = "login";
     private static final String ACTION_BIND = "bind";
@@ -60,6 +65,8 @@ public class JayunQrcode {
         if (ws != null) {
             echo(obj);
         } else {
+            String socket_url = new SocketTool().getSocketUrl(request);
+            log.error("扫描回调地址 {}", socket_url);
             echo(new JayunMessage(false, "没有找到相对应的Socket客户端"));
         }
     }
@@ -74,6 +81,8 @@ public class JayunQrcode {
             }
             echo(obj);
         } else {
+            String socket_url = new SocketTool().getSocketUrl(request);
+            log.error("登录回调地址 {}", socket_url);
             echo(new JayunMessage(false, "没有找到相对应的Socket客户端"));
         }
     }
@@ -89,6 +98,8 @@ public class JayunQrcode {
         if (ws != null) {
             WebSocket.getWebSocketSet().get(sessionId).sendMessage(obj.toString());
         } else {
+            String socket_url = new SocketTool().getSocketUrl(request);
+            log.error("绑定回调地址 {}", socket_url);
             echo(new JayunMessage(false, "没有找到相对应的Socket客户端"));
         }
     }
