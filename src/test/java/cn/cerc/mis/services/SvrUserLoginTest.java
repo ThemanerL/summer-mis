@@ -93,7 +93,7 @@ public class SvrUserLoginTest {
             String msg = String.format("帐号 %s 验证码 %s 不存在，无法完成测试", userCode, deviceId);
             assertThat(msg, ds.eof(), is(false));
 
-            SvrUserLogin app = Application.get(handle, SvrUserLogin.class);
+            SvrUserLogin app = Application.getBean(handle, SvrUserLogin.class);
             app.getDataIn().getHead().setField("deviceId", deviceId);
             assertThat(app.sendVerifyCode(), is(true));
             Thread.sleep(1000 * 30);
