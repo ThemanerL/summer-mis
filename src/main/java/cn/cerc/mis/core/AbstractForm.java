@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import cn.cerc.core.IHandle;
 
+//@Component
+//@Scope(WebApplicationContext.SCOPE_REQUEST)
 public abstract class AbstractForm extends AbstractHandle implements IForm {
     private HttpServletRequest request;
     private HttpServletResponse response;
