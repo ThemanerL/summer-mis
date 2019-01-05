@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 import com.google.gson.Gson;
 
 import cn.cerc.core.IHandle;
-import cn.cerc.core.Record;
 import cn.cerc.core.Utils;
 import cn.cerc.db.core.IAppConfig;
 import cn.cerc.db.core.ServerConfig;
@@ -217,8 +216,7 @@ public class AppLoginDefault extends AbstractJspPage implements IAppLogin {
         svr.setService("SvrUserLogin.getUserCodeByMobile");
         svr.getDataIn().getHead().setField("UserCode_", tel);
         if (!svr.exec()) {
-            Record headOut = svr.getDataOut().getHead();
-            throw new RuntimeException(headOut.getString("Msg_"));
+            throw new RuntimeException(svr.getMessage());
         } else
             return svr.getDataOut().getHead().getString("UserCode_");
     }
