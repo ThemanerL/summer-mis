@@ -304,8 +304,7 @@ public class SvrUserLogin extends CustomService {
 
         Record headOut = getDataOut().getHead();
         if ("".equals(userCode)) {
-            headOut.setField("Msg_", "手机号不允许为空！");
-            return false;
+            throw new RuntimeException("手机号不允许为空！");
         }
 
         SqlQuery ds = new SqlQuery(this);
@@ -314,14 +313,12 @@ public class SvrUserLogin extends CustomService {
         ds.add("where a.Mobile_='%s' and ((a.BelongAccount_ is null) or (a.BelongAccount_=''))", userCode);
         ds.open();
         if (ds.size() == 0) {
-            headOut.setField("Msg_", "您的手机号码不存在于系统中，如果您需要注册帐号，请 <a href='TFrmContact'>联系客服</a> 进行咨询");
-            return false;
+            throw new RuntimeException("您的手机号码不存在于系统中，如果您需要注册帐号，请 <a href='TFrmContact'>联系客服</a> 进行咨询");
         }
 
         if (ds.size() != 1) {
-            headOut.setField("Msg_",
+            throw new RuntimeException(
                     String.format("您的手机绑定了多个帐号，无法登录，建议您使用主账号登录后，在【我的账号--更改我的资料】菜单中设置主附帐号关系后再使用手机号登录！", userCode));
-            return false;
         }
         headOut.setField("UserCode_", ds.getString("Code_"));
         return true;
