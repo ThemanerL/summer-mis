@@ -76,6 +76,10 @@ public class CodeNameField extends AbstractField {
                 html.print(" placeholder=\"%s\"", this.getPlaceholder());
             html.println("/>");
 
+            if (this.isShowStar()) {
+                html.println("<font>*</font>");
+            }
+
             html.print("<span>");
             if (this.getDialog() != null && this.getDialog().isOpen()) {
                 html.print("<a href=\"%s\">", getUrl(this.getDialog()));
