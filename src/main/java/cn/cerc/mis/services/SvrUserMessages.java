@@ -135,8 +135,17 @@ public class SvrUserMessages extends CustomService {
         cdsMsg.edit();
         cdsMsg.setField("Content_", content);
         cdsMsg.setField("Process_", process);
+        if (process == 3) {
+            cdsMsg.setField("Status_", 1);
+        }
         cdsMsg.post();
 
+        if (process == 3) {
+            // 清除缓存
+            String buffKey = String.format("%d.%s.%s.%s", BufferType.getObject.ordinal(), MessageRecord.class,
+                    cdsMsg.getString("CorpNo_"), cdsMsg.getString("UserCode_"));
+            Redis.delete(buffKey);
+        }
         // 极光推送
         pushToJiGuang(cdsMsg);
         return true;

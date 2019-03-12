@@ -108,6 +108,7 @@ public class BookOptions {
     public static final String EnableABQualityManage = "EnableABQualityManage";
     public static final String EnableWorkPieceToOP = "EnableWorkPieceToOP";
     public static final String StudentFileSupCorpNo = "StudentFileSupCorpNo";
+    public static final String EnableAutoMRP = "EnableAutoMRP";
 
     private static Map<String, String> items = new HashMap<>();
 
@@ -202,6 +203,7 @@ public class BookOptions {
         items.put(EnableAutoFinishDA, "是否开启采购单自动结案");
         items.put(EnableABQualityManage, "是否开启进货单商品品质状况管理");
         items.put(EnableWorkPieceToOP, "是否开启员工计件生成生产报工单");
+        items.put(EnableAutoMRP, "是否开启自动MRP计算");
 
         // 安全管控参数
         items.put(EnableReportSecurity, "启用安全报表控制，未确认的单据不允许打印报表");
