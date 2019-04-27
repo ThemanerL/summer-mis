@@ -322,7 +322,7 @@ public abstract class AbstractJspPage extends UIComponent implements IPage {
         out.println("</body>");
     }
 
-    private UIMenuTree getMenu() {
+    public UIMenuTree getMenu() {
         if (menu == null) {
             menu = new UIMenuTree(this);
             menu.addItem().init("测试", "FrmIndex").addSubitem("测试1", "FrmIndex");
