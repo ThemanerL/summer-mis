@@ -26,7 +26,6 @@ import cn.cerc.ui.parts.UIContent;
 import cn.cerc.ui.parts.UIDocument;
 import cn.cerc.ui.parts.UIFooter;
 import cn.cerc.ui.parts.UIHeader;
-import cn.cerc.ui.parts.UIMenuTree;
 import cn.cerc.ui.parts.UIToolBar;
 
 public abstract class AbstractJspPage extends UIComponent implements IPage {
@@ -37,8 +36,6 @@ public abstract class AbstractJspPage extends UIComponent implements IPage {
     private List<String> scriptFiles = new ArrayList<>();
     private List<HtmlContent> scriptFunctions = new ArrayList<>();
     private List<HtmlContent> scriptCodes = new ArrayList<>();
-    // 左侧菜单
-    private UIMenuTree menu;
     // 头部：广告+菜单
     private UIHeader header;
     // 主体: 控制区(可选)+内容+消息区
@@ -308,26 +305,15 @@ public abstract class AbstractJspPage extends UIComponent implements IPage {
 
     protected void outBody(PrintWriter out) {
         out.println("<body>");
-        out.println(this.getMenu());
-        out.println("<div>");
         out.println(this.getHeader());
         out.println(this.getDocument());
         out.println(this.getToolBar());
         out.println(this.getFooter());
-        out.println("</div>");
         if (getForm().getClient().isPhone()) {
             out.println("<span id='back-top' style='display: none'>顶部</span>");
             out.println("<span id='back-bottom' style='display: none'>底部</span>");
         }
         out.println("</body>");
-    }
-
-    public UIMenuTree getMenu() {
-        if (menu == null) {
-            menu = new UIMenuTree(this);
-            menu.addItem().init("测试", "FrmIndex").addSubitem("测试1", "FrmIndex");
-        }
-        return menu;
     }
 
     public final UIContent getContent() {
