@@ -10,10 +10,11 @@ public class UIMenuTreeItem extends UIComponent {
     private UIImage img;
     private String name;
     private String code;
-    private boolean menuLock;
+    private boolean menuExpand;
     private List<UIMenuTreeItem> items = new ArrayList<>();
 
     private String target = "_blank";
+    private String active;
 
     public UIMenuTreeItem() {
     }
@@ -25,13 +26,24 @@ public class UIMenuTreeItem extends UIComponent {
     @Override
     public void output(HtmlWriter html) {
         if (items.size() == 0) {
+            html.println("<li class='layout-nav-item");
+            if (active != null)
+                html.println(" %s", active);
+            html.println("'>");
             html.println("<a href=\"%s\">", getCode(), getName());
             if (img != null)
                 img.output(html);
             html.println(getName());
             html.print("</a>");
+            html.print("</li>");
         } else {
-            html.print("<a href=\"%s\">", getCode());
+            html.println("<li class='layout-nav-item");
+            if (isMenuExpand())
+                html.println(" layout-nav-itemed");
+            html.println("'>");
+            html.print("<a href=\"javascript: void(0)\" onclick=\"%s\">", getCode());
+            if (img != null)
+                img.output(html);
             html.print("<cite>%s</cite>", getName());
             html.print("<span class=\"layout-nav-more\"></span>");
             html.print("</a>");
@@ -44,6 +56,7 @@ public class UIMenuTreeItem extends UIComponent {
             }
 
             html.println("</dl>");
+            html.println("</li>");
         }
     }
 
@@ -80,19 +93,26 @@ public class UIMenuTreeItem extends UIComponent {
         return this;
     }
 
-    public boolean isMenuLock() {
-        return menuLock;
+    public boolean isMenuExpand() {
+        return menuExpand;
     }
 
-    public UIMenuTreeItem setMenuLock(boolean menuLock) {
-        this.menuLock = menuLock;
+    public UIMenuTreeItem setMenuExpand(boolean menuExpand) {
+        this.menuExpand = menuExpand;
+        return this;
+    }
+    public UIMenuTreeItem setMenuActive() {
+        this.active = "layout-active";
         return this;
     }
 
-    public UIMenuTreeItem addSubitem(String name, String code) {
+    public UIMenuTreeItem addSubitem(String name, String code, boolean isActive) {
         UIMenuTreeItem item = new UIMenuTreeItem();
         item.init(name, code);
         items.add(item);
+        if (isActive) {
+            item.setMenuActive();
+        }
         return item;
     }
 

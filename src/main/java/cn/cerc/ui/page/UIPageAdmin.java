@@ -130,8 +130,7 @@ public class UIPageAdmin extends AbstractJspPage {
 
     @Override
     protected void outBody(PrintWriter out) {
-        out.println("<body>");
-        out.println(this.getMenu());
+        out.println("<body class='layout-admin'>");
         out.println("<div class='layout-header'>");
         out.println("    <div class='layout-logo'>聚安后台管理系統</div>");
         out.println("    <!-- 头部区域  -->");
@@ -139,12 +138,13 @@ public class UIPageAdmin extends AbstractJspPage {
         out.println("    <ul class='layout-nav layout-right'>");
         out.println("      <li class='layout-nav-item'>");
         out.println("        <a href='javascript:;'>");
-        out.println("          <img src='http://t.cn/RCzsdCq' class='layout-nav-img'>善貴");
+        out.println("          <img src='http://t.cn/RCzsdCq' class='layout-nav-img'>admin");
         out.println("        </a>");
         out.println("      </li>");
-        out.println("      <li class='layout-nav-item'><a href=''>退了</a></li>");
+        out.println("      <li class='layout-nav-item'><a href='FrmLogout'>退出系统</a></li>");
         out.println("    </ul>");
-        out.println("  </div>");
+        out.println("</div>");
+        out.println(this.getMenu());
         out.println(String.format("<div class='%s'>", this.getCssClass()));
         out.println(this.getHeader());
         out.println(this.getDocument());

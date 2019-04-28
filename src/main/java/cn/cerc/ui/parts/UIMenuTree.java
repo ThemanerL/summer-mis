@@ -17,9 +17,7 @@ public class UIMenuTree extends UIComponent {
         html.println("<div class='layout-side-scroll'>");
         html.println("<ul class='layout-nav layout-nav-tree'  lay-filter='test'>");
         for (UIMenuTreeItem item : items) {
-            html.println("<li>");
             html.println(item.toString());
-            html.println("</li>");
         }
         html.println("</ul>");
         html.println("</div>");
