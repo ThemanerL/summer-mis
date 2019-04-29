@@ -5,11 +5,11 @@ import org.springframework.stereotype.Component;
 import cn.cerc.mis.core.IBookOption;
 
 @Component
-public class AllowERPSynchro implements IBookOption {
+public class EnableStockCWReport implements IBookOption {
 
     @Override
     public String getTitle() {
-        return "允许地藤系统与ERP系统交换数据,此功能当前暂支持华软ERP系统";
+        return "启用进出仓通知作业模式，需要打印进、出仓通知单";
     }
 
 }

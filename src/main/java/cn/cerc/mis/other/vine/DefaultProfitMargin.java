@@ -5,11 +5,11 @@ import org.springframework.stereotype.Component;
 import cn.cerc.mis.core.IBookOption;
 
 @Component
-public class AllowERPSynchro implements IBookOption {
+public class DefaultProfitMargin implements IBookOption {
 
     @Override
     public String getTitle() {
-        return "允许地藤系统与ERP系统交换数据,此功能当前暂支持华软ERP系统";
+        return "网单代发货利润率（<font color=red>需启用O2O模组</font>）";
     }
 
 }

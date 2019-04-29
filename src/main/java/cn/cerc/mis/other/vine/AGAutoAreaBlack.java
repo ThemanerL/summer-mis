@@ -5,11 +5,11 @@ import org.springframework.stereotype.Component;
 import cn.cerc.mis.core.IBookOption;
 
 @Component
-public class AllowERPSynchro implements IBookOption {
+public class AGAutoAreaBlack implements IBookOption {
 
     @Override
     public String getTitle() {
-        return "允许地藤系统与ERP系统交换数据,此功能当前暂支持华软ERP系统";
+        return "将退货单自动设置成销售黑名单（须先启动区域专卖管控）";
     }
 
 }

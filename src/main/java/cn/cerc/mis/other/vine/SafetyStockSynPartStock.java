@@ -5,11 +5,11 @@ import org.springframework.stereotype.Component;
 import cn.cerc.mis.core.IBookOption;
 
 @Component
-public class AllowERPSynchro implements IBookOption {
+public class SafetyStockSynPartStock implements IBookOption {
 
     @Override
     public String getTitle() {
-        return "允许地藤系统与ERP系统交换数据,此功能当前暂支持华软ERP系统";
+        return "启用分仓别进行安全库存设置(其会自动同步到商品基本资料档)";
     }
 
 }
