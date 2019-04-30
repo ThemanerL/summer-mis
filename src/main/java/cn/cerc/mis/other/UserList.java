@@ -25,6 +25,11 @@ public class UserList implements IDataList {
     private Map<String, UserRecord> buff = new HashMap<>();
     private String buffKey;
 
+    private static final String ShowInUP = "ShowInUP";
+    private static final String ShowOutUP = "ShowOutUP";
+    private static final String ShowWholesaleUP = "ShowWholesaleUP";
+    private static final String ShowBottomUP = "ShowBottomUP";
+
     public UserList(IHandle handle) {
         super();
         this.handle = handle;
@@ -92,10 +97,10 @@ public class UserList implements IDataList {
             value.setCode(ds.getString("Code_"));
             value.setName(ds.getString("Name_"));
             Map<String, Integer> priceValue = getPriceValue(ds.getString("Code_"));
-            value.setShowInUP(priceValue.get(UserOptions.ShowInUP));
-            value.setShowOutUP(priceValue.get(UserOptions.ShowOutUP));
-            value.setShowWholesaleUP(priceValue.get(UserOptions.ShowWholesaleUP));
-            value.setShowBottomUP(priceValue.get(UserOptions.ShowBottomUP));
+            value.setShowInUP(priceValue.get(ShowInUP));
+            value.setShowOutUP(priceValue.get(ShowOutUP));
+            value.setShowWholesaleUP(priceValue.get(ShowWholesaleUP));
+            value.setShowBottomUP(priceValue.get(ShowBottomUP));
 
             value.setQq(ds.getString("QQ_"));
             value.setMobile(ds.getString("Mobile_"));
@@ -118,16 +123,16 @@ public class UserList implements IDataList {
 
     private Map<String, Integer> getPriceValue(String userCode) {
         Map<String, Integer> value = new HashMap<>();
-        value.put(UserOptions.ShowInUP, 0);
-        value.put(UserOptions.ShowOutUP, 0);
-        value.put(UserOptions.ShowWholesaleUP, 0);
-        value.put(UserOptions.ShowBottomUP, 0);
+        value.put(ShowInUP, 0);
+        value.put(ShowOutUP, 0);
+        value.put(ShowWholesaleUP, 0);
+        value.put(ShowBottomUP, 0);
 
         ISystemTable systemTable = Application.getBean("systemTable", ISystemTable.class);
         SqlQuery ds = new SqlQuery(handle);
         ds.add("select Code_,Value_ from %s ", systemTable.getUserOptions());
-        ds.add("where UserCode_='%s' and (Code_='%s' or Code_='%s' or Code_='%s' or Code_='%s')", userCode,
-                UserOptions.ShowInUP, UserOptions.ShowOutUP, UserOptions.ShowWholesaleUP, UserOptions.ShowBottomUP);
+        ds.add("where UserCode_='%s' and (Code_='%s' or Code_='%s' or Code_='%s' or Code_='%s')", userCode, ShowInUP,
+                ShowOutUP, ShowWholesaleUP, ShowBottomUP);
         ds.open();
         while (ds.fetch())
             value.put(ds.getString("Code_"), ds.getInt("Value_"));
