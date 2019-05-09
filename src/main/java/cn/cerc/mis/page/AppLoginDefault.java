@@ -179,34 +179,10 @@ public class AppLoginDefault extends AbstractJspPage implements IAppLogin {
             req.getSession().setAttribute("loginMsg", "");
             req.getSession().setAttribute("mobile", "");
         } else {
-            // 登录验证失败，进行判断，手机号为空，则回到登录页，手机不为空，密码为空，则跳到发送验证码页面
-            String mobile = Utils.safeString(app.getDataOut().getHead().getString("Mobile_"));
-            ServerConfig config = new ServerConfig();
-            String supCorpNo = config.getProperty("vine.mall.supCorpNo", "");
-            if (mobile == null || "".equals(mobile)) {
-                log.debug(String.format("用户帐号(%s)与密码认证失败", userCode));
-                req.getSession().setAttribute("loginMsg", app.getMessage());
-                if (!"".equals(supCorpNo) && form.getClient().getDevice().equals(ClientDevice.device_iphone)) {
-                    return "redirect:TFrmWelcome.check";
-                } else {
-                    return this.execute();
-                }
-            } else if (password == null || "".equals(password)) {
-                if (!"".equals(supCorpNo) && form.getClient().getDevice().equals(ClientDevice.device_iphone)) {
-                    req.getSession().setAttribute("mobile", mobile);
-                    return "redirect:TFrmWelcome.check";
-                } else {
-                    return "redirect:TFrmEasyReg?phone=" + mobile;
-                }
-            } else {
-                log.debug(String.format("用户帐号(%s)与密码认证失败", userCode));
-                req.getSession().setAttribute("loginMsg", app.getMessage());
-                if (!"".equals(supCorpNo) && form.getClient().getDevice().equals(ClientDevice.device_iphone)) {
-                    return "redirect:TFrmWelcome.check";
-                } else {
-                    return this.execute();
-                }
-            }
+            // 登录验证失败
+            log.debug(String.format("用户帐号(%s)与密码认证失败", userCode));
+            req.getSession().setAttribute("loginMsg", app.getMessage());
+            return this.execute();
         }
         return null;
     }
