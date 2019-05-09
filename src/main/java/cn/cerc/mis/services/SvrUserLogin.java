@@ -104,17 +104,12 @@ public class SvrUserLogin extends CustomService {
             throw new SecurityCheckException(String.format("没有找到注册的帐套  %s ", corpNo));
         }
 
-        // 取得认证密码，若是微信入口进入，则免密码录入
         String mobile = dsUser.getString("Mobile_");
         getDataOut().getHead().setField("Mobile_", mobile);
 
         String password = headIn.getString("Password_");
         if (password == null || "".equals(password)) {
-            if ("".equals(dsUser.getString("Mobile_"))) {
-                throw new RuntimeException("您没有登记手机号，请您输入密码进行登录！");
-            } else {
-                throw new RuntimeException("用户密码不允许为空！");
-            }
+            throw new RuntimeException("用户密码不允许为空！");
         }
 
         boolean YGLogin = buff.getCorpType() == BookVersion.ctFree.ordinal();
@@ -142,12 +137,12 @@ public class SvrUserLogin extends CustomService {
         enrollMachineInfo(dsUser.getString("CorpNo_"), userCode, deviceId, device_name);
 
         if (dsUser.getBoolean("Encrypt_")) {
-            if (!headIn.exists("wx") && !"000000".equals(password)) {
+            if (!headIn.exists("wx")) {
                 password = MD5.get(dsUser.getString("Code_") + password);
             }
         }
 
-        if (!isAutoLogin(userCode, deviceId) && !"000000".equals(password)) {
+        if (!isAutoLogin(userCode, deviceId)) {
             if (!dsUser.getString("Password_").equals(password)) {
                 dsUser.edit();
                 if (dsUser.getInt("VerifyTimes_") == 6) {
@@ -160,7 +155,7 @@ public class SvrUserLogin extends CustomService {
                     dsUser.post();
                     if (dsUser.getInt("VerifyTimes_") > 3) {
                         throw new SecurityCheckException(
-                                String.format("您输入密码的错误次数已达 %d 次，若忘记密码，可不输入，直接通过验证码的方式进入系统，输错超过6次时，您的账号将被自动停用！",
+                                String.format("您输入密码的错误次数已达 %d 次，若忘记密码，可点击下方【忘记密码】链接重新设置密码，输错超过6次时，您的账号将被自动停用！",
                                         dsUser.getInt("VerifyTimes_")));
                     } else {
                         throw new SecurityCheckException("您的登录密码错误，禁止登录！");
