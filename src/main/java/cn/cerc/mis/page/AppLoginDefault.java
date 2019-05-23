@@ -145,7 +145,7 @@ public class AppLoginDefault extends AbstractJspPage implements IAppLogin {
         req.setAttribute("password", password);
         req.setAttribute("needVerify", "false");
 
-        IUserLoginCheck obj = Application.getBean("svrCheckUserLogin", IUserLoginCheck.class);
+        IUserLoginCheck obj = Application.getBean("userLoginCheck", IUserLoginCheck.class);
         if (obj != null ) {
             if (obj instanceof SupportHandle) {
                 if (form instanceof AbstractForm)
