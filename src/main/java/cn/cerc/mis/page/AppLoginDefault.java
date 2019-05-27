@@ -7,8 +7,6 @@ import java.util.TreeMap;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
-import SvrUserLogin.IUserLoginCheck;
-import cn.cerc.core.SupportHandle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -145,34 +143,33 @@ public class AppLoginDefault extends AbstractJspPage implements IAppLogin {
         req.setAttribute("password", password);
         req.setAttribute("needVerify", "false");
 
-        IUserLoginCheck obj = Application.getBean("userLoginCheck", IUserLoginCheck.class);
-        if (obj != null ) {
-            if (obj instanceof SupportHandle) {
-                if (form instanceof AbstractForm)
-                    ((SupportHandle) obj).init((AbstractForm) form);
-                else
-                    ((SupportHandle) obj).init(form.getHandle());
-            }
-        }
-
         // 如长度大于10表示用手机号码登入
         if (userCode.length() > 10) {
             String oldCode = userCode;
-            userCode = obj.getTelToUserCode(oldCode);
+            userCode = getAccountFromTel(form.getHandle(), oldCode);
             log.debug(String.format("将手机号 %s 转化成帐号 %s", oldCode, userCode));
         }
 
         log.debug(String.format("进行用户帐号(%s)与密码认证", userCode));
         // 进行用户名、密码认证
+        LocalService app;
+        if (form instanceof AbstractForm)
+            app = new LocalService((AbstractForm) form);
+        else
+            app = new LocalService(form.getHandle());
+
+        app.setService("SvrUserLogin.check");
         String IP = getIPAddress();
-        if (obj.check(userCode, password, deviceId, IP, form.getClient().getLanguage())) {
-            String sid = obj.getSessionId();
+        if (app.exec("Account_", userCode, "Password_", password, "MachineID_", deviceId, "ClientIP_", IP, "Language_",
+                form.getClient().getLanguage())) {
+            String sid = app.getDataOut().getHead().getString("SessionID_");
             if (sid != null && !sid.equals("")) {
                 log.debug(String.format("认证成功，取得sid(%s)", sid));
                 ((ClientDevice) this.getForm().getClient()).setSid(sid);
             }
-            // 登记聚安应用帐号
-            String mobile = Utils.safeString(obj.getMobile());
+
+            // // 登记聚安应用帐号
+            String mobile = Utils.safeString(app.getDataOut().getHead().getString("Mobile_"));
             if (mobile != null && !"".equals(mobile)) {
                 JayunSecurity api = new JayunSecurity(req);
                 if (!api.register(userCode, mobile)) {
@@ -184,10 +181,20 @@ public class AppLoginDefault extends AbstractJspPage implements IAppLogin {
         } else {
             // 登录验证失败
             log.debug(String.format("用户帐号(%s)与密码认证失败", userCode));
-            req.getSession().setAttribute("loginMsg", obj.getMessage());
+            req.getSession().setAttribute("loginMsg", app.getMessage());
             return this.execute();
         }
         return null;
+    }
+
+    private String getAccountFromTel(IHandle handle, String tel) throws ServletException, IOException {
+        LocalService svr = new LocalService(handle);
+        svr.setService("SvrUserLogin.getUserCodeByMobile");
+        svr.getDataIn().getHead().setField("UserCode_", tel);
+        if (!svr.exec()) {
+            throw new RuntimeException(svr.getMessage());
+        } else
+            return svr.getDataOut().getHead().getString("UserCode_");
     }
 
     /**
