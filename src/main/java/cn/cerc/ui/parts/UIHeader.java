@@ -61,7 +61,7 @@ public class UIHeader extends UIComponent {
             for (UrlRecord menu : leftMenus) {
                 html.print("<li>");
                 if (i > 1)
-                    html.println("<span>→</span>");
+                    html.println("<span>-></span>");
                 html.print("<a href=\"%s\">%s</a>", menu.getUrl(), menu.getName());
                 i++;
                 html.print("</li>");
