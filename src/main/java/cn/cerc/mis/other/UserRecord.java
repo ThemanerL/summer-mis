@@ -8,6 +8,7 @@ public class UserRecord implements Serializable {
     private String corpNo;
     private String code;
     private String name;
+    private String headImgAdd;
     private int showInUP;
     private int showOutUP;
     private int showWholesaleUP;
@@ -153,4 +154,11 @@ public class UserRecord implements Serializable {
         this.admin = admin;
     }
 
+    public String getHeadImgAdd() {
+        return headImgAdd;
+    }
+
+    public void setHeadImgAdd(String headImgAdd) {
+        this.headImgAdd = headImgAdd;
+    }
 }

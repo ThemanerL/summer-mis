@@ -1,22 +1,20 @@
 package cn.cerc.mis.other;
 
-import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-
 import cn.cerc.core.IHandle;
 import cn.cerc.db.cache.Redis;
 import cn.cerc.db.mysql.MysqlConnection;
 import cn.cerc.db.mysql.SqlQuery;
 import cn.cerc.mis.core.Application;
 import cn.cerc.mis.core.ISystemTable;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserList implements IDataList {
     private static final Logger log = LoggerFactory.getLogger(UserList.class);
@@ -96,6 +94,7 @@ public class UserList implements IDataList {
             value.setCorpNo(ds.getString("CorpNo_"));
             value.setCode(ds.getString("Code_"));
             value.setName(ds.getString("Name_"));
+            value.setHeadImgAdd(ds.getString("HeadimgAdd_"));
             Map<String, Integer> priceValue = getPriceValue(ds.getString("Code_"));
             value.setShowInUP(priceValue.get(ShowInUP));
             value.setShowOutUP(priceValue.get(ShowOutUP));
