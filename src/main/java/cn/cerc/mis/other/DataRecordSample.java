@@ -2,7 +2,7 @@ package cn.cerc.mis.other;
 
 import java.io.Serializable;
 
-public class UserRecord implements Serializable {
+public class DataRecordSample implements Serializable {
     private static final long serialVersionUID = 4744827168403991038L;
     private String id;
     private String corpNo;
