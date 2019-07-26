@@ -16,11 +16,14 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UserList implements IDataList {
-    private static final Logger log = LoggerFactory.getLogger(UserList.class);
+/**
+ * 以用户表为原型，增加从缓存读取数据的模板
+ */
+public class DataListSample implements IDataList {
+    private static final Logger log = LoggerFactory.getLogger(DataListSample.class);
     private static final int Version = 4;
     private IHandle handle;
-    private Map<String, UserRecord> buff = new HashMap<>();
+    private Map<String, DataRecordSample> buff = new HashMap<>();
     private String buffKey;
 
     private static final String ShowInUP = "ShowInUP";
@@ -28,7 +31,7 @@ public class UserList implements IDataList {
     private static final String ShowWholesaleUP = "ShowWholesaleUP";
     private static final String ShowBottomUP = "ShowBottomUP";
 
-    public UserList(IHandle handle) {
+    public DataListSample(IHandle handle) {
         super();
         this.handle = handle;
         if (handle != null)
@@ -45,11 +48,11 @@ public class UserList implements IDataList {
         this.init();
 
         // 从缓存中取回值
-        UserRecord result = buff.get(key);
+        DataRecordSample result = buff.get(key);
         return result == null ? key : result.getName();
     }
 
-    public UserRecord get(String userCode) {
+    public DataRecordSample get(String userCode) {
         if (userCode == null || "".equals(userCode))
             throw new RuntimeException("用户代码不允许为空！");
 
@@ -68,9 +71,9 @@ public class UserList implements IDataList {
         Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
         String data = Redis.get(buffKey);
         if (data != null && !"".equals(data)) {
-            Type type = new TypeToken<Map<String, UserRecord>>() {
+            Type type = new TypeToken<Map<String, DataRecordSample>>() {
             }.getType();
-            Map<String, UserRecord> items = gson.fromJson(data, type);
+            Map<String, DataRecordSample> items = gson.fromJson(data, type);
             for (String key : items.keySet()) {
                 buff.put(key, items.get(key));
             }
@@ -88,7 +91,7 @@ public class UserList implements IDataList {
         ds.open();
         while (ds.fetch()) {
             String key = ds.getString("Code_");
-            UserRecord value = new UserRecord();
+            DataRecordSample value = new DataRecordSample();
 
             value.setId(ds.getString("ID_"));
             value.setCorpNo(ds.getString("CorpNo_"));
