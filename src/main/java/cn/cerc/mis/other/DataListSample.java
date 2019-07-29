@@ -44,11 +44,8 @@ public class DataListSample implements IDataList {
         if (key == null || "".equals(key))
             return "";
 
-        // 初始化缓存
-        this.init();
-
         // 从缓存中取回值
-        DataRecordSample result = buff.get(key);
+        DataRecordSample result = get(key);
         return result == null ? key : result.getName();
     }
 
