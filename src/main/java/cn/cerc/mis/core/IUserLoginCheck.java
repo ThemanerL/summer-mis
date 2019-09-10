@@ -1,4 +1,4 @@
-package SvrUserLogin;
+package cn.cerc.mis.core;
 
 public interface IUserLoginCheck {
 

@@ -7,7 +7,6 @@ import java.util.TreeMap;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
-import SvrUserLogin.IUserLoginCheck;
 import cn.cerc.core.SupportHandle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +26,7 @@ import cn.cerc.mis.core.Application;
 import cn.cerc.mis.core.ClientDevice;
 import cn.cerc.mis.core.IAppLogin;
 import cn.cerc.mis.core.IForm;
+import cn.cerc.mis.core.IUserLoginCheck;
 import cn.cerc.mis.core.LocalService;
 import cn.cerc.mis.core.RequestData;
 import cn.cerc.mis.page.qrcode.SocketTool;
