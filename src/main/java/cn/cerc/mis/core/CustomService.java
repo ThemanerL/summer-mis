@@ -54,7 +54,7 @@ public class CustomService extends AbstractHandle implements IService, IRestful 
             }
         }
         if (mt == null) {
-            this.setMessage(String.format("没有找到服务：%s.%s ！", this.getClass().getName(), this.funcCode));
+            this.setMessage(String.format("No service found：%s.%s ！", this.getClass().getName(), this.funcCode));
             ss.setMessage(this.getMessage());
             ss.setResult(false);
             return ss;

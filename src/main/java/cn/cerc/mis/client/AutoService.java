@@ -6,6 +6,7 @@ import cn.cerc.mis.core.Application;
 import cn.cerc.mis.core.IService;
 import cn.cerc.mis.core.IStatus;
 import cn.cerc.mis.core.ServiceException;
+import cn.cerc.mis.language.R;
 import cn.cerc.mis.other.UserNotFindException;
 
 public class AutoService implements IHandle {
@@ -50,12 +51,12 @@ public class AutoService implements IHandle {
 
     public boolean exec() throws ServiceException, UserNotFindException, ServiceException {
         if (service.getService() == null)
-            throw new RuntimeException("没有指定 service");
+            throw new RuntimeException(R.asString(handle, "没有指定 service"));
 
         handle.init(service.getCorpNo(), service.getUserCode(), "127.0.0.1");
         IService bean = Application.getService(this, service.getService());
         if (bean == null)
-            throw new RuntimeException("无法创建服务：" + service.getService());
+            throw new RuntimeException(R.asString(handle, "无法创建服务：") + service.getService());
 
         IStatus status = bean.execute(service.getDataIn(), dataOut);
 
@@ -90,17 +91,17 @@ public class AutoService implements IHandle {
 
     @Override
     public void setProperty(String key, Object value) {
-        throw new RuntimeException("调用了未被实现的接口");
+        throw new RuntimeException(R.asString(handle, "调用了未被实现的接口"));
     }
 
     @Override
     public boolean init(String bookNo, String userCode, String clientCode) {
-        throw new RuntimeException("调用了未被实现的接口");
+        throw new RuntimeException(R.asString(this, "调用了未被实现的接口"));
     }
 
     @Override
     public boolean init(String token) {
-        throw new RuntimeException("调用了未被实现的接口");
+        throw new RuntimeException(R.asString(handle, "调用了未被实现的接口"));
     }
 
     @Override

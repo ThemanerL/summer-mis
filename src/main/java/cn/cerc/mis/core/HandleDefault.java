@@ -79,11 +79,11 @@ public class HandleDefault implements IHandle {
     @Override
     public boolean init(String token) {
         this.setProperty(Application.token, token);
-        log.debug(String.format("根据 token=%s 初始化 Session", token));
+        log.debug(String.format("according to token=%s initialization Session", token));
         if (token == null)
             return false;
         if (token.length() < 10)
-            throw new RuntimeException("token 值有错！");
+            throw new RuntimeException("token Wrong value！");
 
         // 从数据表CurrentUser中，取出公司别CorpNo_与UserCode_，再依据UserCode_从Account取出RoleCode_
         try (MemoryBuffer buff = new MemoryBuffer(BufferType.getSessionBase, token)) {
@@ -91,7 +91,7 @@ public class HandleDefault implements IHandle {
                 buff.setField("exists", false);
                 LocalService svr = new LocalService(this, "AppSessionRestore.byToken");
                 if (!svr.exec("token", token)) {
-                    log.error("sid 恢复错误 ", svr.getMessage());
+                    log.error("sid Recovery error ", svr.getMessage());
                     this.setProperty(Application.token, null);
                     return false;
                 }

@@ -50,7 +50,7 @@ public class RemoteService implements IServiceProxy {
         if (args.length > 0) {
             Record headIn = getDataIn().getHead();
             if (args.length % 2 != 0)
-                throw new RuntimeException("传入的参数数量必须为偶数！");
+                throw new RuntimeException("The number of parameters passed in must be even！");
             for (int i = 0; i < args.length; i = i + 2)
                 headIn.setField(args[i].toString(), args[i + 1]);
         }
@@ -106,7 +106,7 @@ public class RemoteService implements IServiceProxy {
         HttpResponse response = client.execute(httpPost);
         // 如果请求成功
         if (response.getStatusLine().getStatusCode() != 200) {
-            this.setMessage("请求服务器失败，错误代码为：" + response.getStatusLine().getStatusCode());
+            this.setMessage("The request server failed with the error code：" + response.getStatusLine().getStatusCode());
             return null;
         }
 

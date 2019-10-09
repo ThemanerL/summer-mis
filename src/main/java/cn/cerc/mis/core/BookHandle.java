@@ -2,6 +2,7 @@ package cn.cerc.mis.core;
 
 import cn.cerc.core.IHandle;
 import cn.cerc.db.mysql.MysqlConnection;
+import cn.cerc.mis.language.R;
 
 public class BookHandle implements IHandle {
     private IHandle handle;
@@ -48,17 +49,17 @@ public class BookHandle implements IHandle {
 
     @Override
     public void setProperty(String key, Object value) {
-        throw new RuntimeException("调用了未被实现的接口");
+        throw new RuntimeException(R.asString(handle, "调用了未被实现的接口"));
     }
 
     @Override
     public boolean init(String bookNo, String userCode, String clientCode) {
-        throw new RuntimeException("调用了未被实现的接口");
+        throw new RuntimeException(R.asString(handle, "调用了未被实现的接口"));
     }
 
     @Override
     public boolean init(String token) {
-        throw new RuntimeException("调用了未被实现的接口");
+        throw new RuntimeException(R.asString(this, "调用了未被实现的接口"));
     }
 
     @Override

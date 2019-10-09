@@ -205,8 +205,8 @@ public class StartForms implements Filter {
 
             // 是否拥有此菜单调用权限
             if (!Application.getPassport(form.getHandle()).passForm(form)) {
-                log.warn(String.format("无权限执行 %s", request.getRequestURL()));
-                throw new RuntimeException("对不起，您没有权限执行此功能！");
+                log.warn(String.format("No permission to execute %s", request.getRequestURL()));
+                throw new RuntimeException("Sorry, you do not have authorization to execute this function！");
             }
 
             // 专用测试账号则跳过设备认证的判断

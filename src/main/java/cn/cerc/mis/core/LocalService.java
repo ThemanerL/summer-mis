@@ -82,7 +82,7 @@ public class LocalService implements IServiceProxy {
         if (args.length > 0) {
             Record headIn = getDataIn().getHead();
             if (args.length % 2 != 0)
-                throw new RuntimeException("传入的参数数量必须为偶数！");
+                throw new RuntimeException("The number of parameters passed in must be even！");
             for (int i = 0; i < args.length; i = i + 2)
                 headIn.setField(args[i].toString(), args[i + 1]);
         }
@@ -152,7 +152,7 @@ public class LocalService implements IServiceProxy {
         if (args.length > 0) {
             Record headIn = getDataIn().getHead();
             if (args.length % 2 != 0)
-                return new ServiceStatus(false, "传入的参数数量必须为偶数！");
+                return new ServiceStatus(false, "The number of parameters passed in must be even！");
             for (int i = 0; i < args.length; i = i + 2)
                 headIn.setField(args[i].toString(), args[i + 1]);
         }

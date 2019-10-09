@@ -24,7 +24,7 @@ public interface IBookManage {
     default public String getBookMonth() {
         TDateTime dateFrom = getDateFrom();
         if (dateFrom == null)
-            throw new RuntimeException("帐本年月不允许为空！");
+            throw new RuntimeException("The book year is not allowed to be empty!");
         return dateFrom.getYearMonth();
     }
 
