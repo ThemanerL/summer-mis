@@ -79,7 +79,7 @@ public class HandleDefault implements IHandle {
     @Override
     public boolean init(String token) {
         this.setProperty(Application.token, token);
-        log.debug(String.format("according to token=%s initialization Session", token));
+        log.debug(String.format("根据 token=%s 初始化 Session", token));
         if (token == null)
             return false;
         if (token.length() < 10)
@@ -91,7 +91,7 @@ public class HandleDefault implements IHandle {
                 buff.setField("exists", false);
                 LocalService svr = new LocalService(this, "AppSessionRestore.byToken");
                 if (!svr.exec("token", token)) {
-                    log.error("sid Recovery error ", svr.getMessage());
+                    log.error("sid 恢复错误 ", svr.getMessage());
                     this.setProperty(Application.token, null);
                     return false;
                 }

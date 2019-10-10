@@ -47,7 +47,7 @@ public class AppSessionRestore extends CustomService {
         cdsCurrent.add("where loginID_= '%s' ", token);
         cdsCurrent.open();
         if (cdsCurrent.eof()) {
-            log.warn(String.format("token %s could not find it！", token));
+            log.warn(String.format("token %s 没有找到！", token));
             HandleDefault sess = (HandleDefault) this.getProperty(null);
             sess.setProperty(Application.token, null);
             return false;
@@ -60,7 +60,7 @@ public class AppSessionRestore extends CustomService {
         cdsUser.add("where ID_='%s'", userId);
         cdsUser.open();
         if (cdsUser.eof()) {
-            log.warn(String.format("userId %s could not find it！", userId));
+            log.warn(String.format("userId %s 没有找到！", userId));
             HandleDefault sess = (HandleDefault) this.getProperty(null);
             sess.setProperty(Application.token, null);
             return false;

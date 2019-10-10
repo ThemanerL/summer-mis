@@ -83,7 +83,7 @@ public class ResetManager implements IBookManage {
         this.section = section;
         log.info(String.format("corpNo:%s, init:%s, book total: %d", handle.getCorpNo(), initMonth, books.size()));
         log.info(String.format("dateFrom: %s, dateTo: %s", section.getDateFrom(), section.getDateTo()));
-        log.info(String.format("%s, source total:%d", R.asString(handle, "取得数据源"), sources.size()));
+        log.info(String.format("取得数据源, source total:%d", sources.size()));
 
         Timing pt1 = timer.get("sources load");
         Timing pt2 = timer.get("sources output");
@@ -104,7 +104,7 @@ public class ResetManager implements IBookManage {
         pt1.stop();
 
         try {
-            log.info(String.format(R.asString(handle, "排序 %d 项数据并传给帐本"), dataList.size()));
+            log.info(String.format("排序 %d 项数据并传给帐本", dataList.size()));
             pt1 = timer.get("books enroll").start();
             for (IBookData bookData : dataList) {
                 for (IResetBook book : books) {

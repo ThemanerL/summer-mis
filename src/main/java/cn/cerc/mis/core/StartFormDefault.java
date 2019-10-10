@@ -77,7 +77,7 @@ public class StartFormDefault implements ApplicationContextAware {
             passport.setHandle(handle);
             // 是否拥有此菜单调用权限
             if (!passport.passForm(form)) {
-                log.warn(String.format("No permission to execute %s", request.getRequestURL()));
+                log.warn(String.format("无权限执行 %s", request.getRequestURL()));
                 throw new RuntimeException("Sorry, you do not have authorization to execute this function！");
             }
 

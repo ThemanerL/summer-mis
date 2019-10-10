@@ -89,7 +89,7 @@ public class StartForms implements Filter {
                 req.setAttribute("myappHandle", handle);
                 form.setHandle(handle);
 
-                log.debug("Perform security check, if not logged in, display login dialog");
+                log.debug("进行安全检查，若未登录则显示登录对话框");
 
                 if (!form.logon()) {
                     IAppLogin page = Application.getBean(IAppLogin.class, "appLogin", "appLoginManage",
@@ -149,12 +149,12 @@ public class StartForms implements Filter {
         String deviceId = form.getClient().getId();
         // TODO 验证码变量，需要改成静态变量，统一取值
         String verifyCode = form.getRequest().getParameter("verifyCode");
-        log.debug(String.format("Equipment certification, deviceId=%s", deviceId));
+        log.debug(String.format("进行设备认证, deviceId=%s", deviceId));
         String userId = (String) form.getHandle().getProperty(Application.userId);
         try (MemoryBuffer buff = new MemoryBuffer(BufferType.getSessionInfo, userId, deviceId)) {
             if (!buff.isNull()) {
                 if (buff.getBoolean("VerifyMachine")) {
-                    log.debug("Already certified, skip authentication");
+                    log.debug("已经认证过，跳过认证");
                     return true;
                 }
             }
@@ -205,7 +205,7 @@ public class StartForms implements Filter {
 
             // 是否拥有此菜单调用权限
             if (!Application.getPassport(form.getHandle()).passForm(form)) {
-                log.warn(String.format("No permission to execute %s", request.getRequestURL()));
+                log.warn(String.format("无权限执行 %s", request.getRequestURL()));
                 throw new RuntimeException("Sorry, you do not have authorization to execute this function！");
             }
 
@@ -244,7 +244,7 @@ public class StartForms implements Filter {
                         pageOutput = e.getViewFile();
                     }
                 } else {
-                    log.debug("Jumped to the device authentication page without authentication");
+                    log.debug("没有进行认证过，跳转到设备认证页面");
                     ServerConfig config = new ServerConfig();
                     String supCorpNo = config.getProperty("vine.mall.supCorpNo", "");
                     // 若是专用APP登陆并且是iPhone，则不跳转设备登陆页，由iPhone原生客户端处理
