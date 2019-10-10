@@ -104,10 +104,10 @@ public class FrmPhoneSample extends AbstractForm {
 
         new Block991(page.getContent());
         Block992 b992 = new Block992(page.getContent());
-        b992.addButton("进入系统");
-        b992.addButton("进入系统");
-        b992.addButton("进入系统");
-        b992.addButton("进入系统");
+        b992.addButton("Enter the system");
+        b992.addButton("Enter the system");
+        b992.addButton("Enter the system");
+        b992.addButton("Enter the system");
         return page;
     }
 

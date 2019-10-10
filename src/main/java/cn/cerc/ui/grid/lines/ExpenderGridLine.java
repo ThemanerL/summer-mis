@@ -65,7 +65,7 @@ public class ExpenderGridLine extends AbstractGridLine {
                     else if (field instanceof AbstractField)
                         outputField(html, field);
                     else
-                        throw new RuntimeException("暂不支持的数据类型：" + field.getClass().getName());
+                        throw new RuntimeException("Data types not currently supported：" + field.getClass().getName());
                     html.println("</span>");
                 }
             }

@@ -105,7 +105,7 @@ public class BeanRecord<T> implements AutoCloseable, BuildRecord {
                         double val = (Double) value;
                         mt.invoke(owner, val);
                     } else {
-                        String str = String.format("数据字段(%s)的数据类型(%s)与要赋值的对象属性类型(%s)不一致！", field,
+                        String str = String.format("The data type (%s) of the data field (%s) is inconsistent with the object attribute type (%s) to be assigned！", field,
                                 value.getClass().getName(), p1.getName());
                         throw new RuntimeException(str);
                     }

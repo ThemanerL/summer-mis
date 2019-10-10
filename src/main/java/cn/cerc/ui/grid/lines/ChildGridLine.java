@@ -46,7 +46,7 @@ public class ChildGridLine extends AbstractGridLine {
                     else if (field instanceof AbstractField)
                         outputField(html, field);
                     else
-                        throw new RuntimeException("暂不支持的数据类型：" + field.getClass().getName());
+                        throw new RuntimeException("Data types not currently supported：" + field.getClass().getName());
                     if (field.getTitle() != null && !"".equals(field.getTitle()))
                         html.print("<span style='float: left;'>%s：</span> ", field.getTitle());
                 }

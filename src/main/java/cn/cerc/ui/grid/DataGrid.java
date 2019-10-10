@@ -47,9 +47,9 @@ public class DataGrid extends AbstractGrid {
             sumFieldWidth += cell.getFields().get(0).getWidth();
 
         if (sumFieldWidth < 0)
-            throw new RuntimeException("总列宽不允许小于1");
+            throw new RuntimeException("Total column width is not allowed to be less than 1");
         if (sumFieldWidth > MaxWidth)
-            throw new RuntimeException("总列宽不允许大于600");
+            throw new RuntimeException("Total column width is not allowed to be greater than 600");
 
         html.print("<table class=\"%s\"", this.getCSSClass());
         if (this.getCSSStyle() != null)

@@ -39,17 +39,17 @@ public class OperaPages extends UISheet {
             html.println("<div class=\"foot-page\">");
         } else {
             html.println("<section>");
-            html.println("<div class=\"title\">数据分页</div>");
+            html.println("<div class=\"title\">Data paging</div>");
             html.println("<div class=\"contents\">");
-            html.println("总记录数：%d, 当前页：%d，总页数：%d <br/>", pages.getRecordCount(), pages.getCurrent(), pages.getCount());
+            html.println("total：%d, current page：%d，total pages：%d <br/>", pages.getRecordCount(), pages.getCurrent(), pages.getCount());
             html.println("<div align=\"center\">");
         }
-        html.println("<a href=\"?pageno=1%s\">首页</a>", url);
-        html.println("<a href=\"?pageno=%d%s\">上一页</a>", pages.getPrior(), url);
-        html.println("<a href=\"?pageno=%d%s\">下一页</a>", pages.getNext(), url);
-        html.println("<a href=\"?pageno=%d%s\">尾页</a>", pages.getCount(), url);
+        html.println("<a href=\"?pageno=1%s\">Home</a>", url);
+        html.println("<a href=\"?pageno=%d%s\">Previous page</a>", pages.getPrior(), url);
+        html.println("<a href=\"?pageno=%d%s\">Next page</a>", pages.getNext(), url);
+        html.println("<a href=\"?pageno=%d%s\">Last page</a>", pages.getCount(), url);
         if (isPhone) {
-            html.println("笔数：%s, 页数：%d / %d", pages.getRecordCount(), pages.getCurrent(), pages.getCount());
+            html.println("Number of pens：%s, Number of pages：%d / %d", pages.getRecordCount(), pages.getCurrent(), pages.getCount());
             html.println("</div>");
         } else {
             html.println("</div>");
