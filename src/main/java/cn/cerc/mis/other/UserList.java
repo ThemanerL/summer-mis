@@ -53,7 +53,7 @@ public class UserList implements IDataList {
 
     public UserRecord get(String userCode) {
         if (userCode == null || "".equals(userCode))
-            throw new RuntimeException("用户代码不允许为空！");
+            throw new RuntimeException("User code is not allowed to be empty！");
 
         // 初始化缓存
         this.init();
@@ -76,7 +76,7 @@ public class UserList implements IDataList {
             for (String key : items.keySet()) {
                 buff.put(key, items.get(key));
             }
-            log.debug(this.getClass().getName() + " 缓存成功！");
+            log.debug(this.getClass().getName() + " Cache success！");
             return;
         }
 
@@ -118,7 +118,7 @@ public class UserList implements IDataList {
 
         // 存入到缓存中
         Redis.set(buffKey, gson.toJson(buff));
-        log.debug(this.getClass().getName() + " 缓存初始化！");
+        log.debug(this.getClass().getName() + " Cache initialization！");
     }
 
     private Map<String, Integer> getPriceValue(String userCode) {
@@ -176,7 +176,7 @@ public class UserList implements IDataList {
                 systemTable.getUserOptions(), roleCode, userCode);
         conn.execute(sql);
 
-        log.info(String.format("%s 已被切换到 corpNo=%s, roleCode=%s", userCode, corpNo, roleCode));
+        log.info(String.format("%s Has been switched to corpNo=%s, roleCode=%s", userCode, corpNo, roleCode));
     }
 
 }

@@ -34,7 +34,7 @@ public class SvrAutoLogin {
     public boolean check(IForm form, HttpServletRequest request) {
         String userCode = request.getParameter("userCode");
         if (userCode == null || "".equals(userCode)) {
-            this.setMessage("用户代码不允许为空");
+            this.setMessage("User code is not allowed to be empty");
             return false;
         }
         String deviceId = form.getClient().getId();
@@ -44,7 +44,7 @@ public class SvrAutoLogin {
         dsUser.add("select * from %s where Code_='%s'", systemTable.getUserInfo(), userCode);
         dsUser.open();
         if (dsUser.eof()) {
-            this.setMessage(String.format("该帐号(%s)并不存在，禁止登录！", userCode));
+            this.setMessage(String.format("The account number (%s) does not exist. Login is forbidden.！", userCode));
             return false;
         }
 
@@ -85,7 +85,7 @@ public class SvrAutoLogin {
 
             // 检查设备码
             SvrUserLogin svrLogin = Application.getBean(handle, SvrUserLogin.class);
-            svrLogin.enrollMachineInfo(dsUser.getString("CorpNo_"), userCode, deviceId, "浏览器");
+            svrLogin.enrollMachineInfo(dsUser.getString("CorpNo_"), userCode, deviceId, "Browser");
 
             // 设置登录信息
             ClientDevice info = new ClientDevice();

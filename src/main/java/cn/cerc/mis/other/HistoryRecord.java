@@ -47,7 +47,7 @@ public class HistoryRecord {
     public void save(IHandle handle) {
         String corpNo = handle.getCorpNo();
         if (corpNo == null || "".equals(corpNo)) {
-            throw new RuntimeException("生成日志时，公司编号不允许为空！");
+            throw new RuntimeException("Company number is not allowed to be empty when generating logs！");
         }
 
         String userCode = handle.getUserCode();

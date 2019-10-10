@@ -21,10 +21,10 @@ public class MemoryBuffer extends Buffer implements AutoCloseable {
 
     public static String buildKey(BufferType bt, String... keys) {
         if (keys == null || keys.length == 0)
-            throw new RuntimeException("[MemoryBuffer]错误的初始化参数！");
+            throw new RuntimeException("[MemoryBuffer]Wrong initialization parameter！");
 
         if (keys.length == 1 && keys[0] == null)
-            throw new RuntimeException("传值有误！");
+            throw new RuntimeException("Incorrect value！");
 
         StringBuffer str = new StringBuffer();
         str.append(bt.ordinal());

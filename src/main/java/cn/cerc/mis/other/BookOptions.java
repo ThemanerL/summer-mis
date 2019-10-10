@@ -3,6 +3,7 @@ package cn.cerc.mis.other;
 import java.util.HashMap;
 import java.util.Map;
 
+import cn.cerc.mis.language.R;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -341,7 +342,7 @@ public class BookOptions {
         }
         // 做返回值复查
         if (result == null || "".equals(result))
-            throw new RuntimeException("期初年月未设置，请先到系统参数中设置好后再进行此作业!");
+            throw new RuntimeException("The beginning of the year is not set, please set it in the system parameters before proceeding with this operation.!");
         return result;
     }
 
@@ -354,7 +355,7 @@ public class BookOptions {
         f.add("select AppDate_ from %s", systemTable.getBookInfo());
         SqlQuery ds = f.open();
         if (ds.size() == 0)
-            throw new RuntimeException(String.format("没有找到帐套：%s", corpNo));
+            throw new RuntimeException(String.format("No set of books found：%s", corpNo));
         return ds.getDate("AppDate_");
 
     }
@@ -362,7 +363,7 @@ public class BookOptions {
     public static String getParamName(String paramCode) {
         String result = items.get(paramCode);
         if (result == null || "".equals(result))
-            throw new RuntimeException("没有注册的帐套参数: " + paramCode);
+            throw new RuntimeException("Unregistered set of parameters: " + paramCode);
         return result;
     }
 
@@ -375,7 +376,7 @@ public class BookOptions {
         cdsTmp.open();
         if (!cdsTmp.eof())
             return;
-        String paramName = getParamName(paramKey);
+        String paramName = R.asString(this.handle, getParamName(paramKey));
         cdsTmp.append();
         cdsTmp.setField("CorpNo_", corpNo);
         cdsTmp.setField("Code_", paramKey);

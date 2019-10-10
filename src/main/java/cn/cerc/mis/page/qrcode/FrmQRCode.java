@@ -19,7 +19,7 @@ public class FrmQRCode extends AbstractForm implements JayunEasyLogin {
         SvrAutoLogin svrLogin = new SvrAutoLogin(this);
         if (svrLogin.check(this, this.getRequest())) {
             ClientDevice info = ((ClientDevice) this.getClient());
-            message = new JayunMessage(true, "已确认");
+            message = new JayunMessage(true, "confirmed");
             message.setToken(info.getSid());
             message.setUrl("WebDefault");
         } else {

@@ -27,11 +27,11 @@ public class MessageRecord {
 
     public MessageRecord(String userCode, String subject) {
         if (subject == null || "".equals(subject)) {
-            throw new RuntimeException("消息标题不允许为空");
+            throw new RuntimeException("Message title is not allowed to be empty");
         }
 
         if (userCode == null || "".equals(userCode)) {
-            throw new RuntimeException("用户代码不允许为空");
+            throw new RuntimeException("User code is not allowed to be empty");
         }
 
         this.userCode = userCode;
@@ -45,16 +45,16 @@ public class MessageRecord {
 
     public String send(IHandle handle) {
         if (subject == null || "".equals(subject)) {
-            throw new RuntimeException("消息标题不允许为空");
+            throw new RuntimeException("Message title is not allowed to be empty");
         }
 
         if (userCode == null || "".equals(userCode)) {
-            throw new RuntimeException("用户代码不允许为空");
+            throw new RuntimeException("User code is not allowed to be empty");
         }
 
         String sendCorpNo = corpNo != null ? corpNo : handle.getCorpNo();
         if ("".equals(sendCorpNo)) {
-            throw new RuntimeException("公司别不允许为空");
+            throw new RuntimeException("Companies are not allowed to be empty");
         }
 
         LocalService svr = new LocalService(handle, "SvrUserMessages.appendRecord");

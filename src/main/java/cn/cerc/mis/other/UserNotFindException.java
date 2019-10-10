@@ -5,7 +5,7 @@ public class UserNotFindException extends Exception {
     private String userCode;
 
     public UserNotFindException(String userCode) {
-        super("找不到用户帐号：" + userCode);
+        super("User account not found：" + userCode);
         this.userCode = userCode;
     }
 

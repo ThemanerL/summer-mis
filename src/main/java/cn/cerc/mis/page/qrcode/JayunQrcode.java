@@ -41,7 +41,7 @@ public class JayunQrcode {
         String sign = getSign(appKey, appSecret, action, timestamp);
 
         if (!sign.equals(reqSign)) {
-            JayunMessage msg = new JayunMessage(false, "签名失败");
+            JayunMessage msg = new JayunMessage(false, "Signature failed");
             echo(msg);
             return;
         }

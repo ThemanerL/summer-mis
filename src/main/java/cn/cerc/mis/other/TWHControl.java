@@ -10,7 +10,7 @@ public enum TWHControl {
      * 取得单头仓别
      */
     public String getHeadWH(Record head) {
-        return this == TWHControl.whcNone ? "仓库" : head.getString("WHCode_");
+        return this == TWHControl.whcNone ? "warehouse" : head.getString("WHCode_");
     }
 
     /*
