@@ -18,7 +18,7 @@ public class AppSessionRestore extends CustomService {
 
     public boolean byUserCode() throws ServiceException, UserNotFindException {
         Record headIn = getDataIn().getHead();
-        DataValidateException.stopRun("用户id不允许为空", !headIn.hasValue("userCode"));
+        DataValidateException.stopRun("User id is not allowed to be empty", !headIn.hasValue("userCode"));
         String userCode = headIn.getString("userCode");
 
         SqlQuery cdsUser = new SqlQuery(this);
@@ -38,7 +38,7 @@ public class AppSessionRestore extends CustomService {
 
     public boolean byToken() throws ServiceException {
         Record headIn = getDataIn().getHead();
-        DataValidateException.stopRun("token不允许为空", !headIn.hasValue("token"));
+        DataValidateException.stopRun("Token is not allowed to be empty", !headIn.hasValue("token"));
         String token = headIn.getString("token");
 
         SqlQuery cdsCurrent = new SqlQuery(this);
@@ -47,7 +47,7 @@ public class AppSessionRestore extends CustomService {
         cdsCurrent.add("where loginID_= '%s' ", token);
         cdsCurrent.open();
         if (cdsCurrent.eof()) {
-            log.warn(String.format("token %s 没有找到！", token));
+            log.warn(String.format("token %s could not find it！", token));
             HandleDefault sess = (HandleDefault) this.getProperty(null);
             sess.setProperty(Application.token, null);
             return false;
@@ -60,7 +60,7 @@ public class AppSessionRestore extends CustomService {
         cdsUser.add("where ID_='%s'", userId);
         cdsUser.open();
         if (cdsUser.eof()) {
-            log.warn(String.format("userId %s 没有找到！", userId));
+            log.warn(String.format("userId %s could not find it！", userId));
             HandleDefault sess = (HandleDefault) this.getProperty(null);
             sess.setProperty(Application.token, null);
             return false;

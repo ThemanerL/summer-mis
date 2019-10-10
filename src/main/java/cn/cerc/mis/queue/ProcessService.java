@@ -78,7 +78,7 @@ public class ProcessService extends AbstractTask {
         task.setProcessTime(TDateTime.Now().toString());
         LocalService svr = new LocalService(this, "SvrUserMessages.updateAsyncService");
         if (!svr.exec("msgId", msgId, "content", task.toString(), "process", task.getProcess()))
-            throw new RuntimeException("更新任务队列进度异常：" + svr.getMessage());
+            throw new RuntimeException("Update task queue progress is abnormal：" + svr.getMessage());
         log.debug(task.getService() + ":" + subject + ":" + AsyncService.getProcessTitle(task.getProcess()));
     }
 

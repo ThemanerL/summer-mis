@@ -55,7 +55,7 @@ public class MemoryBookInfo {
     public static int getStatus(IHandle handle, String corpNo) {
         BookInfoRecord item = get(handle, corpNo);
         if (item == null)
-            throw new RuntimeException(String.format("没有找到注册的帐套  %s ", corpNo));
+            throw new RuntimeException(String.format("No registered set of books found  %s ", corpNo));
         return item.getStatus();
     }
 
@@ -81,7 +81,7 @@ public class MemoryBookInfo {
     public static BookVersion getCorpType(IHandle handle, String corpNo) {
         BookInfoRecord item = get(handle, corpNo);
         if (item == null)
-            throw new RuntimeException(String.format("没有找到注册的帐套  %s ", corpNo));
+            throw new RuntimeException(String.format("No registered set of books found  %s ", corpNo));
         int result = item.getCorpType();
         return BookVersion.values()[result];
     }
@@ -97,14 +97,14 @@ public class MemoryBookInfo {
     public static String getShortName(IHandle handle, String corpNo) {
         BookInfoRecord item = get(handle, corpNo);
         if (item == null)
-            throw new RuntimeException(String.format("没有找到注册的帐套  %s ", corpNo));
+            throw new RuntimeException(String.format("No registered set of books found  %s ", corpNo));
         return item.getShortName();
     }
 
     public static String getIndustry(IHandle handle, String corpNo) {
         BookInfoRecord item = get(handle, corpNo);
         if (item == null)
-            throw new RuntimeException(String.format("没有找到注册的帐套  %s ", corpNo));
+            throw new RuntimeException(String.format("No registered set of books found  %s ", corpNo));
         return item.getIndustry();
     }
 

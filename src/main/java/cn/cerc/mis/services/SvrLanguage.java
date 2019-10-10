@@ -16,7 +16,7 @@ public class SvrLanguage extends CustomService {
 
     public boolean downloadAll() throws DataValidateException {
         Record headIn = getDataIn().getHead();
-        DataValidateException.stopRun("语言类型不允许为空", !headIn.hasValue("lang_"));
+        DataValidateException.stopRun("Language type is not allowed to be empty", !headIn.hasValue("lang_"));
 
         SqlQuery dslang = new SqlQuery(this);
         dslang.add("select * from %s", systemTable.getLanguage());
@@ -28,8 +28,8 @@ public class SvrLanguage extends CustomService {
 
     public boolean download() throws DataValidateException {
         Record headIn = getDataIn().getHead();
-        DataValidateException.stopRun("语言类型不允许为空", !headIn.hasValue("lang_"));
-        DataValidateException.stopRun("翻译文字不允许为空", !headIn.hasValue("key_"));
+        DataValidateException.stopRun("Language type is not allowed to be empty", !headIn.hasValue("lang_"));
+        DataValidateException.stopRun("Translation text is not allowed to be empty", !headIn.hasValue("key_"));
 
         String lang = headIn.getString("lang_");
         String key = headIn.getString("key_");

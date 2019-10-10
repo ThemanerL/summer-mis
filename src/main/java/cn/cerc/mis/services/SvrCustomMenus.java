@@ -32,7 +32,7 @@ public class SvrCustomMenus extends CustomService {
 
         while (dataIn.fetch()) {
             if (!ds1.locate("ID_", dataIn.getString("id")))
-                throw new RuntimeException("菜单错误，请核查！");
+                throw new RuntimeException("Menu error, please check！");
             if (!ds2.locate("ID_", dataIn.getString("id"))) {
                 ds1.locate("ID_", dataIn.getString("id"));
 
@@ -51,7 +51,7 @@ public class SvrCustomMenus extends CustomService {
 
     public boolean search() {
         if (!systemTable.getManageBook().equals(handle.getCorpNo()))
-            throw new RuntimeException("您不是运营商账号不允许操作！");
+            throw new RuntimeException("You are not allowed to operate the operator account！");
 
         Record headIn = getDataIn().getHead();
         BuildQuery f = new BuildQuery(this);

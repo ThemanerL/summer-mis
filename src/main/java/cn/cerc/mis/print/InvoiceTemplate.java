@@ -60,9 +60,9 @@ public class InvoiceTemplate extends PrintTemplate {
         pdfTableHeaderCell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
 
         // 设置表头栏位
-        pdfTableHeaderCell.setPhrase(new Paragraph("名称", f8));
+        pdfTableHeaderCell.setPhrase(new Paragraph("Name", f8));
         pdfTable.addCell(pdfTableHeaderCell);
-        pdfTableHeaderCell.setPhrase(new Paragraph("信息", f8));
+        pdfTableHeaderCell.setPhrase(new Paragraph("Information", f8));
         pdfTable.addCell(pdfTableHeaderCell);
 
         // 创建一个表格的正文内容单元格

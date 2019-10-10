@@ -85,14 +85,14 @@ public class AsyncService implements IServiceProxy {
         if (args.length > 0) {
             Record headIn = getDataIn().getHead();
             if (args.length % 2 != 0)
-                throw new RuntimeException("传入的参数数量必须为偶数！");
+                throw new RuntimeException("The number of parameters passed in must be even！");
             for (int i = 0; i < args.length; i = i + 2)
                 headIn.setField(args[i].toString(), args[i + 1]);
         }
 
         String subject = this.getSubject();
         if ("".equals(subject))
-            throw new RuntimeException("后台任务标题不允许为空！");
+            throw new RuntimeException("Background task title is not allowed to be empty！");
         this.send(); // 发送到队列服务器
         getDataOut().getHead().setField("_msgId_", msgId);
         if (this.process == 2) {
@@ -190,7 +190,7 @@ public class AsyncService implements IServiceProxy {
 
     public void setProcess(int process) {
         if (process < 0 || process > processTiles.size())
-            throw new RuntimeException("非法的任务进度值：" + process);
+            throw new RuntimeException("Illegal task progress value：" + process);
         this.process = process;
     }
 

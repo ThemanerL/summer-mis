@@ -59,7 +59,7 @@ public class BarcodeDemo2 {
         // step 4
         PdfContentByte cb = writer.getDirectContent();
 
-        document.add(new Paragraph("各类条码生成范例：", fontChinese));
+        document.add(new Paragraph("Various types of barcode generation examples：", fontChinese));
         // EAN 13
         document.add(new Paragraph("Barcode EAN.UCC-13"));
         BarcodeEAN codeEAN = new BarcodeEAN();

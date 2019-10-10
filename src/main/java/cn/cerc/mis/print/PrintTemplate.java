@@ -213,11 +213,11 @@ public class PrintTemplate {
 
     public void setOutputDevice(String outputDevice) {
         if (null == outputDevice || "".equals(outputDevice))
-            throw new RuntimeException("输出设备不允许为空！");
+            throw new RuntimeException("Output device is not allowed to be empty！");
         if ("screen".equals(outputDevice) || "printer".equals(outputDevice) || "file".equals(outputDevice))
             this.outputDevice = outputDevice;
         else
-            throw new RuntimeException("输出设备只能为 screen(默认)、printer、file三者之一!");
+            throw new RuntimeException("The output device can only be one of screen (default), printer, file!");
     }
 
     public ReportHeaderFooter getHeaderFooter() {

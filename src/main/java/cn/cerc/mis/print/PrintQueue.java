@@ -39,7 +39,7 @@ public class PrintQueue {
             throw new RuntimeException("ReportParams is null");
         }
         if (userCode == null || "".equals(userCode)) {
-            throw new RuntimeException("用户代码不允许为空");
+            throw new RuntimeException("User code is not allowed to be empty");
         }
 
         String queueCode = buildQueue();

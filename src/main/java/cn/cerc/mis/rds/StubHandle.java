@@ -9,6 +9,7 @@ import cn.cerc.db.mysql.SqlQuery;
 import cn.cerc.db.queue.AliyunQueueConnection;
 import cn.cerc.mis.core.Application;
 import cn.cerc.mis.core.ISystemTable;
+import cn.cerc.mis.language.R;
 
 public class StubHandle implements IHandle, AutoCloseable {
     public static final String DefaultBook = "999001";
@@ -39,7 +40,7 @@ public class StubHandle implements IHandle, AutoCloseable {
         ds.add("where CorpNo_='%s'", corpNo);
         ds.open();
         if (ds.eof())
-            throw new RuntimeException("找不到默认帐号：CorpNo=" + corpNo);
+            throw new RuntimeException("No default account found：CorpNo=" + corpNo);
         String userCode = ds.getString("Code_");
 
         handle.init(corpNo, userCode, clientIP);
@@ -89,17 +90,17 @@ public class StubHandle implements IHandle, AutoCloseable {
 
     @Override
     public void setProperty(String key, Object value) {
-        throw new RuntimeException("调用了未被实现的接口");
+        throw new RuntimeException(R.asString(handle, "调用了未被实现的接口"));
     }
 
     @Override
     public boolean init(String bookNo, String userCode, String clientCode) {
-        throw new RuntimeException("调用了未被实现的接口");
+        throw new RuntimeException(R.asString(handle, "调用了未被实现的接口"));
     }
 
     @Override
     public boolean init(String token) {
-        throw new RuntimeException("调用了未被实现的接口");
+        throw new RuntimeException(R.asString(handle, "调用了未被实现的接口"));
     }
 
     @Override
