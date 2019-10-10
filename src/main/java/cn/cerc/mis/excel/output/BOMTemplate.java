@@ -50,7 +50,7 @@ public class BOMTemplate extends ExcelTemplate {
         super.output(sheet);
 
         this.setRow(this.getHeads().size() + this.getDataSet().size() + 2);
-        sheet.addCell(new Label(0, this.getRow(), "材料清单："));
+        sheet.addCell(new Label(0, this.getRow(), "Bill of materials："));
         this.setRow(this.getRow() + 1);
         this.getColumns().clear();
         this.getColumns().addAll(materials);
@@ -59,7 +59,7 @@ public class BOMTemplate extends ExcelTemplate {
         super.output(sheet);
 
         this.setRow(this.getRow() + materialDataSet.size() + 2);
-        sheet.addCell(new Label(0, this.getRow(), "制成清单："));
+        sheet.addCell(new Label(0, this.getRow(), "Make a list："));
         this.setRow(this.getRow() + 1);
         this.getColumns().clear();
         this.getColumns().addAll(makes);

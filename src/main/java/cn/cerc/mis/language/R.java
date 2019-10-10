@@ -39,12 +39,12 @@ public class R {
             return text;
 
         if (text == null || "".equals(text.trim())) {
-            log.error("字符串为空");
+            log.error("The string is empty");
             return "file error";
         }
 
         if (text.length() > 150) {
-            log.error("字符串长度超过150，key:" + text);
+            log.error("String length exceeds150，key:" + text);
             return text;
         }
         // 校验key

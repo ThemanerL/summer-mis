@@ -36,7 +36,7 @@ public class ExportExcel {
         AccreditManager manager = template.getAccreditManager();
         if (manager != null) {
             if (!manager.isPass(this.handle))
-                throw new AccreditException(String.format("您没有导出[%s]的权限", manager.getDescribe()));
+                throw new AccreditException(String.format("You do not have permission to export [%s]", manager.getDescribe()));
         }
 
         HistoryWriter writer = template.getHistoryWriter();

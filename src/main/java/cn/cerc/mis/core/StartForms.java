@@ -49,7 +49,7 @@ public class StartForms implements Filter {
 
         String childCode = getRequestCode(req);
         if (childCode == null) {
-            outputErrorPage(req, resp, new RuntimeException("无效的请求：" + childCode));
+            outputErrorPage(req, resp, new RuntimeException("Invalid request：" + childCode));
             return;
         }
 
@@ -89,7 +89,7 @@ public class StartForms implements Filter {
                 req.setAttribute("myappHandle", handle);
                 form.setHandle(handle);
 
-                log.debug("进行安全检查，若未登录则显示登录对话框");
+                log.debug("Perform security check, if not logged in, display login dialog");
 
                 if (!form.logon()) {
                     IAppLogin page = Application.getBean(IAppLogin.class, "appLogin", "appLoginManage",
@@ -149,12 +149,12 @@ public class StartForms implements Filter {
         String deviceId = form.getClient().getId();
         // TODO 验证码变量，需要改成静态变量，统一取值
         String verifyCode = form.getRequest().getParameter("verifyCode");
-        log.debug(String.format("进行设备认证, deviceId=%s", deviceId));
+        log.debug(String.format("Equipment certification, deviceId=%s", deviceId));
         String userId = (String) form.getHandle().getProperty(Application.userId);
         try (MemoryBuffer buff = new MemoryBuffer(BufferType.getSessionInfo, userId, deviceId)) {
             if (!buff.isNull()) {
                 if (buff.getBoolean("VerifyMachine")) {
-                    log.debug("已经认证过，跳过认证");
+                    log.debug("Already certified, skip authentication");
                     return true;
                 }
             }
@@ -244,7 +244,7 @@ public class StartForms implements Filter {
                         pageOutput = e.getViewFile();
                     }
                 } else {
-                    log.debug("没有进行认证过，跳转到设备认证页面");
+                    log.debug("Jumped to the device authentication page without authentication");
                     ServerConfig config = new ServerConfig();
                     String supCorpNo = config.getProperty("vine.mall.supCorpNo", "");
                     // 若是专用APP登陆并且是iPhone，则不跳转设备登陆页，由iPhone原生客户端处理

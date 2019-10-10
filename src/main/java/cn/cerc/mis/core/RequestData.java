@@ -30,7 +30,7 @@ public class RequestData {
                 serviceCode = request.getPathInfo().substring(1);
             } catch (Exception e) {
                 log.error(e.getMessage(), e);
-                throw new RuntimeException("服务名不能为空！");
+                throw new RuntimeException("Service name cannot be empty！");
             }
         }
         BufferedReader reader;

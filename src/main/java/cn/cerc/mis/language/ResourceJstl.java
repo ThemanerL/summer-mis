@@ -33,7 +33,7 @@ public class ResourceJstl extends SimpleTagSupport {
                 text = getString(request, jf);
             } catch (Exception e) {
                 String uri = request.getRequestURI();
-                log.error("key为空，uri：" + uri);
+                log.error("key Is empty，uri：" + uri);
                 text = "file error";
             }
         } finally {

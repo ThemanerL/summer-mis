@@ -136,7 +136,7 @@ public class ImportExcel extends ImportExcelFile {
 
         ImportExcelTemplate template = this.getTemplate();
         if (template.getColumns().size() != sheet.getColumns())
-            throw new RuntimeException(String.format("导入的文件：<b>%s</b>, 其总列数为 %d，而模版总列数为  %d 二者不一致，无法导入！",
+            throw new RuntimeException(String.format("Imported file: <b>%s</b>, the total number of columns is %d, and the total number of templates is %d. They are inconsistent and cannot be imported.！",
                     file.getName(), sheet.getColumns(), template.getColumns().size()));
 
         DataSet ds = new DataSet();
@@ -148,7 +148,7 @@ public class ImportExcel extends ImportExcelFile {
                     String title = template.getColumns().get(col).getName();
                     if (!title.equals(value))
                         throw new RuntimeException(
-                                String.format("导入的文件：<b>%s</b>，其标题第 %d 列为【 %s】, 模版中为【%s】，二者不一致，无法导入！", file.getName(),
+                                String.format("Imported file: <b>%s</b>, whose title is listed as [%s] in the %d and [%s] in the template. The two are inconsistent and cannot be imported.！", file.getName(),
                                         col + 1, value, title));
                 }
             } else {
@@ -163,7 +163,7 @@ public class ImportExcel extends ImportExcelFile {
                     }
                     ImportColumn column = template.getColumns().get(col);
                     if (!column.validate(row, col, value)) {
-                        ColumnValidateException err = new ColumnValidateException("其数据不符合模版要求，当前值为：" + value);
+                        ColumnValidateException err = new ColumnValidateException("The data does not meet the template requirements, the current value is：" + value);
                         err.setTitle(column.getName());
                         err.setValue(value);
                         err.setCol(col);

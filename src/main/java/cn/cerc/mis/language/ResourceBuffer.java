@@ -32,7 +32,7 @@ public class ResourceBuffer {
                 items.put(item.getString("key_"), item.getString("value_"));
             }
             if (items.size() == 0) {
-                log.error("没有找到相应的语言字典数据！！！");
+                log.error("No corresponding language dictionary data found！！！");
             }
         }
         if (items.containsKey(text)) {
