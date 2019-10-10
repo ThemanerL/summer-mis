@@ -3,6 +3,7 @@ package cn.cerc.mis.tools;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.cerc.mis.language.R;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,10 +35,10 @@ public class SearchManager implements IBookManage {
     @Override
     public void setDateRange(TDateTime beginDate, TDateTime endDate, boolean forceExecute) {
         if (initMonth.compareTo(beginDate.getYearMonth()) > 0)
-            throw new RuntimeException(String.format("起始日期(%s)小于开账年月(%s)", beginDate.getYearMonth(), initMonth));
+            throw new RuntimeException(String.format(R.asString(handle, "起始日期(%s)小于开账年月(%s)"), beginDate.getYearMonth(), initMonth));
 
         if (beginDate.compareTo(endDate) > 0)
-            throw new RuntimeException(String.format("起始日期(%s)大于截止日期(%s)", beginDate, endDate));
+            throw new RuntimeException(String.format(R.asString(handle, "起始日期(%s)大于截止日期(%s)"), beginDate, endDate));
 
         duration = new DurationSplit(beginDate, endDate);
     }
@@ -50,7 +51,7 @@ public class SearchManager implements IBookManage {
             throw new RuntimeException("duration is null");
 
         if (books.size() == 0)
-            throw new RuntimeException("帐本对象不允许为空！");
+            throw new RuntimeException(R.asString(handle, "帐本对象不允许为空！"));
 
         timer.get("process total").start();
 
@@ -66,7 +67,7 @@ public class SearchManager implements IBookManage {
         this.section = section;
         log.info(String.format("corpNo:%s, init:%s, book total: %d", handle.getCorpNo(), initMonth, books.size()));
         log.info(String.format("dateFrom: %s, dateTo: %s", section.getDateFrom(), section.getDateTo()));
-        log.info(String.format("取得数据源, source total:%d", sources.size()));
+        log.info(String.format("%s, source total:%d", R.asString(handle, "取得数据源"), sources.size()));
 
         Timing pt1 = timer.get("sources load");
         Timing pt2 = timer.get("sources output");

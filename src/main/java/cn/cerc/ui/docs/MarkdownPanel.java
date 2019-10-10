@@ -1,6 +1,7 @@
 package cn.cerc.ui.docs;
 
 import cn.cerc.mis.core.IPage;
+import cn.cerc.mis.language.R;
 import cn.cerc.ui.other.OperaPanel;
 import cn.cerc.ui.parts.UIComponent;
 
@@ -21,7 +22,7 @@ public class MarkdownPanel extends OperaPanel {
             IPage page = (IPage) this.getOwner();
             MarkdownDoc doc = new MarkdownDoc(page.getForm());
             doc.setOutHtml(true);
-            this.setReadme(doc.getContext("/docs/" + fileName, "(暂未编写相应的说明)"));
+            this.setReadme(doc.getContext("/docs/" + fileName, R.asString(page.getForm().getHandle(), "(暂未编写相应的说明)")));
         }
     }
 

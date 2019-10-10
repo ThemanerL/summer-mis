@@ -3,6 +3,7 @@ package cn.cerc.mis.tools;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.cerc.mis.language.R;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,7 +41,7 @@ public class UpdateManager implements IBookManage {
             beginDate = TDateTime.fromYearMonth(initMonth);
 
         if (beginDate.compareTo(endDate) > 0)
-            throw new RuntimeException(String.format("起始日期(%s)大于截止日期(%s)", beginDate, endDate));
+            throw new RuntimeException(String.format(R.asString(handle, "起始日期(%s)大于截止日期(%s)"), beginDate, endDate));
 
         duration = new DurationSplit(beginDate, endDate);
         dataList = new BookDataList(new DurationSection(beginDate, TDateTime.Now()));
@@ -56,7 +57,7 @@ public class UpdateManager implements IBookManage {
             throw new RuntimeException("duration is null");
 
         if (books.size() == 0)
-            throw new RuntimeException("帐本对象不允许为空！");
+            throw new RuntimeException(R.asString(handle, "帐本对象不允许为空！"));
 
         if (dataList.size() == 0)
             return;

@@ -68,7 +68,7 @@ public class PhoneVerify {
         ds.add("where id_='%s'", handle.getUserCode());
         ds.open();
         if (ds.eof()) {
-            throw new RuntimeException("当前用户不存在");
+            throw new RuntimeException(R.asString(handle, "当前用户不存在"));
         }
         this.mobile = ds.getString("mobile_");
         this.phone = mobile;

@@ -66,7 +66,7 @@ public class SvrUserLogin extends CustomService {
         // 开始进行用户验证
         String userCode = headIn.getString("Account_");
         if (userCode.equals("")) {
-            throw new SecurityCheckException("用户帐号不允许为空！");
+            throw new SecurityCheckException(R.asString(this, "用户帐号不允许为空！"));
         }
 
         SqlQuery dsUser = new SqlQuery(this);
@@ -75,7 +75,7 @@ public class SvrUserLogin extends CustomService {
         dsUser.add("PCMachine3_,RoleCode_,DiyRole_ from %s where Code_='%s'", systemTable.getUserInfo(), userCode);
         dsUser.open();
         if (dsUser.eof()) {
-            throw new SecurityCheckException(String.format("该帐号(%s)并不存在，禁止登录！", userCode));
+            throw new SecurityCheckException(String.format(R.asString(this, "该帐号(%s)并不存在，禁止登录！"), userCode));
         }
 
         String corpNo = dsUser.getString("CorpNo_");
@@ -95,13 +95,13 @@ public class SvrUserLogin extends CustomService {
             }
             ds.open();
             if (ds.eof()) {
-                throw new SecurityCheckException(String.format("您不是该上游%s的下游客户，不允许登录！", supCorpNo));
+                throw new SecurityCheckException(String.format(R.asString(this, "您不是该上游%s的下游客户，不允许登录！"), supCorpNo));
             }
         }
 
         BookInfoRecord buff = MemoryBookInfo.get(this, corpNo);
         if (buff == null) {
-            throw new SecurityCheckException(String.format("没有找到注册的帐套  %s ", corpNo));
+            throw new SecurityCheckException(String.format(R.asString(this, "没有找到注册的帐套  %s "), corpNo));
         }
 
         String mobile = dsUser.getString("Mobile_");
@@ -109,27 +109,27 @@ public class SvrUserLogin extends CustomService {
 
         String password = headIn.getString("Password_");
         if (password == null || "".equals(password)) {
-            throw new RuntimeException("用户密码不允许为空！");
+            throw new RuntimeException(R.asString(this, "用户密码不允许为空！"));
         }
 
         boolean YGLogin = buff.getCorpType() == BookVersion.ctFree.ordinal();
         if (buff.getStatus() == 3) {
-            throw new SecurityCheckException("对不起，您的账套处于暂停录入状态，禁止登录！若需启用，请您联系客服处理！");
+            throw new SecurityCheckException(R.asString(this, "对不起，您的账套处于暂停录入状态，禁止登录！若需启用，请您联系客服处理！"));
         }
         if (buff.getStatus() == 4) {
-            throw new SecurityCheckException("对不起，您的帐套已过期，请联系客服续费！");
+            throw new SecurityCheckException(R.asString(this, "对不起，您的帐套已过期，请联系客服续费！"));
         }
         if (dsUser.getInt("Enabled_") < 1 && dsUser.getInt("VerifyTimes_") == 6) {
             throw new SecurityCheckException(
-                    String.format("该帐号(%s)因输入错误密码或验证码次数达到6次，已被自动停用，禁止登录！若需启用，请您联系客服处理！", userCode));
+                    String.format(R.asString(this, "该帐号(%s)因输入错误密码或验证码次数达到6次，已被自动停用，禁止登录！若需启用，请您联系客服处理！"), userCode));
         }
         if (dsUser.getInt("Enabled_") < 1) {
-            throw new SecurityCheckException(String.format("该帐号(%s)被暂停使用，禁止登录！若需启用，请您联系客服处理！", userCode));
+            throw new SecurityCheckException(String.format(R.asString(this, "该帐号(%s)被暂停使用，禁止登录！若需启用，请您联系客服处理！"), userCode));
         }
         // 判断此帐号是否为附属帐号
         if (dsUser.getString("BelongAccount_") != null && !"".equals(dsUser.getString("BelongAccount_"))) {
             throw new SecurityCheckException(
-                    String.format("该帐号已被设置为附属帐号，不允许登录，请使用主帐号 %s 登录系统！", dsUser.getString("BelongAccount_")));
+                    String.format(R.asString(this, "该帐号已被设置为附属帐号，不允许登录，请使用主帐号 %s 登录系统！"), dsUser.getString("BelongAccount_")));
         }
 
         // 检查设备码
@@ -149,16 +149,16 @@ public class SvrUserLogin extends CustomService {
                     // 该账号设置停用
                     dsUser.setField("Enabled_", 0);
                     dsUser.post();
-                    throw new RuntimeException("您输入密码的错误次数已超出规定次数，现账号已被自动停用，若需启用，请您联系客服处理！");
+                    throw new RuntimeException(R.asString(this, "您输入密码的错误次数已超出规定次数，现账号已被自动停用，若需启用，请您联系客服处理！"));
                 } else {
                     dsUser.setField("VerifyTimes_", dsUser.getInt("VerifyTimes_") + 1);
                     dsUser.post();
                     if (dsUser.getInt("VerifyTimes_") > 3) {
                         throw new SecurityCheckException(
-                                String.format("您输入密码的错误次数已达 %d 次，若忘记密码，可点击下方【忘记密码】链接重新设置密码，输错超过6次时，您的账号将被自动停用！",
+                                String.format(R.asString(this, "您输入密码的错误次数已达 %d 次，若忘记密码，可点击下方【忘记密码】链接重新设置密码，输错超过6次时，您的账号将被自动停用！"),
                                         dsUser.getInt("VerifyTimes_")));
                     } else {
-                        throw new SecurityCheckException("您的登录密码错误，禁止登录！");
+                        throw new SecurityCheckException(R.asString(this, "您的登录密码错误，禁止登录！"));
                     }
                 }
             }
@@ -166,7 +166,7 @@ public class SvrUserLogin extends CustomService {
 
         // 当前设备是否已被停用
         if (!isStopUsed(userCode, deviceId)) {
-            throw new SecurityCheckException("您的当前设备已被停用，禁止登录，请联系管理员恢复启用！");
+            throw new SecurityCheckException(R.asString(this, "您的当前设备已被停用，禁止登录，请联系管理员恢复启用！"));
         }
 
         try (Transaction tx = new Transaction(this)) {
@@ -285,7 +285,7 @@ public class SvrUserLogin extends CustomService {
         headIn.setField("Account_", ds.getString("Code_"));
         headIn.setField("Password_", ds.getString("Password_"));
         headIn.setField("MachineID_", clientId);
-        headIn.setField("ClientName_", "Web浏览器");
+        headIn.setField("ClientName_", R.asString(this, "Web浏览器"));
         headIn.setField("ClientIP_", "127.0.0.1");
         headIn.setField("wx", true);
         return this.Check();
@@ -299,7 +299,7 @@ public class SvrUserLogin extends CustomService {
 
         Record headOut = getDataOut().getHead();
         if ("".equals(userCode)) {
-            throw new RuntimeException("手机号不允许为空！");
+            throw new RuntimeException(R.asString(this, "手机号不允许为空！"));
         }
 
         SqlQuery ds = new SqlQuery(this);
@@ -308,12 +308,13 @@ public class SvrUserLogin extends CustomService {
         ds.add("where a.Mobile_='%s' and ((a.BelongAccount_ is null) or (a.BelongAccount_=''))", userCode);
         ds.open();
         if (ds.size() == 0) {
-            throw new RuntimeException("您的手机号码不存在于系统中，如果您需要注册帐号，请 <a href='TFrmContact'>联系客服</a> 进行咨询");
+            throw new RuntimeException(String.format("%s <a href='TFrmContact'>%s</a> %s", R.asString(this, "您的手机号码不存在于系统中，如果您需要注册帐号，请"),
+                    R.asString(this, "联系客服"), R.asString(this, "进行咨询")));
         }
 
         if (ds.size() != 1) {
             throw new RuntimeException(
-                    String.format("您的手机绑定了多个帐号，无法登录，建议您使用主账号登录后，在【我的账号--更改我的资料】菜单中设置主附帐号关系后再使用手机号登录！", userCode));
+                    String.format(R.asString(this, "您的手机绑定了多个帐号，无法登录，建议您使用主账号登录后，在【我的账号--更改我的资料】菜单中设置主附帐号关系后再使用手机号登录！"), userCode));
         }
         headOut.setField("UserCode_", ds.getString("Code_"));
         return true;
@@ -375,29 +376,29 @@ public class SvrUserLogin extends CustomService {
                 "sendVerifyCode")) {
             if (!buff.isNull()) {
                 log.info(String.format("verifyCode %s", buff.getString("VerifyCode_")));
-                throw new RuntimeException(String.format("请勿在 %d 分钟内重复点击获取认证码！", TimeOut));
+                throw new RuntimeException(String.format(R.asString(this, "请勿在 %d 分钟内重复点击获取认证码！"), TimeOut));
             }
 
             Record headIn = getDataIn().getHead();
-            DataValidateException.stopRun("用户帐号不允许为空", "".equals(getUserCode()));
+            DataValidateException.stopRun(R.asString(this, "用户帐号不允许为空"), "".equals(getUserCode()));
 
             String deviceId = headIn.getString("deviceId");
             if ("".equals(deviceId)) {
-                throw new RuntimeException("认证码不允许为空");
+                throw new RuntimeException(R.asString(this, "认证码不允许为空"));
             }
 
             SqlQuery cdsUser = new SqlQuery(this);
             cdsUser.add("select Mobile_ from %s ", systemTable.getUserInfo());
             cdsUser.add("where Code_='%s' ", getUserCode());
             cdsUser.open();
-            DataValidateException.stopRun("系统检测到该帐号还未登记过手机号，无法发送认证码到该手机上，请您联系管理员，让其开一个认证码给您登录系统！", cdsUser.eof());
+            DataValidateException.stopRun(R.asString(this, "系统检测到该帐号还未登记过手机号，无法发送认证码到该手机上，请您联系管理员，让其开一个认证码给您登录系统！"), cdsUser.eof());
             String mobile = cdsUser.getString("Mobile_");
 
             SqlQuery cdsVer = new SqlQuery(this);
             cdsVer.add("select * from %s", systemTable.getDeviceVerify());
             cdsVer.add("where UserCode_='%s' and MachineCode_='%s'", getUserCode(), deviceId);
             cdsVer.open();
-            DataValidateException.stopRun("系统出错，请您重新进入系统！", cdsVer.size() != 1);
+            DataValidateException.stopRun(R.asString(this, "系统出错，请您重新进入系统！"), cdsVer.size() != 1);
 
             String verifyCode = Utils.intToStr(Utils.random(900000) + 100000);
             log.info("{} verifyCode is {}", mobile, verifyCode);
@@ -411,12 +412,12 @@ public class SvrUserLogin extends CustomService {
             Record record = getDataOut().getHead();
             LocalService svr = new LocalService(this, "SvrNotifyMachineVerify");
             if (svr.exec("verifyCode", verifyCode, "mobile", mobile)) {
-                record.setField("Msg_", String.format("系统已将认证码发送到您尾号为 %s 的手机上，并且该认证码 %d 分钟内有效，请注意查收！",
+                record.setField("Msg_", String.format(R.asString(this, "系统已将认证码发送到您尾号为 %s 的手机上，并且该认证码 %d 分钟内有效，请注意查收！"),
                         mobile.substring(mobile.length() - 4, mobile.length()), TimeOut));
                 buff.setExpires(TimeOut * 60);
                 buff.setField("VerifyCode", verifyCode);
             } else {
-                record.setField("Msg_", String.format("验证码发送失败，失败原因：%s", svr.getMessage()));
+                record.setField("Msg_", String.format(R.asString(this, "验证码发送失败，失败原因：%s"), svr.getMessage()));
             }
             record.setField("VerifyCode_", verifyCode);
             return true;
@@ -427,10 +428,10 @@ public class SvrUserLogin extends CustomService {
     public boolean getMachInfo() throws DataValidateException {
         Record headIn = getDataIn().getHead();
         String userCode = headIn.getString("UserCode_");
-        DataValidateException.stopRun("用户帐号不允许为空", "".equals(userCode));
+        DataValidateException.stopRun(R.asString(this, "用户帐号不允许为空"), "".equals(userCode));
 
         String corpNo = headIn.getString("CorpNo_");
-        DataValidateException.stopRun("用户帐套不允许为空", "".equals(corpNo));
+        DataValidateException.stopRun(R.asString(this, "用户帐套不允许为空"), "".equals(corpNo));
 
         SqlQuery cdsTmp = new SqlQuery(this);
         cdsTmp.add("select * from %s", systemTable.getDeviceVerify());
@@ -550,7 +551,7 @@ public class SvrUserLogin extends CustomService {
             dataVer.setField("VerifyCode_", verifyCode);
             dataVer.post();
         } else {
-            throw new RuntimeException("您输入的验证码有误，请重新输入！");
+            throw new RuntimeException(R.asString(this, "您输入的验证码有误，请重新输入！"));
         }
     }
 

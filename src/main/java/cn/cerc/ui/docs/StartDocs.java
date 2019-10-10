@@ -23,7 +23,7 @@ public class StartDocs extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (!"1".equals(ServerConfig.getInstance().getProperty("docs.service", "0"))) {
-            throw new RuntimeException("该功能暂不开放");
+            throw new RuntimeException("This feature is not open yet");
         }
         String uri = req.getRequestURI();
         if ("/docs".equals(uri)) {

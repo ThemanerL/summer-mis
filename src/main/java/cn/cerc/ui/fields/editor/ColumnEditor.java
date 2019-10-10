@@ -26,7 +26,7 @@ public class ColumnEditor {
     public ColumnEditor(AbstractField owner) {
         this.owner = owner;
         if (!(owner.getOwner() instanceof AbstractGridLine))
-            throw new RuntimeException("不支持的数据类型：" + owner.getOwner().getClass().getName());
+            throw new RuntimeException("Unsupported data type：" + owner.getOwner().getClass().getName());
         gridLine = (AbstractGridLine) (owner.getOwner());
     }
 

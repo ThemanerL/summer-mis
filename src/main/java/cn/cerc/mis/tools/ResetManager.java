@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import cn.cerc.mis.language.R;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,14 +44,14 @@ public class ResetManager implements IBookManage {
             beginDate = TDateTime.fromYearMonth(initMonth);
 
         if (beginDate.compareTo(endDate) > 0)
-            throw new RuntimeException(String.format("起始日期(%s)大于截止日期(%s)", beginDate, endDate));
+            throw new RuntimeException(String.format(R.asString(handle, "起始日期(%s)大于截止日期(%s)"), beginDate, endDate));
 
         // 非强制执行时，增加对执行时间的判断
         if (!forceExecute) {
             Calendar cal = Calendar.getInstance();
             if (cal.get(Calendar.HOUR_OF_DAY) >= 8 && (cal.get(Calendar.HOUR_OF_DAY) < 18)) {
                 if (TDateTime.Now().compareMonth(beginDate) > 1)
-                    throw new RuntimeException("在工作高峰期间(08:00-18:00)，为保障其它用户可用性，只允许处理最近2个月的数据！");
+                    throw new RuntimeException(R.asString(handle, "在工作高峰期间(08:00-18:00)，为保障其它用户可用性，只允许处理最近2个月的数据！"));
             }
         }
         duration = new DurationSplit(beginDate, endDate);
@@ -64,7 +65,7 @@ public class ResetManager implements IBookManage {
             throw new RuntimeException("duration is null");
 
         if (books.size() == 0)
-            throw new RuntimeException("帐本对象不允许为空！");
+            throw new RuntimeException(R.asString(handle, "帐本对象不允许为空！"));
 
         timer.get("process total").start();
 
@@ -82,7 +83,7 @@ public class ResetManager implements IBookManage {
         this.section = section;
         log.info(String.format("corpNo:%s, init:%s, book total: %d", handle.getCorpNo(), initMonth, books.size()));
         log.info(String.format("dateFrom: %s, dateTo: %s", section.getDateFrom(), section.getDateTo()));
-        log.info(String.format("取得数据源, source total:%d", sources.size()));
+        log.info(String.format("%s, source total:%d", R.asString(handle, "取得数据源"), sources.size()));
 
         Timing pt1 = timer.get("sources load");
         Timing pt2 = timer.get("sources output");
@@ -103,7 +104,7 @@ public class ResetManager implements IBookManage {
         pt1.stop();
 
         try {
-            log.info(String.format("排序 %d 项数据并传给帐本", dataList.size()));
+            log.info(String.format(R.asString(handle, "排序 %d 项数据并传给帐本"), dataList.size()));
             pt1 = timer.get("books enroll").start();
             for (IBookData bookData : dataList) {
                 for (IResetBook book : books) {

@@ -8,6 +8,7 @@ import cn.cerc.core.Utils;
 import cn.cerc.db.cache.Redis;
 import cn.cerc.db.mysql.SqlQuery;
 import cn.cerc.mis.core.CustomService;
+import cn.cerc.mis.language.R;
 import cn.cerc.mis.message.JPushRecord;
 import cn.cerc.mis.message.MessageLevel;
 import cn.cerc.mis.message.MessageProcess;
@@ -129,7 +130,7 @@ public class SvrUserMessages extends CustomService {
         cdsMsg.open();
         if (cdsMsg.eof()) {
             // 此任务可能被其它主机抢占
-            this.setMessage(String.format("消息号UID_ %s 不存在", msgId));
+            this.setMessage(String.format(R.asString(this, "消息号UID_ %s 不存在"), msgId));
             return false;
         }
         cdsMsg.edit();
