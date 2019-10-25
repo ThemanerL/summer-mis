@@ -35,7 +35,7 @@ public class R {
 
     public static String asString(IHandle handle, String text) {
         String language = getLanguage(handle);
-        if (Application.LangageDefault.equals(language))
+        if (Application.LangageDefault.equals(language) || isEnglish(text))
             return text;
 
         if (text == null || "".equals(text.trim())) {
@@ -136,5 +136,9 @@ public class R {
             return en_result;
         }
         return text;
+    }
+
+    private static boolean isEnglish(String text) {
+        return text.replace(" ", "").matches("[a-zA-Z]+");
     }
 }
