@@ -3,6 +3,7 @@ package cn.cerc.ui.other;
 import javax.servlet.http.HttpServletRequest;
 
 import cn.cerc.mis.core.IForm;
+import cn.cerc.mis.language.R;
 import cn.cerc.ui.core.HtmlWriter;
 import cn.cerc.ui.grid.MutiPage;
 import cn.cerc.ui.parts.UIComponent;
@@ -39,17 +40,20 @@ public class OperaPages extends UISheet {
             html.println("<div class=\"foot-page\">");
         } else {
             html.println("<section>");
-            html.println("<div class=\"title\">Data paging</div>");
+            html.println("<div class=\"title\">%s</div>", R.asString(form.getHandle(), "数据分页"));
             html.println("<div class=\"contents\">");
-            html.println("total：%d, current page：%d，total pages：%d <br/>", pages.getRecordCount(), pages.getCurrent(), pages.getCount());
+            html.println("%s：%d, %s：%d，%s：%d <br/>", R.asString(form.getHandle(), "总记录数"), pages.getRecordCount(),
+                    R.asString(form.getHandle(), "当前页"), pages.getCurrent(), R.asString(form.getHandle(), "总页数"),
+                    pages.getCount());
             html.println("<div align=\"center\">");
         }
-        html.println("<a href=\"?pageno=1%s\">Home</a>", url);
-        html.println("<a href=\"?pageno=%d%s\">Previous page</a>", pages.getPrior(), url);
-        html.println("<a href=\"?pageno=%d%s\">Next page</a>", pages.getNext(), url);
-        html.println("<a href=\"?pageno=%d%s\">Last page</a>", pages.getCount(), url);
+        html.println("<a href=\"?pageno=1%s\">%s</a>", url, R.asString(form.getHandle(), "首页"));
+        html.println("<a href=\"?pageno=%d%s\">%s</a>", pages.getPrior(), url, R.asString(form.getHandle(), "上一页"));
+        html.println("<a href=\"?pageno=%d%s\">%s</a>", pages.getNext(), url, R.asString(form.getHandle(), "下一页"));
+        html.println("<a href=\"?pageno=%d%s\">%s</a>", pages.getCount(), url, R.asString(form.getHandle(), "尾页"));
         if (isPhone) {
-            html.println("Number of pens：%s, Number of pages：%d / %d", pages.getRecordCount(), pages.getCurrent(), pages.getCount());
+            html.println("%s：%s, %s：%d / %d", R.asString(form.getHandle(), "笔数"), pages.getRecordCount(),
+                    R.asString(form.getHandle(), "页数"), pages.getCurrent(), pages.getCount());
             html.println("</div>");
         } else {
             html.println("</div>");
