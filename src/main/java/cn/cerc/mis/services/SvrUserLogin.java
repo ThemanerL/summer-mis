@@ -557,10 +557,10 @@ public class SvrUserLogin extends CustomService {
     public void updateCurrentUser(String computer, String screen, String language) {
 //        getConnection().execute(String.format("Update %s Set Viability_=0 Where Viability_>0 and LogoutTime_<'%s'",
 //                systemTable.getCurrentUser(), TDateTime.Now().incHour(-1)));
-//        String SQLCmd = String.format(
-//                "update %s set Viability_=-1,LogoutTime_='%s' where Account_='%s' and Viability_>-1",
-//                systemTable.getCurrentUser(), TDateTime.Now(), getUserCode());
-//        getConnection().execute(SQLCmd);
+        String SQLCmd = String.format(
+                "update %s set Viability_=-1,LogoutTime_='%s' where Account_='%s' and Viability_>-1",
+                systemTable.getCurrentUser(), TDateTime.Now(), getUserCode());
+        getConnection().execute(SQLCmd);
 
         // 增加新的记录
         Record rs = new Record();
