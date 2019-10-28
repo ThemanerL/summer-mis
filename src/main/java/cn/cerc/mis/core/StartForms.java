@@ -25,6 +25,7 @@ import cn.cerc.mis.other.BufferType;
 import cn.cerc.mis.other.MemoryBuffer;
 import cn.cerc.mis.page.JspPage;
 import cn.cerc.mis.page.RedirectPage;
+import cn.cerc.mis.redis.LoginRedisTool;
 
 @Deprecated // 请改使用 StartFormDefault
 public class StartForms implements Filter {
@@ -105,8 +106,14 @@ public class StartForms implements Filter {
                                     cmd);
                             request.getServletContext().getRequestDispatcher(url).forward(request, response);
                         }
-                    } else // 已授权通过
+                    } else {
+                        // 重置心跳值
+                        LoginRedisTool login = new LoginRedisTool();
+                        login.set(LoginRedisTool.s_current_users, LoginRedisTool.viability_default, info.getSid());
+                        
+                        // 已授权通过
                         callForm(form, funcCode);
+                    }
                 } else {
                     callForm(form, funcCode);
                 }
