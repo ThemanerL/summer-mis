@@ -29,7 +29,18 @@ public class R {
                 }
             }
         }
-        String language = temp == null ? Application.getLangage() : (String) temp;
+
+        String language;
+
+        SqlQuery ds = new SqlQuery(handle);
+        ds.add("select Value_ from %s where Code_='%s' and UserCode_='%s'", "UserOptions",
+                "Lang_", handle.getUserCode());
+        ds.open();
+        if (ds.eof()) {
+            language = temp == null ? Application.getLangage() : (String) temp;
+        } else {
+            language = ds.getString("Value_");
+        }
         return language;
     }
 
