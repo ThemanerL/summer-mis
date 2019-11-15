@@ -14,6 +14,7 @@ public class UrlRecord {
     private String hintMsg;
     private String id;
     private String imgage;
+    private String arrow;
 
     public UrlRecord() {
     }
@@ -132,6 +133,15 @@ public class UrlRecord {
 
     public UrlRecord setImgage(String imgage) {
         this.imgage = imgage;
+        return this;
+    }
+
+    public String getArrow() {
+        return arrow;
+    }
+
+    public UrlRecord setArrow(String arrow) {
+        this.arrow = arrow;
         return this;
     }
 }

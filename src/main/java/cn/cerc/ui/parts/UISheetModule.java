@@ -46,7 +46,9 @@ public class UISheetModule extends UISheet {
             if (url.getTarget() != null) {
                 html.print(" target=\"%s\"", url.getTarget());
             }
-            html.println(">%s</a>", url.getName());
+            html.print(">%s</a>", url.getName());
+            if (url.getArrow() != null && !"".equals(url.getArrow()))
+                html.println("<img src='%s' />", url.getArrow());
             html.println("</li>");
         }
         for (String key : items.keySet())

@@ -12,7 +12,7 @@ public class UISheetUrl extends UISheet {
     private List<UrlRecord> urls = new ArrayList<>();
     // 使用于page-link.xml中
     private Map<String, String> items = new LinkedHashMap<>();
-    private boolean flag = false;
+    private boolean isCloseSheet = false;
 
     @Deprecated
     public UISheetUrl() {
@@ -30,7 +30,8 @@ public class UISheetUrl extends UISheet {
         if (urls.size() == 0 && items.size() == 0)
             return;
 
-        if (flag) {
+        // 判断是否隐藏二级菜单的相关操作
+        if (this.isCloseSheet) {
             html.println("<section style='display: none;'>");
         } else {
             html.println("<section>");
@@ -78,11 +79,11 @@ public class UISheetUrl extends UISheet {
         this.items = items;
     }
 
-    public boolean isFlag() {
-        return flag;
+    public boolean getIsCloseSheet() {
+        return isCloseSheet;
     }
 
-    public void setFlag(boolean flag) {
-        this.flag = flag;
+    public void setIsCloseSheet(boolean isCloseSheet) {
+        this.isCloseSheet = isCloseSheet;
     }
 }
