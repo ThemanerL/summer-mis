@@ -13,6 +13,7 @@ public class UrlRecord {
     private Map<String, String> params = new HashMap<>();
     private String hintMsg;
     private String id;
+    private String imgage;
 
     public UrlRecord() {
     }
@@ -122,6 +123,15 @@ public class UrlRecord {
 
     public UrlRecord setId(String id) {
         this.id = id;
+        return this;
+    }
+
+    public String getImgage() {
+        return imgage;
+    }
+
+    public UrlRecord setImgage(String imgage) {
+        this.imgage = imgage;
         return this;
     }
 }
