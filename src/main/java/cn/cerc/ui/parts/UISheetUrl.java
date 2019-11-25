@@ -83,7 +83,7 @@ public class UISheetUrl extends UISheet {
         return isCloseSheet;
     }
 
-    public void setIsCloseSheet(boolean isCloseSheet) {
+    public void setCloseSheet(boolean isCloseSheet) {
         this.isCloseSheet = isCloseSheet;
     }
 }
