@@ -50,11 +50,11 @@ public class StartForms implements Filter {
              * 2、截取当前的资源路径，将资源文件重定向到容器中的项目路径 3、例如/ /131001/images/systeminstall-pc.png ->
              * /forms/images/systeminstall-pc.png
              */
-            log.info("uri {}", uri);
+            log.info("before {}", uri);
             IAppConfig conf = Application.getAppConfig();
             String source = "/" + conf.getPathForms() + uri.substring(uri.indexOf("/", 2));
             request.getServletContext().getRequestDispatcher(source).forward(request, response);
-            log.info("source {}", source);
+            log.info("after  {}", source);
             return;
         }
 
