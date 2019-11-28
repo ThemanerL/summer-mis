@@ -85,6 +85,15 @@ public class StartApp implements Filter {
             request.getServletContext().getRequestDispatcher(url).forward(request, response);
             return;
         }
+        
+        if(uri.contains("service/")) {
+            chain.doFilter(req, resp);
+            return;
+        }
+        if(uri.contains("task/")) {
+            chain.doFilter(req, resp);
+            return;
+        }
 
         // getRemote(req);
 
