@@ -2,7 +2,6 @@ package cn.cerc.mis.core;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.util.Iterator;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -85,12 +84,12 @@ public class StartApp implements Filter {
             request.getServletContext().getRequestDispatcher(url).forward(request, response);
             return;
         }
-        
-        if(uri.contains("service/")) {
+
+        if (uri.contains("service/")) {
             chain.doFilter(req, resp);
             return;
         }
-        if(uri.contains("task/")) {
+        if (uri.contains("task/")) {
             chain.doFilter(req, resp);
             return;
         }
@@ -445,7 +444,7 @@ public class StartApp implements Filter {
     }
 
     public static void main(String[] args2) {
-        String uri = "/131001/WebDefault";
+        String uri = "/131001/images/systeminstall-pc.png";
         System.out.println(uri.substring(uri.indexOf("/", 2)));
     }
 
