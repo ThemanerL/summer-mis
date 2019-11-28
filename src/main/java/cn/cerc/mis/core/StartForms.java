@@ -26,8 +26,8 @@ import cn.cerc.mis.other.MemoryBuffer;
 import cn.cerc.mis.page.JspPage;
 import cn.cerc.mis.page.RedirectPage;
 
-@Deprecated // 请改使用 StartFormDefault
 public class StartForms implements Filter {
+
     private static final Logger log = LoggerFactory.getLogger(StartForms.class);
 
     @Override
@@ -42,10 +42,21 @@ public class StartForms implements Filter {
         // 遇到静态文件直接输出
         IAppStaticFile staticFile = Application.getBean(IAppStaticFile.class, "appStaticFile", "appStaticFileDefault");
         if (staticFile.isStaticFile(uri)) {
-            chain.doFilter(req, resp);
+            // 默认没有重定向，直接读取资源文件的默认路径
+            // chain.doFilter(req, resp);
+
+            /*
+             * 1、 此处的 getPathForms 对应资源文件目录的forms，可自行定义成其他路径，注意配套更新 AppConfig
+             * 2、截取当前的资源路径，将资源文件重定向到容器中的项目路径 3、例如/ /131001/images/systeminstall-pc.png ->
+             * /forms/images/systeminstall-pc.png
+             */
+            log.info("uri {}", uri);
+            IAppConfig conf = Application.getAppConfig();
+            String source = "/" + conf.getPathForms() + uri.substring(uri.indexOf("/", 2));
+            request.getServletContext().getRequestDispatcher(source).forward(request, response);
+            log.info("source {}", source);
             return;
         }
-        log.info(uri);
 
         String childCode = getRequestCode(req);
         if (childCode == null) {
@@ -376,8 +387,7 @@ public class StartForms implements Filter {
         if (err == null) {
             err = e;
         }
-        IAppErrorPage errorPage = Application.getBean(IAppErrorPage.class, "appErrorPage",
-                "appErrorPageDefault");
+        IAppErrorPage errorPage = Application.getBean(IAppErrorPage.class, "appErrorPage", "appErrorPageDefault");
         if (errorPage != null) {
             String result = errorPage.getErrorPage(request, response, err);
             if (result != null) {
