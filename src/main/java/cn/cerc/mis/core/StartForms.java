@@ -58,6 +58,15 @@ public class StartForms implements Filter {
             return;
         }
 
+        if (uri.contains("service/")) {
+            chain.doFilter(req, resp);
+            return;
+        }
+        if (uri.contains("task/")) {
+            chain.doFilter(req, resp);
+            return;
+        }
+
         String childCode = getRequestCode(req);
         if (childCode == null) {
             outputErrorPage(req, resp, new RuntimeException("无效的请求：" + childCode));
