@@ -6,6 +6,7 @@ import java.util.List;
 import cn.cerc.mis.core.AbstractJspPage;
 import cn.cerc.mis.core.Application;
 import cn.cerc.mis.core.IForm;
+import cn.cerc.mis.language.R;
 import cn.cerc.ui.core.Component;
 import cn.cerc.ui.core.HtmlWriter;
 import cn.cerc.ui.core.UrlRecord;
@@ -29,6 +30,8 @@ public class UIHeader extends UIComponent {
     public UIHeader(AbstractJspPage owner) {
         super(owner);
         homePage = new UrlRecord(Application.getAppConfig().getFormDefault(), "<img src=\"images/Home.png\"/>");
+        leftMenus.add(homePage);
+        homePage = new UrlRecord(Application.getAppConfig().getFormDefault(), "开始");
         leftMenus.add(homePage);
     }
 
