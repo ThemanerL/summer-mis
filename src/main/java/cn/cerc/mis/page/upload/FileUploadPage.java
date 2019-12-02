@@ -109,7 +109,7 @@ public class FileUploadPage extends FileUploadBasePage {
                 }
             });
             new StringField(gird, R.asString(this, "文件大小"), "Size_", 2).createText((record, html) -> {
-                html.print(record.getString("Size_")+" B");
+                html.print(record.getString("Size_") + " B");
             });
             new DateTimeField(gird, R.asString(this, "上传时间"), "AppDate_", 4);
 
@@ -224,9 +224,6 @@ public class FileUploadPage extends FileUploadBasePage {
 
     /**
      * 下载文件
-     * 
-     * @param fileName 文件名
-     * @param fileLink 文件路径
      */
     @Override
     public IPage download() {
