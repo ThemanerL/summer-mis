@@ -25,9 +25,6 @@ public class UIPageView extends AbstractJspPage {
         setForm(form);
         initCssFile();
         initJsFile();
-        if (!this.getForm().getClient().isPhone()) {
-            this.getHeader().getAdvertisement();
-        }
     }
 
     @Override
