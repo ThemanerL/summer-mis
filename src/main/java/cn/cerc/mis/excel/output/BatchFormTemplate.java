@@ -32,7 +32,7 @@ public class BatchFormTemplate extends FormTemplate {
                     row++;
                     Object val = footer.getItems().get(field);
                     sheet1.addCell(new Label(0, row, field));
-                    sheet1.addCell(new Label(1, row, Double.toString(Utils.roundTo((Double) val, -2))));
+                    sheet1.addCell(new Label(1, row, Utils.formatFloat("#.##", (Double) val)));
                 }
             });
 

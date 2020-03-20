@@ -8,6 +8,7 @@ import cn.cerc.core.TDate;
 import jxl.write.DateFormat;
 import jxl.write.DateTime;
 import jxl.write.Label;
+import jxl.write.NumberFormat;
 import jxl.write.WritableCellFormat;
 import jxl.write.WritableSheet;
 import jxl.write.WriteException;
@@ -70,21 +71,31 @@ public class ExcelTemplate {
         // 输出列数据
         if (dataSet != null) {
             dataSet.first();
+            NumberFormat nf = new NumberFormat("#,###0;(#,###0)");
+            WritableCellFormat wc = new WritableCellFormat(nf);
             while (dataSet.fetch()) {
                 row++;
                 for (int col = 0; col < columns.size(); col++) {
                     Column column = columns.get(col);
                     column.setRecord(dataSet.getCurrent());
-                    writeColumn(sheet, col, row, column);
+                    writeColumn(sheet, col, row, column, wc);
                 }
             }
         }
     }
 
-    protected void writeColumn(WritableSheet sheet, int col, int row, Column column)
+    protected void writeColumn(WritableSheet sheet, int col, int row, Column column, WritableCellFormat wc)
             throws WriteException, RowsExceededException {
         if (column instanceof NumberColumn) {
             jxl.write.Number item = new jxl.write.Number(col, row, (double) column.getValue());
+            sheet.addCell(item);
+        } else if (column instanceof NumberFormatColumn) {
+            jxl.write.Number item = null;
+            if (wc != null) {
+                item = new jxl.write.Number(col, row, (double) column.getValue(), wc);
+            } else {
+                item = new jxl.write.Number(col, row, (double) column.getValue());
+            }
             sheet.addCell(item);
         } else if (column instanceof DateColumn) {
             TDate day = (TDate) column.getValue();

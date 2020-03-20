@@ -34,7 +34,7 @@ public class FormTemplate extends ExcelTemplate {
                 // head.getString(column.getCode()));
                 // sheet.addCell(item2);
                 column.setRecord(head);
-                writeColumn(sheet, 1, row, column);
+                writeColumn(sheet, 1, row, column, null);
             }
             // 设置新的起点行号
             this.setRow(this.getRow() + heads.size());
