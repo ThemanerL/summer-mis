@@ -26,15 +26,15 @@ public class BatchFormTemplate extends FormTemplate {
             this.setFooter((template, sheet1) -> {
                 Record footer = new Record();
                 for (Record item : dataSet) {
-                    footer.setField("合計數量", footer.getDouble("合計數量") + decimalformat.format(item.getDouble("Num_")));
-                    footer.setField("合計金額", footer.getDouble("合計金額") + decimalformat.format(item.getDouble("OriAmount_")));
+                    footer.setField("合計數量", footer.getDouble("合計數量") + item.getDouble("Num_"));
+                    footer.setField("合計金額", footer.getDouble("合計金額") + item.getDouble("OriAmount_"));
                 }
                 int row = template.getRow();
                 for (String field : footer.getItems().keySet()) {
                     row++;
                     Object val = footer.getItems().get(field);
                     sheet1.addCell(new Label(0, row, field));
-                    sheet1.addCell(new Label(1, row, Utils.formatFloat("#.##", (Double) val)));
+                    sheet1.addCell(new Label(1, row, decimalformat.format((Double) val)));
                 }
             });
 
