@@ -1,5 +1,6 @@
 package cn.cerc.mis.excel.output;
 
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class ExcelTemplate {
     private DateFormat df1 = new DateFormat("yyyy-MM-dd");
     private DateFormat df2 = new DateFormat("yyyy-MM-dd HH:mm:ss");
     private int row = 0;
+    private DecimalFormat decimalformat = new DecimalFormat(",###.####");
 
     public String getFileName() {
         return fileName;
@@ -87,7 +89,7 @@ public class ExcelTemplate {
     protected void writeColumn(WritableSheet sheet, int col, int row, Column column, WritableCellFormat wc)
             throws WriteException, RowsExceededException {
         if (column instanceof NumberColumn) {
-            jxl.write.Number item = new jxl.write.Number(col, row, (double) column.getValue());
+            Label item = new Label(col, row, decimalformat.format(column.getValue()));
             sheet.addCell(item);
         } else if (column instanceof NumberFormatColumn) {
             jxl.write.Number item = null;
