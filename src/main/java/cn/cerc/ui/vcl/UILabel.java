@@ -28,10 +28,15 @@ public class UILabel extends UIComponent {
     public void output(HtmlWriter html) {
         if (url == null) {
             html.print("<label");
-            if (focusTarget != null)
+            if (focusTarget != null) {
                 html.print(" for='%s'", focusTarget);
-            if (cssClass != null)
+            }
+            if (cssClass != null) {
                 html.print(" class='%s'", cssClass);
+            }
+            if (cssStyle != null) {
+                html.print(" style='%s'", cssStyle);
+            }
             html.print(">%s</label>", this.caption);
         } else
             html.print("<a href='%s'>%s</a>", this.url, this.caption);
