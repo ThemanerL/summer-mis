@@ -10,7 +10,7 @@ public class AppStaticFileDefault implements IAppStaticFile {
         if (uri.endsWith(".css") || uri.endsWith(".jpg") || uri.endsWith(".gif") || uri.endsWith(".png")
                 || uri.endsWith(".bmp") || uri.endsWith(".js") || uri.endsWith(".mp3") || uri.endsWith(".icon")
                 || uri.endsWith(".apk") || uri.endsWith(".exe") || uri.endsWith(".jsp") || uri.endsWith(".htm")
-                || uri.endsWith(".html") || uri.endsWith(".manifest")) {
+                || uri.endsWith(".html") || uri.endsWith(".manifest") || uri.endsWith(".ttf")) {
             return true;
         } else {
             return false;
